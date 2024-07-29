@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "applications",
+  "info": {
+    "singularName": "application",
+    "pluralName": "applications",
+    "displayName": "application"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "candidat": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::candidat.candidat"
+    },
+    "job": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::job.job"
+    },
+    "date_candidature": {
+      "type": "datetime"
+    },
+    "statut": {
+      "type": "string"
+    }
+  }
+}

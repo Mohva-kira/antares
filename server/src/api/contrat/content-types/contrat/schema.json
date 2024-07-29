@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contrats",
+  "info": {
+    "singularName": "contrat",
+    "pluralName": "contrats",
+    "displayName": "contrat"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "company": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company.company"
+    },
+    "date_debut": {
+      "type": "datetime"
+    },
+    "date_fin": {
+      "type": "datetime"
+    },
+    "conditions": {
+      "type": "string"
+    }
+  }
+}

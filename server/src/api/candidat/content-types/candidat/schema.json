@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "candidats",
+  "info": {
+    "singularName": "candidat",
+    "pluralName": "candidats",
+    "displayName": "candidat"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "prenom": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "cv": {
+      "type": "string"
+    },
+    "profil_linkedin": {
+      "type": "string"
+    },
+    "experience_totale": {
+      "type": "string"
+    },
+    "competences": {
+      "type": "string"
+    }
+  }
+}
