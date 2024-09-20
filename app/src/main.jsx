@@ -8,6 +8,13 @@ import {
 } from "react-router-dom";
 import Home from './pages/Home.jsx';
 import Offers from './pages/Offers.jsx';
+import Interview from './pages/Interview.jsx';
+import { registerLicense } from '@syncfusion/ej2-base';
+
+
+
+// Registering Syncfusion license key
+registerLicense('Ngo9BigBOggjHTQxAR8/V1NDaF5cWWtCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXZccHRQRGFZUUV2V0o=');
 
 const router = createBrowserRouter([
   {
@@ -21,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/jobs",
     element: <Offers />,
+  },
+  {
+    path: "/meets",
+    element: <Interview />,
   },
 ]);
 
