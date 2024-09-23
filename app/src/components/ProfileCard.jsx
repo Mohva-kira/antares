@@ -3,7 +3,7 @@ import React from "react";
 
 const ProfileCard = ({ profile }) => {
   return (
-    <div className="lg:w-1/2 h-1/3 flex-wrap m-6 rounded-2xl bg-white p-2  flex items-center flex-col ">
+    <div className="lg:w-full h-full flex-wrap m-6 rounded-2xl bg-white p-2  flex items-center flex-col ">
 
       <div>
      {/* Photo de profil */}

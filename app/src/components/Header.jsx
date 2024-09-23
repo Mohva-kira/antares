@@ -26,7 +26,7 @@ const Header = () => {
         },
         {
             name: "Base de CV",
-            path: '/cv'
+            path: '/cvs'
         },
         {
             name: "Communauté",
