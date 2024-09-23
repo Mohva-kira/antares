@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Layout from "../components/Layout";
 import FilterForm from "../components/Filters";
 import ProfileCard from "../components/ProfileCard";
+import { useNavigate } from "react-router-dom";
 
 const Profiles = () => {
   const profiles = [
@@ -103,6 +104,7 @@ const Profiles = () => {
       [name]: value,
     });
   };
+  const navigate = useNavigate()
   return (
     <Layout>
       <div className="w-full h-full flex m-2 p-2">
@@ -115,7 +117,7 @@ const Profiles = () => {
 
         <div className="w-full flex flex-wrap  p-2 m-2">
           {profiles.map((profile, index) => (
-           <div className="w-72 p-4"> <ProfileCard key={index} profile={profile} /></div> 
+           <div className="w-72 p-4 cursor-pointer" onClick={() => navigate("/cv-details/11")}> <ProfileCard key={index}  profile={profile} /></div> 
           ))}
         </div>
       </div>

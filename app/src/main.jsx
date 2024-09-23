@@ -12,6 +12,7 @@ import Interview from './pages/Interview.jsx';
 import { registerLicense } from '@syncfusion/ej2-base';
 import Profiles from './pages/Profiles.jsx';
 import Community from './pages/Community.jsx';
+import CvDetails from './pages/CvDetails.jsx';
 
 
 
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: "/community",
     element: <Community />,
+  },
+  {
+    path: "/cv-details/:id",
+    element: <CvDetails />,
   },
 ]);
 
