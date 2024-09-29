@@ -5,6 +5,7 @@ import { FiMessageSquare } from "react-icons/fi";
 import { CiSearch } from "react-icons/ci";
 import { IoToggleOutline } from "react-icons/io5";
 import { searchItems } from "../utils/utils";
+import logo from "../assets/logo.jpg";
 
 const Header = () => {
   const path = location.pathname;
@@ -32,14 +33,20 @@ const Header = () => {
       name: "Communauté",
       path: "/community",
     },
+    {
+      name: "Formulaires",
+      path: "/formulaires",
+    },
+    {
+      name: "Utilisateurs",
+      path: "/utilisateurs",
+    },
   ];
 
   const handleSearch = (data, query, key) => {
     console.log("query", query);
     setSearchResult(searchItems(data, query, key));
-    if(query == "") setSearchResult([])
-
-    
+    if (query == "") setSearchResult([]);
   };
   const data = [
     {
@@ -146,15 +153,15 @@ const Header = () => {
   ];
   console.log("path", path);
   return (
-    <div className="flex w-full  h-full  shadow-2xl shadow-slate-900 p-2 m-2 rounded-xl">
+    <div className="flex w-full  h-full  shadow-md shadow-slate-900  mb-1 rounded-xl">
       <div className="flex items-start justify-start w-full  m-2 p-2">
-        {/* <img src={viteLogo} alt="" />  */} logo
+        <img src={logo} className="w-36" alt="" />
       </div>
 
       <div className="flex items-center justify-start  flex-wrap gap-5 w-full">
         {links.map((item) => (
           <li
-            className={`list-none flex flex-col justify-around font-normal ${
+            className={`list-none cursor-pointer flex flex-col justify-around font-normal ${
               item.path === path && "text-blue-500 font-bold"
             }`}
             onClick={() => navigate(`${item.path}`)}>
@@ -192,13 +199,18 @@ const Header = () => {
           onClick={() => setSearchSelected(!searchSelected)}
           className="text-3xl relative">
           <CiSearch />
-          {searchSelected  &&
-          <div className=" bg-slate-400 text-base p-2 w-48 text-white absolute top-10 rounded-2xl right-6">
-            <div className="flex flex-col gap-2 ">
-              {searchResult.map((res) => <p className="">{res.title} <div className="w-full h-1 bg-black mt-1 truncate"></div></p> ) }
+          {searchSelected && (
+            <div className=" bg-slate-400 text-base p-2 w-48 text-white absolute top-10 rounded-2xl right-6">
+              <div className="flex flex-col gap-2 ">
+                {searchResult?.map((res) => (
+                  <p className="">
+                    {res.title}{" "}
+                    <div className="w-full h-1 bg-black mt-1 truncate"></div>
+                  </p>
+                ))}
+              </div>
             </div>
-          </div>
-          }
+          )}
         </div>
 
         <div className="text-3xl">

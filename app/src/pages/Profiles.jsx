@@ -89,12 +89,10 @@ const Profiles = () => {
   ];
 
   const [filters, setFilters] = useState({
-    title: "",
+    name: "", // Unused in this example
     experience: "",
-    location: "",
-    company: "",
-    minApplications: 0,
-    maxApplications: Infinity,
+    location: "", // Unused in this example
+    skills: "", // Added this to filter by skills
   });
 
   const handleFilterChange = (e) => {
@@ -104,7 +102,21 @@ const Profiles = () => {
       [name]: value,
     });
   };
-  const navigate = useNavigate()
+
+  // Filtering logic
+  const filteredProfiles = profiles.filter((profile) => {
+    const filterByExperience =
+      !filters.experience || profile.experience >= Number(filters.experience);
+    const filterBySkills =
+      !filters.skills ||
+      profile.skills.some((skill) =>
+        skill.toLowerCase().includes(filters.skills.toLowerCase())
+      );
+    return filterByExperience && filterBySkills;
+  });
+
+  const navigate = useNavigate();
+
   return (
     <Layout>
       <div className="w-full h-full flex m-2 p-2">
@@ -115,9 +127,14 @@ const Profiles = () => {
           />
         </div>
 
-        <div className="w-full flex flex-wrap  p-2 m-2">
-          {profiles.map((profile, index) => (
-           <div className="w-72 p-4 cursor-pointer" onClick={() => navigate("/cv-details/11")}> <ProfileCard key={index}  profile={profile} /></div> 
+        <div className="w-full flex flex-wrap p-2 m-2">
+          {filteredProfiles.map((profile, index) => (
+            <div
+              className="w-72 p-4 cursor-pointer"
+              onClick={() => navigate(`/cv/${index}`)}
+              key={index}>
+              <ProfileCard profile={profile} />
+            </div>
           ))}
         </div>
       </div>

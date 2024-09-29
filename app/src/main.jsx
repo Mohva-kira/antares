@@ -1,23 +1,24 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Home from './pages/Home.jsx';
-import Offers from './pages/Offers.jsx';
-import Interview from './pages/Interview.jsx';
-import { registerLicense } from '@syncfusion/ej2-base';
-import Profiles from './pages/Profiles.jsx';
-import Community from './pages/Community.jsx';
-import CvDetails from './pages/CvDetails.jsx';
-
-
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./pages/Home.jsx";
+import Offers from "./pages/Offers.jsx";
+import Interview from "./pages/Interview.jsx";
+import { registerLicense } from "@syncfusion/ej2-base";
+import Profiles from "./pages/Profiles.jsx";
+import Community from "./pages/Community.jsx";
+import CvDetails from "./pages/CvDetails.jsx";
+import ArticlesPage from "./pages/ArticlePage.jsx";
+import FormPage from "./pages/FormPage.jsx";
+import Auth from "./pages/Auth.jsx";
+import Users from "./pages/Users.jsx";
 
 // Registering Syncfusion license key
-registerLicense('Ngo9BigBOggjHTQxAR8/V1NDaF5cWWtCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXZccHRQRGFZUUV2V0o=');
+registerLicense(
+  "Ngo9BigBOggjHTQxAR8/V1NDaF5cWWtCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXZccHRQRGFZUUV2V0o="
+);
 
 const router = createBrowserRouter([
   {
@@ -45,13 +46,29 @@ const router = createBrowserRouter([
     element: <Community />,
   },
   {
-    path: "/cv-details/:id",
+    path: "/cv/:id",
     element: <CvDetails />,
+  },
+  {
+    path: "/article/:id",
+    element: <ArticlesPage />,
+  },
+  {
+    path: "/formulaires",
+    element: <FormPage />,
+  },
+  {
+    path: "/auth",
+    element: <Auth />,
+  },
+  {
+    path: "/utilisateurs",
+    element: <Users />,
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

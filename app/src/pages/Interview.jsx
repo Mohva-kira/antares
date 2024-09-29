@@ -17,6 +17,7 @@ import {
 import "swiper/css";
 import Layout from "../components/Layout";
 import InterviewDetail from "../components/InterviewDetail";
+import DynamicForm from "../components/DynamicForm";
 
 const Interview = () => {
   const entretiens = [
@@ -174,36 +175,38 @@ const Interview = () => {
   const [selected, setSelected] = useState();
   return (
     <Layout>
-      <div className="w-full p-2 flex">
-      <div className={`${selected ? 'w-4/5' : 'w-full'} p-2 `}>
-        <Swiper
-          spaceBetween={50}
-          slidesPerView={3}
-          onSlideChange={() => console.log("slide change")}
-          onSwiper={(swiper) => console.log(swiper)}
-          >
-          {entretiens.map((item) => (
-            <div className="w-full">
-              {" "}
-              <SwiperSlide onClick={() => {setSelected(item)}} className="h-full">
+      <div className="w-full p-2 flex flex-col">
+        <div className={`${selected ? "w-4/5" : "w-full"} p-2 `}>
+          <Swiper
+            spaceBetween={50}
+            slidesPerView={3}
+            onSlideChange={() => console.log("slide change")}
+            onSwiper={(swiper) => console.log(swiper)}>
+            {entretiens.map((item) => (
+              <div className="w-full">
                 {" "}
-                <InterviewCard
-                  profile={item.profil}
-                  entreprise={item.entreprise}
-                />{" "}
-              </SwiperSlide>{" "}
-            </div>
-          ))}
-        </Swiper>
-        <div className="w-full p-4">
-          <ScheduleComponent>
-            <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
-          </ScheduleComponent>
+                <SwiperSlide
+                  onClick={() => {
+                    setSelected(item);
+                  }}
+                  className="h-full">
+                  {" "}
+                  <InterviewCard
+                    profile={item.profil}
+                    entreprise={item.entreprise}
+                  />{" "}
+                </SwiperSlide>{" "}
+              </div>
+            ))}
+          </Swiper>
+          <div className="w-full p-4">
+            <ScheduleComponent>
+              <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
+            </ScheduleComponent>
+          </div>
         </div>
-     
-      </div>
 
-      {selected && (
+        {selected && (
           <div className="w-full m-2">
             <InterviewDetail
               profile={selected.profil}
@@ -212,10 +215,6 @@ const Interview = () => {
           </div>
         )}
       </div>
-   
-
-
-      
     </Layout>
   );
 };
