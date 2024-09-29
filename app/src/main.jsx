@@ -11,9 +11,9 @@ import Profiles from "./pages/Profiles.jsx";
 import Community from "./pages/Community.jsx";
 import CvDetails from "./pages/CvDetails.jsx";
 import ArticlesPage from "./pages/ArticlePage.jsx";
-import FormPage from "./pages/FormPage.jsx";
 import Auth from "./pages/Auth.jsx";
 import Users from "./pages/Users.jsx";
+import Reports from "./pages/Reports.jsx";
 
 // Registering Syncfusion license key
 registerLicense(
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/formulaires",
-    element: <FormPage />,
+    element: <Reports />,
   },
   {
     path: "/auth",
