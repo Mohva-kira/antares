@@ -191,8 +191,8 @@ const CvDetails = ({ cv }) => {
   console.log("find", findCv);
   return (
     <Layout>
-      <div className="flex w-full">
-        <div className="flex w-1/3 flex-col gap-2">
+      <div className="flex flex-col lg:flex-row w-full">
+        <div className="flex lg:w-1/3 w-full p-2 flex-col gap-2">
           <div className="w-full">
             <LocationMap position={findCv.position} city={findCv.city} />
           </div>

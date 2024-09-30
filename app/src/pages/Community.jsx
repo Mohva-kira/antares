@@ -67,20 +67,27 @@ const Community = () => {
       bgImage: "https://images.unsplash.com/photo-1518770660439-4636190af475", // Marketing Digital - médias sociaux, publicité en ligne
     },
   ];
-
   return (
     <Layout>
-      <div className="w-1/3 m-2 p-2">
-        <NewsLetter />
+      <div className="flex w-full flex-col lg:flex-row lg:space-x-6 p-4 space-y-6 lg:space-y-0">
+        {/* Newsletter Section */}
+        <div className="w-full lg:w-1/3">
+          <NewsLetter />
+        </div>
+
+        {/* Articles Section */}
+        <div className="w-full lg:w-2/3 flex flex-wrap gap-4">
+          {contentArray.map((article, index) => (
+            <ArticlesCard key={index} article={article} />
+          ))}
+        </div>
+
+        <div className="w-full lg:w-1/3 mt-6 lg:mt-0 mx-auto p-4">
+          <PopularCard />
+        </div>
       </div>
-      <div className="w-full h-full flex flex-wrap ">
-        {contentArray.map((article) => (
-          <ArticlesCard article={article} />
-        ))}
-      </div>
-      <div className="w-1/3 m-2 p-2">
-        <PopularCard />
-      </div>
+
+      {/* Popular Card Section */}
     </Layout>
   );
 };

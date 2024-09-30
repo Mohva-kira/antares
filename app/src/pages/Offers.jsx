@@ -103,9 +103,9 @@ const Offers = () => {
 
   return (
     <Layout>
-      <div className="w-full h-screen flex flex-col lg:flex-row mt-10 justify-between p-4 space-y-6 lg:space-y-0 lg:space-x-6">
+      <div className="w-full min-h-screen flex flex-col lg:flex-row mt-10 p-4 space-y-6 lg:space-y-0 lg:space-x-6">
         {/* Section de filtres */}
-        <div className="w-full lg:w-1/3 h-fit justify-center items-center  rounded-lg shadow-md">
+        <div className="w-full lg:w-1/3 h-fit bg-white p-4 rounded-lg shadow-md">
           <FilterForm
             filters={filters}
             handleFilterChange={handleFilterChange}
@@ -113,7 +113,7 @@ const Offers = () => {
         </div>
 
         {/* Section des offres d'emploi */}
-        <div className="w-full lg:w-2/3 p-2 space-y-4">
+        <div className="w-full lg:w-2/3 space-y-4">
           {filteredJobs.map((job, index) => (
             <JobCard
               key={index}
@@ -130,7 +130,7 @@ const Offers = () => {
         </div>
 
         {/* Section des profils */}
-        <div className="w-full lg:w-1/4 p-2 bg-gray-50 rounded-lg shadow-md overflow-y-auto overflow-hidden h-full space-y-2">
+        <div className="w-full lg:w-1/4 bg-gray-50 p-4 rounded-lg shadow-md h-auto lg:h-full space-y-2 overflow-y-auto">
           {profiles.map((profile, index) => (
             <ProfileCard key={index} profile={profile} />
           ))}

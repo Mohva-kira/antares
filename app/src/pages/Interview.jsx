@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import InterviewCard from "../components/InterviewCard";
-
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import {
   ScheduleComponent,
   Day,
@@ -13,7 +12,6 @@ import {
   Inject,
 } from "@syncfusion/ej2-react-schedule";
 
-// Import Swiper styles
 import "swiper/css";
 import Layout from "../components/Layout";
 import InterviewDetail from "../components/InterviewDetail";
@@ -172,33 +170,48 @@ const Interview = () => {
     },
   ];
 
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(null);
+
   return (
     <Layout>
       <div className="w-full p-2 flex flex-col">
-        <div className={`${selected ? "w-4/5" : "w-full"} p-2 `}>
+        <div className="w-full">
+          {/* Swiper */}
           <Swiper
-            spaceBetween={50}
-            slidesPerView={3}
+            modules={[Navigation, Pagination, Scrollbar, A11y]}
+            navigation
+            pagination={{ clickable: true }}
+            scrollbar={{ draggable: true }}
+            spaceBetween={10}
+            slidesPerView={1} // Par défaut, 1 slide visible
+            breakpoints={{
+              640: {
+                slidesPerView: 1, // Petit écran
+              },
+              768: {
+                slidesPerView: 2, // Moyenne taille d'écran
+              },
+              1024: {
+                slidesPerView: 3, // Grand écran
+              },
+            }}
+            className="w-full"
             onSlideChange={() => console.log("slide change")}
             onSwiper={(swiper) => console.log(swiper)}>
             {entretiens.map((item) => (
-              <div className="w-full">
-                {" "}
-                <SwiperSlide
-                  onClick={() => {
-                    setSelected(item);
-                  }}
-                  className="h-full">
-                  {" "}
-                  <InterviewCard
-                    profile={item.profil}
-                    entreprise={item.entreprise}
-                  />{" "}
-                </SwiperSlide>{" "}
-              </div>
+              <SwiperSlide
+                key={item.profil.email}
+                onClick={() => setSelected(item)}
+                className="flex justify-center">
+                <InterviewCard
+                  profile={item.profil}
+                  entreprise={item.entreprise}
+                />
+              </SwiperSlide>
             ))}
           </Swiper>
+
+          {/* Schedule Component */}
           <div className="w-full p-4">
             <ScheduleComponent>
               <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
@@ -206,6 +219,7 @@ const Interview = () => {
           </div>
         </div>
 
+        {/* Détails de l'entretien sélectionné */}
         {selected && (
           <div className="w-full m-2">
             <InterviewDetail

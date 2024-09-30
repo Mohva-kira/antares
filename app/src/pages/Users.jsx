@@ -53,15 +53,15 @@ const Users = () => {
             <UserForm />
           </div>
         </div>
-        <div className="flex w-full justify-center lg:w-[1080px] p-2 space-x-2 ">
-          <div className="bg-white p-2 h-32 w-1/4 rounded-2xl flex justify-between items-center ">
+        <div className="flex w-full flex-col lg:flex-row justify-center lg:w-[1080px] p-2 lg:space-x-2 ">
+          <div className="bg-white p-2 h-32 lg:w-1/4 w-full rounded-2xl flex mb-4 justify-between items-center ">
             <div className="text-lg font-bold flex space-x-2">
               <GrUserAdmin className="text-3xl text-orange-500" />
               <h2> Administrateurs : </h2>
             </div>
             <p className="text-lg font-bold"> 2 </p>
           </div>
-          <div className="bg-white p-2 h-32 w-1/4 rounded-2xl flex justify-between items-center">
+          <div className="bg-white p-2 h-32  lg:w-1/4 w-full mb-4 rounded-2xl flex justify-between items-center">
             <div className="text-lg font-bold flex space-x-2">
               <CiUser className="text-3xl text-orange-500" />
               <h2> Editeurs : </h2>

@@ -22,77 +22,14 @@ const Profiles = () => {
       skills: ["Node.js", "Express", "MongoDB", "JavaScript"],
       photo: "https://via.placeholder.com/100",
     },
-    {
-      name: "Claire Durand",
-      email: "claire.durand@email.com",
-      phone: "+33 6 24 35 46 57",
-      experience: 3,
-      skills: ["Angular", "Java", "Spring Boot", "SQL"],
-      photo: "https://via.placeholder.com/100",
-    },
-    {
-      name: "David Leroy",
-      email: "david.leroy@email.com",
-      phone: "+33 6 25 36 47 58",
-      experience: 8,
-      skills: ["Vue.js", "Node.js", "Python", "Docker"],
-      photo: "https://via.placeholder.com/100",
-    },
-    {
-      name: "Emma Blanc",
-      email: "emma.blanc@email.com",
-      phone: "+33 6 26 37 48 59",
-      experience: 7,
-      skills: ["React", "GraphQL", "TypeScript", "AWS"],
-      photo: "https://via.placeholder.com/100",
-    },
-    {
-      name: "François Petit",
-      email: "francois.petit@email.com",
-      phone: "+33 6 27 38 49 60",
-      experience: 5,
-      skills: ["Python", "Django", "PostgreSQL", "JavaScript"],
-      photo: "https://via.placeholder.com/100",
-    },
-    {
-      name: "Géraldine Laurent",
-      email: "geraldine.laurent@email.com",
-      phone: "+33 6 28 39 50 61",
-      experience: 6,
-      skills: ["React", "Redux", "Sass", "Jest"],
-      photo: "https://via.placeholder.com/100",
-    },
-    {
-      name: "Hugo Moreau",
-      email: "hugo.moreau@email.com",
-      phone: "+33 6 29 40 51 62",
-      experience: 4,
-      skills: ["JavaScript", "Node.js", "Express", "Vue.js"],
-      photo: "https://via.placeholder.com/100",
-    },
-    {
-      name: "Isabelle Fournier",
-      email: "isabelle.fournier@email.com",
-      phone: "+33 6 30 41 52 63",
-      experience: 9,
-      skills: ["React", "Node.js", "AWS", "SQL"],
-      photo: "https://via.placeholder.com/100",
-    },
-    {
-      name: "Julien Lefevre",
-      email: "julien.lefevre@email.com",
-      phone: "+33 6 31 42 53 64",
-      experience: 10,
-      skills: ["React", "Node.js", "GraphQL", "Docker"],
-      photo: "https://via.placeholder.com/100",
-    },
+    // ... autres profils
   ];
 
   const [filters, setFilters] = useState({
-    name: "", // Unused in this example
+    name: "", // Non utilisé dans cet exemple
     experience: "",
-    location: "", // Unused in this example
-    skills: "", // Added this to filter by skills
+    location: "", // Non utilisé dans cet exemple
+    skills: "", // Filtrer par compétences
   });
 
   const handleFilterChange = (e) => {
@@ -103,7 +40,7 @@ const Profiles = () => {
     });
   };
 
-  // Filtering logic
+  // Logique de filtrage
   const filteredProfiles = profiles.filter((profile) => {
     const filterByExperience =
       !filters.experience || profile.experience >= Number(filters.experience);
@@ -119,18 +56,20 @@ const Profiles = () => {
 
   return (
     <Layout>
-      <div className="w-full h-full flex m-2 p-2">
-        <div className="w-1/2 relative p-2">
+      <div className="w-full h-full flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 p-4">
+        {/* Section des filtres */}
+        <div className="w-full lg:w-1/4 p-4 bg-white rounded-lg shadow-md">
           <FilterForm
             filters={filters}
             handleFilterChange={handleFilterChange}
           />
         </div>
 
-        <div className="w-full flex flex-wrap p-2 m-2">
+        {/* Section des profils */}
+        <div className="w-full lg:w-3/4 flex flex-wrap gap-4 justify-center">
           {filteredProfiles.map((profile, index) => (
             <div
-              className="w-72 p-4 cursor-pointer"
+              className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 p-4 cursor-pointer"
               onClick={() => navigate(`/cv/${index}`)}
               key={index}>
               <ProfileCard profile={profile} />

@@ -48,7 +48,7 @@ const Header = () => {
   ];
 
   return (
-    <div className="w-full shadow-md shadow-slate-900 mb-1 rounded-xl">
+    <div className="fixed top-0 w-full  shadow-md shadow-slate-900 mb-10 z-50 bg-white">
       {/* Header section */}
       <div className="flex justify-between items-center p-4">
         <img src={logo} className="w-36" alt="Logo" />
