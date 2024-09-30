@@ -27,7 +27,6 @@ const Offers = () => {
         inProgress: 3,
         rejected: 7,
       },
-      // Add 8 more fake jobs
       {
         title: "Developpeur Frontend",
         experience: "2 ans d'expérience",
@@ -48,66 +47,7 @@ const Offers = () => {
         inProgress: 6,
         rejected: 5,
       },
-      {
-        title: "Expert SEO",
-        experience: "5 ans d'expérience",
-        location: "Freelance",
-        date: "22 Juin",
-        company: "SearchMaster",
-        applications: 20,
-        inProgress: 8,
-        rejected: 12,
-      },
-      {
-        title: "Développeur Backend",
-        experience: "3 ans d'expérience",
-        location: "Remote",
-        date: "8 Juillet",
-        company: "CloudWorks",
-        applications: 25,
-        inProgress: 7,
-        rejected: 10,
-      },
-      {
-        title: "Consultant IT",
-        experience: "10 ans d'expérience",
-        location: "Consultant",
-        date: "15 Août",
-        company: "ConsultingX",
-        applications: 35,
-        inProgress: 12,
-        rejected: 8,
-      },
-      {
-        title: "Marketeur de contenu",
-        experience: "5 ans d'expérience",
-        location: "A distance",
-        date: "19 Septembre",
-        company: "ContentFly",
-        applications: 40,
-        inProgress: 18,
-        rejected: 14,
-      },
-      {
-        title: "Support technique",
-        experience: "Sans experience",
-        location: "Bureau",
-        date: "25 Octobre",
-        company: "TechHelp",
-        applications: 28,
-        inProgress: 5,
-        rejected: 3,
-      },
-      {
-        title: "Chef de projet",
-        experience: "7 ans d'expérience",
-        location: "Sur site",
-        date: "12 Novembre",
-        company: "Enterprise Inc",
-        applications: 32,
-        inProgress: 9,
-        rejected: 6,
-      },
+      // ...Autres jobs
     ];
   };
 
@@ -141,44 +81,39 @@ const Offers = () => {
     );
   });
 
-  const profiles = [{
-    name: "John Doe",
-    email: "john.doe@email.com",
-    phone: "+33 6 12 34 56 78",
-    experience: 5,
-    skills: ["React", "Node.js", "JavaScript", "SQL"],
-    photo: "https://via.placeholder.com/100", // Placeholder image
-  },
-
-  {
-    name: "John Doe",
-    email: "john.doe@email.com",
-    phone: "+33 6 12 34 56 78",
-    experience: 5,
-    skills: ["React", "Node.js", "JavaScript", "SQL"],
-    photo: "https://via.placeholder.com/100", // Placeholder image
-  },
-  {
-    name: "John Doe",
-    email: "john.doe@email.com",
-    phone: "+33 6 12 34 56 78",
-    experience: 5,
-    skills: ["React", "Node.js", "JavaScript", "SQL"],
-    photo: "https://via.placeholder.com/100", // Placeholder image
-  }
+  const profiles = [
+    {
+      name: "John Doe",
+      email: "john.doe@email.com",
+      phone: "+33 6 12 34 56 78",
+      experience: 5,
+      skills: ["React", "Node.js", "JavaScript", "SQL"],
+      photo: "https://via.placeholder.com/100",
+    },
+    {
+      name: "Jane Doe",
+      email: "jane.doe@email.com",
+      phone: "+33 6 12 34 56 78",
+      experience: 4,
+      skills: ["HTML", "CSS", "JavaScript", "PHP"],
+      photo: "https://via.placeholder.com/100",
+    },
+    // Autres profils
   ];
 
   return (
     <Layout>
-      <div className="w-full h-full flex  mt-10 justify-between p-4">
-        <div className="w-full relative p-2">
+      <div className="w-full h-screen flex flex-col lg:flex-row mt-10 justify-between p-4 space-y-6 lg:space-y-0 lg:space-x-6">
+        {/* Section de filtres */}
+        <div className="w-full lg:w-1/3 h-fit justify-center items-center  rounded-lg shadow-md">
           <FilterForm
             filters={filters}
             handleFilterChange={handleFilterChange}
           />
         </div>
 
-        <div className="w-full  h-full p-2 m-2">
+        {/* Section des offres d'emploi */}
+        <div className="w-full lg:w-2/3 p-2 space-y-4">
           {filteredJobs.map((job, index) => (
             <JobCard
               key={index}
@@ -193,13 +128,12 @@ const Offers = () => {
             />
           ))}
         </div>
-        <div className=" overflow-scroll overflow-y-scroll flex flex-col items-center        w-full p-2">
 
-          {
-            profiles.map((profile, index) => <ProfileCard key={index} profile={profile} /> )
-
-          }
-          
+        {/* Section des profils */}
+        <div className="w-full lg:w-1/4 p-2 bg-gray-50 rounded-lg shadow-md overflow-y-auto overflow-hidden h-full space-y-2">
+          {profiles.map((profile, index) => (
+            <ProfileCard key={index} profile={profile} />
+          ))}
         </div>
       </div>
     </Layout>

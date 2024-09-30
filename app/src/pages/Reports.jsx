@@ -4,6 +4,8 @@ import {
   ColumnDirective,
   ColumnsDirective,
   GridComponent,
+  Edit,
+  CommandColumn,
 } from "@syncfusion/ej2-react-grids";
 import {
   ChartComponent,
@@ -21,6 +23,7 @@ import {
   ColumnSeries3D,
   Highlight3D,
 } from "@syncfusion/ej2-react-charts";
+import { DialogComponent } from "@syncfusion/ej2-react-popups";
 
 import { AccumulationChartComponent } from "@syncfusion/ej2-react-charts";
 import Layout from "../components/Layout";
@@ -86,10 +89,34 @@ const Reports = () => {
   };
 
   let data = [
-    { OrderID: 10248, CustomerID: "VINET", ShipCountry: "France" },
-    { OrderID: 10249, CustomerID: "TOMSP", ShipCountry: "Germany" },
-    { OrderID: 10250, CustomerID: "HANAR", ShipCountry: "Brazil" },
-    { OrderID: 10251, CustomerID: "VICTE", ShipCountry: "France" },
+    {
+      ID: 10248,
+      Name: "Amidou Thera",
+      Exp: "10",
+      Degrees: "Master",
+      Adress: "Badalabougou",
+    },
+    {
+      ID: 10249,
+      Name: "Mamadou Camara",
+      Exp: "5",
+      Degrees: "BT2",
+      Adress: "Missabougou",
+    },
+    {
+      ID: 10250,
+      Name: "Moussa Touré",
+      Exp: "7",
+      Degrees: "Master",
+      Adress: "Zerni",
+    },
+    {
+      ID: 10251,
+      Name: "Ismael Sidibé",
+      Exp: "4",
+      Degrees: "Licence",
+      Adress: "Magnanbougou",
+    },
   ];
 
   let chartData = [
@@ -119,6 +146,37 @@ const Reports = () => {
   ];
   const primaryxAxis = { valueType: "Category" };
 
+  //Options for action column
+
+  let grid;
+  const editOptions = { allowEditing: true, allowDeleting: true };
+  let rowData;
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const [dialogContent, setDialogContent] = useState("");
+  const commands = [
+    {
+      buttonOption: {
+        content: "Details",
+        cssClass: "e-flat",
+      },
+    },
+  ];
+  const commandClick = (args) => {
+    if (grid) {
+      rowData = args.rowData;
+      if (rowData) {
+        setDialogVisible(true);
+        setDialogContent(`<p><b>Nom:</b> ${rowData.Name}</p>
+      <p><b>Expérience:</b> ${rowData.Exp}</p>
+      <p><b>Niveau d'études:</b> ${rowData.Degrees}</p>
+      <p><b>Adresse:</b> ${rowData.Adress}</p>`);
+      }
+    }
+  };
+  const dialogClose = () => {
+    setDialogVisible(false);
+  };
+
   return (
     <Layout>
       <div className="min-h-screen w-full p-2 flex flex-col  items-center ">
@@ -131,8 +189,8 @@ const Reports = () => {
             <DynamicForm />
           </div>
         </div>
-        <div className="w-full h-full flex justify-between ">
-          <div className="w-1/2 h-full p-2 m-2 rounded-2xl bg-slate-200">
+        <div className="w-full lg:w-[1080px] p-2 h-full flex justify-between ">
+          <div className="w-1/2 h-full p-2 m-2 rounded-2xl bg-white">
             <ChartComponent id="charts" primaryXAxis={primaryxAxis}>
               <Inject services={[LineSeries, Category]} />
               <SeriesCollectionDirective>
@@ -144,7 +202,7 @@ const Reports = () => {
               </SeriesCollectionDirective>
             </ChartComponent>
           </div>
-          <div className="w-1/2 h-full p-2 m-2 rounded-2xl bg-slate-200">
+          <div className="w-1/2 h-full p-2 m-2 rounded-2xl bg-white">
             <Chart3DComponent
               id="charts2"
               style={{ textAlign: "center" }}
@@ -185,20 +243,37 @@ const Reports = () => {
             ;
           </div>
         </div>
-        <div className="flex w-full justify-center items-center mt-4 p-2 bg-slate-200s">
+        <div className="flex w-full justify-center items-center bg-white rounded-2xl lg:w-[1080px]  mt-4 p-2 bg-slate-200s">
           <div className="lg:w-[1080px] p-2 ">
-            <GridComponent dataSource={data}>
+            <GridComponent
+              dataSource={data}
+              editSettings={editOptions}
+              commandClick={commandClick}
+              height={265}
+              ref={(g) => (grid = g)}>
               <ColumnsDirective>
-                <ColumnDirective field="OrderID" headerText="ID Candidat" />
-                <ColumnDirective field="CustomerID" headerText="Nom" />
-                <ColumnDirective field="CustomerID" headerText="Expérience" />
+                <ColumnDirective field="ID" headerText="ID Candidat" />
+                <ColumnDirective field="Name" headerText="Nom" />
+                <ColumnDirective field="Exp" headerText="Expérience" />
+                <ColumnDirective field="Degrees" headerText="Niveau d'etudes" />
+                <ColumnDirective field="Adress" headerText="Adresse" />
                 <ColumnDirective
-                  field="CustomerID"
-                  headerText="Niveau d'etudes"
+                  headerText="Commands"
+                  width="120"
+                  commands={commands}
                 />
-                <ColumnDirective field="ShipCountry" headerText="Adresse" />
               </ColumnsDirective>
+              <Inject services={[Edit, CommandColumn]} />
             </GridComponent>
+          </div>
+          <div>
+            <DialogComponent
+              header="Détails"
+              width={720}
+              close={dialogClose}
+              visible={dialogVisible}
+              content={dialogContent}
+              showCloseIcon={true}></DialogComponent>
           </div>
         </div>
       </div>

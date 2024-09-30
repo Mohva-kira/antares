@@ -15,6 +15,7 @@
     "@syncfusion/ej2-react-calendars": "^27.1.48",
     "@syncfusion/ej2-react-charts": "^27.1.50",
     "@syncfusion/ej2-react-grids": "^27.1.50",
+    "@syncfusion/ej2-react-popups": "^27.1.50",
     "@syncfusion/ej2-react-schedule": "^27.1.48",
     "chart.js": "^4.4.4",
     "react": "^18.3.1",

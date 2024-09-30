@@ -23,7 +23,7 @@ registerLicense(
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Auth />,
   },
   {
     path: "/home",
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
     element: <ArticlesPage />,
   },
   {
-    path: "/formulaires",
+    path: "/rapports",
     element: <Reports />,
   },
   {
