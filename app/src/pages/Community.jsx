@@ -10,79 +10,81 @@ const Community = () => {
       title: "Développement Web",
       description:
         "Créer des applications web modernes avec React.js et TailwindCSS pour une expérience utilisateur optimale.",
-      bgImage: "https://images.unsplash.com/photo-1535223289827-42f1e9919769", // Développement Web - bureau avec code
+      bgImage:
+        "https://www.letecode.com/storage/articles/June2021/I1PF2FjDhjEygfb5CM6d.jpeg", // Développement Web - bureau avec code
     },
     {
       title: "Optimisation SEO",
       description:
         "Améliorer le référencement de votre site pour attirer plus de trafic organique à travers des stratégies SEO avancées.",
-      bgImage: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0", // SEO - recherche Google, graphique
+      bgImage:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6yfXuL2jjVbP-Q_7ptDNDjToZ-oeLoYUtwQ&s", // Optimisation SEO - tableau SEO
     },
     {
       title: "Transformation Digitale",
       description:
         "Accompagner les entreprises dans leur passage au numérique en automatisant les processus et optimisant l'efficacité.",
-      bgImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c", // Transformation digitale - bureau moderne, technologies numériques
+      bgImage: "https://unsplash.com/photos/SYTO3xs06fU", // Transformation digitale - technologies numériques
     },
     {
       title: "Cybersécurité",
       description:
         "Mettre en place des solutions de sécurité informatique pour protéger vos données et celles de vos clients.",
-      bgImage: "https://images.unsplash.com/photo-1506111583091-becfd4bfa6a6", // Cybersécurité - cadenas numérique, protection des données
+      bgImage: "https://unsplash.com/photos/ivfeOa1KTQU", // Cybersécurité - protection des données
     },
     {
       title: "Analyse de Données",
       description:
         "Exploiter la puissance des données pour des insights business et améliorer la prise de décision.",
-      bgImage: "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd", // Analyse de données - graphiques et statistiques
+      bgImage: "https://unsplash.com/photos/qwtCeJ5cLYs", // Analyse de données - graphiques et statistiques
     },
     {
       title: "Mobile Development",
       description:
         "Concevoir des applications mobiles performantes et fluides pour iOS et Android.",
-      bgImage: "https://images.unsplash.com/photo-1538336712274-f1a232f6dfd4", // Développement mobile - téléphone avec code
+      bgImage: "https://unsplash.com/photos/s9CC2SKySJM", // Développement mobile - téléphone avec code
     },
     {
       title: "UX/UI Design",
       description:
         "Créer des interfaces utilisateur intuitives et attractives pour maximiser l'engagement des utilisateurs.",
-      bgImage: "https://images.unsplash.com/photo-1523475496153-3d6ccf52f709", // UX/UI - design d'interface, wireframes
+      bgImage: "https://unsplash.com/photos/2zZp12ChxhU", // UX/UI Design - wireframes
     },
     {
       title: "Cloud Computing",
       description:
         "Migrer vos infrastructures sur le cloud pour bénéficier de la scalabilité et de la flexibilité des services cloud.",
-      bgImage: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2", // Cloud Computing - nuages et réseaux
+      bgImage: "https://unsplash.com/photos/YIW0bCuU7zU", // Cloud Computing - nuages et infrastructure cloud
     },
     {
       title: "Gestion de Projet Agile",
       description:
         "Appliquer des méthodologies agiles pour assurer la bonne gestion de vos projets et livrer à temps.",
-      bgImage: "https://images.unsplash.com/photo-1581091012184-904c3e44f8a5", // Gestion de projet Agile - tableau Kanban, post-its
+      bgImage: "https://unsplash.com/photos/oLqUgxagwHQ", // Gestion de Projet Agile - tableau Kanban
     },
     {
       title: "Marketing Digital",
       description:
         "Mettre en place des stratégies de marketing digital pour augmenter la visibilité de votre marque.",
-      bgImage: "https://images.unsplash.com/photo-1518770660439-4636190af475", // Marketing Digital - médias sociaux, publicité en ligne
+      bgImage: "https://unsplash.com/photos/8K62atzbulI", // Marketing Digital - publicité en ligne, réseaux sociaux
     },
   ];
   return (
     <Layout>
       <div className="flex w-full flex-col lg:flex-row lg:space-x-6 p-4 space-y-6 lg:space-y-0">
         {/* Newsletter Section */}
-        <div className="w-full lg:w-1/3">
+        <div className="w-full lg:w-1/4">
           <NewsLetter />
         </div>
 
         {/* Articles Section */}
-        <div className="w-full lg:w-2/3 flex flex-wrap gap-4">
+        <div className="w-full lg:w-full flex flex-wrap gap-4">
           {contentArray.map((article, index) => (
             <ArticlesCard key={index} article={article} />
           ))}
         </div>
 
-        <div className="w-full lg:w-1/3 mt-6 lg:mt-0 mx-auto p-4">
+        <div className="w-full lg:w-1/4 mt-6 lg:mt-0 mx-auto p-4">
           <PopularCard />
         </div>
       </div>

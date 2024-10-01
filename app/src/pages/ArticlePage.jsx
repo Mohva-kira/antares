@@ -245,7 +245,6 @@ const ArticlePage = () => {
 
           {/* Table of Contents */}
 
-          {/* Article Content */}
           <ArticleContent
             titre={article.titre}
             auteur={article.auteur}

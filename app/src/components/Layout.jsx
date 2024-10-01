@@ -5,7 +5,9 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      <div className="flex h-full w-full bg-slate-400 mt-20 ">{children}</div>
+      <div className="flex min-h-screen  w-full bg-slate-400 mt-20 ">
+        <div className="flex-grow"> {children} </div>
+      </div>
     </>
   );
 };
