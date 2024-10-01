@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DynamicForm from "../components/DynamicForm";
 import {
   ColumnDirective,
@@ -24,69 +24,15 @@ import {
   Highlight3D,
 } from "@syncfusion/ej2-react-charts";
 import { DialogComponent } from "@syncfusion/ej2-react-popups";
-
-import { AccumulationChartComponent } from "@syncfusion/ej2-react-charts";
 import Layout from "../components/Layout";
-// import CandidatForm from "./CandidatForm"; // Formulaire Candidat
-// import EntrepriseForm from "./EntrepriseForm"; // Formulaire Entreprise
-// import EntretienForm from "./EntretienForm"; // Formulaire Entretien
 
 const Reports = () => {
   const [formType, setFormType] = useState("candidat");
-
-  //   const renderForm = () => {
-  //     switch (formType) {
-  //       case "candidat":
-  //         return <CandidatForm />;
-  //       case "entreprise":
-  //         return <EntrepriseForm />;
-  //       case "entretien":
-  //         return <EntretienForm />;
-  //       default:
-  //         return null;
-  //     }
-  //   };
-
   const [responseMessage, setResponseMessage] = useState("");
-
-  // Fonction pour gérer la soumission des formulaires
-  const handleSubmit = async (formType, formData) => {
-    let url = "";
-
-    // Définir l'URL de l'API en fonction du type de formulaire soumis
-    switch (formType) {
-      case "candidat":
-        url = "https://api.example.com/candidats";
-        break;
-      case "entreprise":
-        url = "https://api.example.com/entreprises";
-        break;
-      case "entretien":
-        url = "https://api.example.com/entretiens";
-        break;
-      default:
-        break;
-    }
-
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData), // Envoi des données du formulaire sous forme JSON
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setResponseMessage(`Succès: ${formType} ajouté avec succès!`);
-      } else {
-        setResponseMessage("Erreur lors de l'ajout de l'entité.");
-      }
-    } catch (error) {
-      setResponseMessage("Erreur de connexion à l'API.");
-    }
-  };
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const [dialogContent, setDialogContent] = useState("");
+  let grid;
+  let rowData;
 
   let data = [
     {
@@ -146,21 +92,41 @@ const Reports = () => {
   ];
   const primaryxAxis = { valueType: "Category" };
 
-  //Options for action column
+  const handleSubmit = async (formType, formData) => {
+    let url = "";
+    switch (formType) {
+      case "candidat":
+        url = "https://api.example.com/candidats";
+        break;
+      case "entreprise":
+        url = "https://api.example.com/entreprises";
+        break;
+      case "entretien":
+        url = "https://api.example.com/entretiens";
+        break;
+      default:
+        break;
+    }
 
-  let grid;
-  const editOptions = { allowEditing: true, allowDeleting: true };
-  let rowData;
-  const [dialogVisible, setDialogVisible] = useState(false);
-  const [dialogContent, setDialogContent] = useState("");
-  const commands = [
-    {
-      buttonOption: {
-        content: "Details",
-        cssClass: "e-flat",
-      },
-    },
-  ];
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setResponseMessage(`Succès: ${formType} ajouté avec succès!`);
+      } else {
+        setResponseMessage("Erreur lors de l'ajout de l'entité.");
+      }
+    } catch (error) {
+      setResponseMessage("Erreur de connexion à l'API.");
+    }
+  };
+
   const commandClick = (args) => {
     if (grid) {
       rowData = args.rowData;
@@ -173,25 +139,26 @@ const Reports = () => {
       }
     }
   };
-  const dialogClose = () => {
-    setDialogVisible(false);
-  };
+  const dialogClose = () => setDialogVisible(false);
 
+  // Fade-in animation and responsive layout
   return (
     <Layout>
-      <div className="min-h-screen w-full p-2 flex flex-col  items-center ">
-        <div className="w-full max-w-xl bg-slate-200 rounded-2xl mb-3 shadow-lg p-8">
+      <div className="min-h-screen w-full p-2 flex flex-col justify-center items-center">
+        <div className="w-full max-w-xl bg-slate-200 rounded-2xl mb-3 shadow-lg p-8 animate-fade-in">
           <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">
             Gestion des Entités
           </h1>
-
           <div className="transition-opacity mb-10 duration-500 ease-in-out">
             <DynamicForm />
           </div>
         </div>
-        <div className="w-full lg:w-[1080px] p-2 h-full flex justify-between ">
-          <div className="w-1/2 h-full p-2 m-2 rounded-2xl bg-white">
-            <ChartComponent id="charts" primaryXAxis={primaryxAxis}>
+
+        <div className="w-full lg:w-[1080px] lg:flex-row flex-col p-2 h-full space-y-4 flex justify-between">
+          <div className="lg:w-1/2 w-full h-full p-2 rounded-2xl bg-white animate-fade-in delay-100">
+            <ChartComponent
+              id="charts"
+              primaryXAxis={{ valueType: "Category" }}>
               <Inject services={[LineSeries, Category]} />
               <SeriesCollectionDirective>
                 <SeriesDirective
@@ -202,25 +169,16 @@ const Reports = () => {
               </SeriesCollectionDirective>
             </ChartComponent>
           </div>
-          <div className="w-1/2 h-full p-2 m-2 rounded-2xl bg-white">
+
+          <div className="lg:w-1/2 w-full h-full p-2 rounded-2xl bg-white  animate-fade-in delay-200">
             <Chart3DComponent
               id="charts2"
-              style={{ textAlign: "center" }}
-              primaryXAxis={{
-                valueType: "Category",
-                labelRotation: -45,
-                labelPlacement: "BetweenTicks",
-              }}
-              wallColor="transparent"
-              primaryYAxis={{
-                maximum: 150000,
-                interval: 50000,
-              }}
+              primaryXAxis={{ valueType: "Category", labelRotation: -45 }}
+              primaryYAxis={{ maximum: 150000, interval: 50000 }}
+              depth={100}
               enableRotation={true}
               rotation={7}
-              tilt={10}
-              depth={100}
-              legendSettings={{ enableHighlight: true, visible: true }}>
+              tilt={10}>
               <Inject
                 services={[
                   ColumnSeries3D,
@@ -233,21 +191,21 @@ const Reports = () => {
               <Chart3DSeriesCollectionDirective>
                 <Chart3DSeriesDirective
                   dataSource={pieData}
-                  dataLabel={{ visible: true }}
                   xName="x"
-                  name="Sales"
                   yName="y"
-                  type="Column"></Chart3DSeriesDirective>
+                  type="Column"
+                  dataLabel={{ visible: true }}
+                />
               </Chart3DSeriesCollectionDirective>
             </Chart3DComponent>
-            ;
           </div>
         </div>
-        <div className="flex w-full justify-center items-center bg-white rounded-2xl lg:w-[1080px]  mt-4 p-2 bg-slate-200s">
-          <div className="lg:w-[1080px] p-2 ">
+
+        <div className="flex w-10/12 justify-center items-center bg-white rounded-2xl lg:w-[1080px] mt-4  animate-fade-in delay-300">
+          <div className="lg:w-[1080px] p-2">
             <GridComponent
               dataSource={data}
-              editSettings={editOptions}
+              editSettings={{ allowEditing: true, allowDeleting: true }}
               commandClick={commandClick}
               height={265}
               ref={(g) => (grid = g)}>
@@ -257,15 +215,12 @@ const Reports = () => {
                 <ColumnDirective field="Exp" headerText="Expérience" />
                 <ColumnDirective field="Degrees" headerText="Niveau d'etudes" />
                 <ColumnDirective field="Adress" headerText="Adresse" />
-                <ColumnDirective
-                  headerText="Commands"
-                  width="120"
-                  commands={commands}
-                />
+                <ColumnDirective headerText="Commands" width="120" />
               </ColumnsDirective>
               <Inject services={[Edit, CommandColumn]} />
             </GridComponent>
           </div>
+
           <div>
             <DialogComponent
               header="Détails"
@@ -273,7 +228,8 @@ const Reports = () => {
               close={dialogClose}
               visible={dialogVisible}
               content={dialogContent}
-              showCloseIcon={true}></DialogComponent>
+              showCloseIcon={true}
+            />
           </div>
         </div>
       </div>

@@ -24,33 +24,38 @@ const Community = () => {
       title: "Transformation Digitale",
       description:
         "Accompagner les entreprises dans leur passage au numérique en automatisant les processus et optimisant l'efficacité.",
-      bgImage: "https://unsplash.com/photos/SYTO3xs06fU", // Transformation digitale - technologies numériques
+      bgImage:
+        "https://www.incenteev.com/wp-content/uploads/2021/01/Transformation_Digitale.png", // Transformation digitale - technologies numériques
     },
     {
       title: "Les meilleurs moyens de réseauter pour décrocher un emploi",
       description:
         " Le réseautage est un moyen puissant de trouver un emploi. Cet article explique comment utiliser les réseaux sociaux professionnels, participer à des événements et développer des connexions pour maximiser tes chances.",
-      bgImage: "https://unsplash.com/photos/ivfeOa1KTQU", // Cybersécurité - protection des données
+      bgImage:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSibKW1U8piZbek1Xq35eIQjdGEac8A26dX_g&s", // Cybersécurité - protection des données
     },
     {
-      title: "Analyse de Données",
+      title: "Les compétences les plus recherchées par les recruteurs en 2024",
       description:
-        "Les compétences les plus recherchées par les recruteurs en 2024",
-      bgImage: "https://unsplash.com/photos/qwtCeJ5cLYs", // Analyse de données - graphiques et statistiques
+        "Cet article liste les compétences techniques et comportementales que les recruteurs recherchent le plus. Cela inclut les compétences en communication, la résolution de problèmes, et les technologies spécifiques comme React.js ou le cloud computing.",
+      bgImage:
+        "https://media.istockphoto.com/id/1494208454/vector/competence-skills-or-ability-for-work-responsibility-professional-work-experience-capability.jpg?s=612x612&w=0&k=20&c=iRerY6Qe2VXbsGekq8z5x0qZrkiuQ7nQmbp5VUAMP3s=", // Analyse de données - graphiques et statistiques
     },
     {
       title:
         "Techniques pour réussir les tests d’évaluation lors d’un recrutement",
       description:
         "Certains processus de recrutement incluent des tests d'évaluation techniques ou comportementaux. Cet article donne des astuces pour s'y préparer, comme l'entraînement sur des plateformes comme HackerRank pour les développeurs, ou la préparation aux tests psychométriques.",
-      bgImage: "https://unsplash.com/photos/s9CC2SKySJM", // Développement mobile - téléphone avec code
+      bgImage:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEoZPw68k1z3AQdzMZDNe0mDo1zsuvTiEuxQ&ss", // Développement mobile - téléphone avec code
     },
-    // {
-    //   title: "UX/UI Design",
-    //   description:
-    //     "Créer des interfaces utilisateur intuitives et attractives pour maximiser l'engagement des utilisateurs.",
-    //   bgImage: "https://unsplash.com/photos/2zZp12ChxhU", // UX/UI Design - wireframes
-    // },
+    {
+      title: "Comment se différencier lors d'un entretien de groupe",
+      description:
+        "Les entretiens de groupe sont de plus en plus utilisés pour évaluer la capacité des candidats à travailler en équipe. Cet article détaille comment se démarquer sans dominer la conversation.",
+      bgImage:
+        "https://f.hellowork.com/edito/sites/3/2015/02/shutterstock_174539192.jpg", // UX/UI Design - wireframes
+    },
     // {
     //   title: "Cloud Computing",
     //   description:
