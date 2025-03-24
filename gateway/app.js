@@ -8,6 +8,7 @@ var cors = require('cors')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var candidatRouter = require('./routes/candidats');
+var jobsRouter = require('./routes/jobs');
 var redevablesRouter = require('./routes/redevables');
 var app = express();
 const port = 3010
@@ -27,6 +28,7 @@ app.use(cors())
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/candidats', candidatRouter);
+app.use('/jobs', jobsRouter);
 app.use('/redevances', redevablesRouter);
 
 

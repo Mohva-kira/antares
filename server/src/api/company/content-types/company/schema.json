@@ -4,17 +4,15 @@
   "info": {
     "singularName": "company",
     "pluralName": "companies",
-    "displayName": "company"
+    "displayName": "company",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "nom": {
-      "type": "string"
-    },
-    "prenom": {
+    "name": {
       "type": "string"
     },
     "adresse": {
@@ -31,6 +29,9 @@
     },
     "activite": {
       "type": "string"
+    },
+    "nb_employees": {
+      "type": "biginteger"
     }
   }
 }

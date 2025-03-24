@@ -13,7 +13,7 @@ const FilterForm = ({ filters, handleFilterChange }) => {
   };
 
   return (
-    <div className="lg:w-1/4 w-full flex items-center justify-start lg:flex-col flex-wrap gap-2 p-4 h-fit rounded-2xl bg-slate-50 lg:fixed  top-32 lg:mt-20 lg:m-3  shadow-lg">
+    <div className="lg:w-1/4 w-full flex items-center justify-start lg:flex-col flex-wrap gap-2 p-4 h-fit rounded-2xl bg-slate-50 lg:fixed  top-16 lg:mt-20 shadow-lg">
       {Object.keys(filters).map((filterKey) => (
         <div key={filterKey} className="mb-4 lg:w-full w-1/3">
           <label

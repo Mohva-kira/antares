@@ -881,18 +881,19 @@ export interface ApiCompanyCompany extends Schema.CollectionType {
     singularName: 'company';
     pluralName: 'companies';
     displayName: 'company';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    nom: Attribute.String;
-    prenom: Attribute.String;
+    name: Attribute.String;
     adresse: Attribute.String;
     email: Attribute.Email;
     phone: Attribute.String;
     site: Attribute.String;
     activite: Attribute.String;
+    nb_employees: Attribute.BigInteger;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -954,12 +955,13 @@ export interface ApiJobJob extends Schema.CollectionType {
     singularName: 'job';
     pluralName: 'jobs';
     displayName: 'job';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    Titre: Attribute.String;
+    titre: Attribute.String;
     description: Attribute.String;
     lieu: Attribute.String;
     salaire: Attribute.String;
@@ -969,6 +971,7 @@ export interface ApiJobJob extends Schema.CollectionType {
       'oneToOne',
       'api::company.company'
     >;
+    experience: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

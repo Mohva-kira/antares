@@ -1,0 +1,33 @@
+{
+  
+company
+: 
+{data: {…}}
+createdAt
+: 
+"2025-03-24T12:28:34.064Z"
+date
+: 
+"2025-03-24"
+description
+: 
+"Une sécrétaire pour s'occuper des dossiers et reorganiser les taches"
+experience
+: 
+"2"
+lieu
+: 
+"Bamako"
+publishedAt
+: 
+"2025-03-24T12:28:34.041Z"
+salaire
+: 
+"250000"
+titre
+: 
+"Sécretaire de bureau"
+updatedAt
+: 
+"2025-03-24T12:38:48.452Z"
+}

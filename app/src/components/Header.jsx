@@ -99,7 +99,7 @@ const Header = () => {
             <CiUser size={27} />
 
             {profileVisible ? (
-              <div className="w-56 bg-slate-500 absolute top-16 right-0 rounded-2xl h-72">
+              <div className="w-56 bg-slate-500 absolute top-16 right-0 rounded-2xl h-40">
                 <p className="text-center text-2xl capitalize font-bold">
                   {" "}
                   {user?.user?.username}{" "}
@@ -112,24 +112,11 @@ const Header = () => {
                       Profile
                     </a>
                   </li>
-                  <li>
-                    <a
-                      href={`/cv/${user?.user?.id}`}
-                      className="block px-4 py-2 text-sm dropdown-item hover:text-orange-400  dark:hover:text-orange-400">
-                      CV
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href={`/candidatures/${user?.user?.id}`}
-                      className="block px-4 py-2 text-sm dropdown-item hover:text-orange-400  dark:hover:text-orange-400">
-                      Candidatures
-                    </a>
-                  </li>
+
                   <li>
                     <a
                       onClick={() => logOut()}
-                      className="block cursor-pointer px-4 py-2 text-sm dropdown-item hover:text-orange-400  dark:hover:text-orange-400">
+                      className="block cursor-pointer px-4 py-2 text-sm dropdown-item hover:bg-gray-100 hover:text-orange-400  dark:hover:text-orange-400">
                       Deconnexion
                     </a>
                   </li>

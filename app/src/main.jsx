@@ -3,7 +3,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { store } from "../../client/src/redux/Store.js";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./index.css";
 import ArticlesPage from "./pages/ArticlePage.jsx";
@@ -16,6 +15,7 @@ import Offers from "./pages/Offers.jsx";
 import Profiles from "./pages/Profiles.jsx";
 import Reports from "./pages/Reports";
 import Users from "./pages/Users.jsx";
+import { store } from "./redux/Store.js";
 
 // Registering Syncfusion license key
 registerLicense(

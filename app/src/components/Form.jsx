@@ -28,9 +28,9 @@ const Form = ({ fields, title, setIsVisible, post }) => {
           e.preventDefault();
           handleSubmit(dataToSend, fields, setErrors, send, setIsVisible);
         }}
-        className="p-5 bg-gray-100 flex flex-wrap gap-4 rounded-lg w-full mx-auto">
+        className="p-5 bg-gray-100 flex flex-wrap justify-center items-center gap-4 rounded-2xl w-full mx-auto">
         {fields?.map((field) => (
-          <div key={field.name} className="w-full sm:w-1/2 mb-4">
+          <>
             {field.type === "textarea" ? (
               <textarea
                 id={field.name}
@@ -44,11 +44,11 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                 id={field.name}
                 value={(dataToSend && dataToSend[field.name]) || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-full p-2 border rounded">
+                className="w-2/5 p-2 border rounded">
                 <option value="">{field.placeholder}</option>
-                {field?.options?.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
+                {field?.options?.map((option, index) => (
+                  <option key={index} value={option.value}>
+                    {option.name}
                   </option>
                 ))}
               </select>
@@ -61,9 +61,9 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                   (item, index) => (
                     <div
                       key={index}
-                      className="mb-4 p-4 border rounded bg-white">
+                      className="mb-4 p-4 w-2/5 border rounded bg-white">
                       {field?.fields?.map((subField) => (
-                        <div key={subField.name} className="mb-2">
+                        <div key={subField.name} className="mb-2 w-full">
                           <input
                             type={subField.type}
                             name={subField.name}
@@ -110,13 +110,13 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                 placeholder={field.placeholder}
                 value={(dataToSend && dataToSend[field.name]) || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-full p-2 border rounded"
+                className="w-2/5 p-2 border rounded"
               />
             )}
             {errors && errors[field.name] && (
               <p className="text-red-500 text-sm">{errors[field.name]}</p>
             )}
-          </div>
+          </>
         ))}
 
         <button

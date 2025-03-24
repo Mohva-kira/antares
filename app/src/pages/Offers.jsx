@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FilterForm from "../components/Filters";
+import Form from "../components/Form";
 import JobCard from "../components/JobCard";
 import Layout from "../components/Layout";
-import ProfileCard from "../components/ProfileCard";
 import Modal from "../components/Modal";
-import Form from "../components/Form";
-
+import ProfileCard from "../components/ProfileCard";
+import { companyFields, jobsFIelds } from "../constants";
+import {
+  useGetCompanyQuery,
+  usePostCompanyMutation,
+} from "../redux/companyService";
+import { useGetJobsQuery, usePostJobsMutation } from "../redux/jobService";
 const Offers = () => {
   const generateFakeJobs = () => {
     return [
@@ -53,8 +58,25 @@ const Offers = () => {
     ];
   };
 
-  const [isVisible, setIsVisible] = useState(false);
+  const {
+    data: entreprises,
+    isFetching,
+    isSuccess,
+    isLoading,
+    isError,
+  } = useGetCompanyQuery();
 
+  const {
+    data: JobsData,
+    isSuccess: isJobSuccess,
+    isLoading: isJobLoading,
+    isError: isJobError,
+  } = useGetJobsQuery();
+
+  const [postJobs] = usePostJobsMutation();
+  const [postCompany] = usePostCompanyMutation();
+  const [isVisible, setIsVisible] = useState(false);
+  const [title, setTitle] = useState();
   const [filters, setFilters] = useState({
     title: "",
     experience: "",
@@ -63,6 +85,8 @@ const Offers = () => {
     minApplications: 0,
     maxApplications: Infinity,
   });
+
+  const [fields, setFields] = useState();
 
   const jobs = generateFakeJobs();
 
@@ -105,16 +129,41 @@ const Offers = () => {
     // Autres profils
   ];
 
+  const selectForm = (fields, title) => {
+    setTitle(title);
+    setFields(fields);
+    setIsVisible(true);
+  };
+  const send = (data) => {
+    console.log("les données envoyées", data);
+    title === "jobs"
+      ? postJobs({ data }).then((rep) => console.log("reponse", rep))
+      : postCompany({ data }).then((rep) => console.log("reponse", rep));
+  };
+
+  useEffect(() => {
+    console.log("entreprise", entreprises);
+    let fields = jobsFIelds;
+
+    let field = jobsFIelds.find((item) => item.name === "company");
+
+    let result = [];
+    entreprises?.data.map((item) => {
+      result.push({ value: item.id, name: item.attributes.name });
+    });
+
+    field.options = result;
+  }, [entreprises]);
+
+  useEffect(() => {
+    console.log("jobs", JobsData);
+  }, [JobsData]);
+
   return (
     <Layout>
       <div className="w-full min-h-screen flex flex-col lg:flex-row mt-10 p-4 space-y-6 lg:space-y-0 lg:space-x-6">
         {/* Section de filtres */}
         <div className="w-full lg:w-1/3 h-fit  flex flex-col p-4 rounded-lg shadow-md">
-          <div>
-            <button className="bg-orange-500 w-full py-2 rounded-2xl ">
-              Ajouter un poste
-            </button>
-          </div>
           <FilterForm
             filters={filters}
             handleFilterChange={handleFilterChange}
@@ -123,14 +172,26 @@ const Offers = () => {
 
         {/* Section des offres d'emploi */}
         <div className="w-full lg:w-2/3 space-y-4">
-          {filteredJobs.map((job, index) => (
+          <div className="w-full flex flex-wrap space-x-4">
+            <button
+              onClick={() => selectForm(companyFields, "company")}
+              className="bg-orange-500 text-white font-semibold py-2 w-60 rounded-2xl ">
+              Ajouter une entreprise
+            </button>
+            <button
+              onClick={() => selectForm(jobsFIelds, "jobs")}
+              className="bg-orange-500 py-2 text-white font-semibold  w-60 rounded-2xl ">
+              Ajouter un poste
+            </button>
+          </div>
+          {JobsData.data.map((job, index) => (
             <JobCard
               key={index}
-              title={job.title}
-              experience={job.experience}
-              location={job.location}
-              date={job.date}
-              company={job.company}
+              title={job.attributes.titre}
+              experience={job.attributes.experience}
+              location={job.attributes.lieu}
+              date={job.attributes.date}
+              company={job.attributes?.company?.data?.attributes?.name}
               applications={job.applications}
               inProgress={job.inProgress}
               rejected={job.rejected}
@@ -145,10 +206,13 @@ const Offers = () => {
           ))}
         </div>
       </div>
-      <Modal>
-          <Form
-            
-          />
+      <Modal isVisible={isVisible} setIsVisible={setIsVisible}>
+        <Form
+          fields={fields}
+          setIsVisible={setIsVisible}
+          post={send}
+          title={"Créer un job"}
+        />
       </Modal>
     </Layout>
   );

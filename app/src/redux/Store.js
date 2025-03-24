@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { redevableApi } from "./redevableService";
-import redevableReducer from "./redevableService";
-import profileReducer, { profileApi } from "./profileServices";
-import redevanceReducer, { redevanceApi } from "./redevanceService";
-import auth from "./auth/authService";
-import { authApi } from "./auth/authService";
 import { auteursApi } from "./auteursService";
+import auth, { authApi } from "./auth/authService";
+import candidatReducer, { candidatApi } from "./candidatService";
+import { companyApi } from "./companyService";
+import { jobsApi } from "./jobService";
+import profileReducer, { profileApi } from "./profileServices";
+import redevableReducer, { redevableApi } from "./redevableService";
+import redevanceReducer, { redevanceApi } from "./redevanceService";
 
 export const store = configureStore({
   reducer: {
@@ -14,20 +15,27 @@ export const store = configureStore({
     auth: auth,
     profile: profileReducer,
     redevances: redevanceReducer,
+    candidat: candidatReducer,
+    [candidatApi.reducerPath]: candidatApi.reducer,
     [redevableApi.reducerPath]: redevableApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [auteursApi.reducerPath]: auteursApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [redevanceApi.reducerPath]: redevanceApi.reducer,
+    [jobsApi.reducerPath]: jobsApi.reducer,
+    [companyApi.reducerPath]: companyApi.reducer
   },
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
+      jobsApi.middleware,
       redevableApi.middleware,
       authApi.middleware,
       auteursApi.middleware,
       profileApi.middleware,
-      redevanceApi.middleware
+      redevanceApi.middleware,
+      candidatApi.middleware,
+      companyApi.middleware,
     ),
 });
 

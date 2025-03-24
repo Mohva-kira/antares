@@ -14,23 +14,27 @@ const Login = ({ showLogin, setShowLogin }) => {
   const send = async () => {
     const dataToSend = { identifier: email, password };
     console.log("data to send", dataToSend);
-
-    try {
-      await login(dataToSend).then((rep) => {
+    await login(dataToSend)
+      .then((rep) => {
         console.log("login rep", rep);
-        localStorage.setItem("auth", JSON.stringify(rep.data));
-        if (rep.error) {
-          toast.error("email / nom d'utilisateur ou mot de passe incorrecte");
+        if (rep.data) {
+          localStorage.setItem("auth", JSON.stringify(rep.data));
+
+          toast.success("Vous êtes connecté");
+          dispatch(setAuth(rep.data));
+          navigate("/home");
+
           return;
         }
-        toast.success("Vous êtes connecté");
-        dispatch(setAuth(rep.data));
+        if (rep.error) {
+          console.log("Erreur", rep.error);
+          toast.error("Email ou mot de passe incorrecte");
+        }
+      })
+      .catch((raison) => {
+        console.log("Erreur", raison);
+        toast.error("Email ou mot de passe incorrecte");
       });
-      setTimeout("", 3000);
-      navigate("/home");
-    } catch (error) {
-      console.error("erreur", error);
-    }
   };
   return (
     <>
@@ -67,6 +71,7 @@ const Login = ({ showLogin, setShowLogin }) => {
                     <span class="ml-4">Se connecter avec Google</span>
                   </button>
                 </div>
+                {/* <ToastContainer /> */}
 
                 <div class="my-12 border-b text-center">
                   <div class="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
