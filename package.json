@@ -6,8 +6,9 @@
   "scripts": {
     "server": "cd server && npm run develop",
     "client": " cd client && npm run dev",
+    "gateway": " cd gateway && nodemon app.js",
     "app": "cd app && npm run dev",
-    "start": "concurrently -k \"npm run server\" \"npm run app\" \"npm run client\"",
+    "start": "concurrently \"npm run server\" \"npm run app\" \"npm run client\"  \"npm run gateway\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mohamed Tandjigora - Mohva",
