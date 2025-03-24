@@ -1,0 +1,15 @@
+{
+  "name": "antares",
+  "version": "1.0.0",
+  "description": "Human ressources app",
+  "main": "index.js",
+  "scripts": {
+    "server": "cd server && npm run develop",
+    "client": " cd client && npm run dev",
+    "app": "cd app && npm run dev",
+    "start": "concurrently -k \"npm run server\" \"npm run app\" \"npm run client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mohamed Tandjigora - Mohva",
+  "license": "ISC"
+}
