@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { CiSearch, CiUser } from "react-icons/ci";
 import { FiMessageSquare } from "react-icons/fi";
-import { CiSearch } from "react-icons/ci";
-import { IoToggleOutline } from "react-icons/io5";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi"; // Importer les icônes du menu burger
-import { searchItems } from "../utils/utils";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.jpg";
+import { searchItems } from "../utils/utils";
 
 const Header = () => {
   const path = location.pathname;
@@ -13,7 +12,10 @@ const Header = () => {
   const [searchSelected, setSearchSelected] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false); // État pour gérer l'ouverture du menu burger
+  const [profileVisible, setProfileVisible] = useState(false);
+  const user = JSON.parse(localStorage.getItem("auth"));
 
+  console.log("user", user);
   const links = [
     { name: "Accueil", path: "/home" },
     { name: "Jobs", path: "/jobs" },
@@ -47,6 +49,10 @@ const Header = () => {
     // ...Autres données
   ];
 
+  const logOut = () => {
+    localStorage.clear();
+    navigate("/auth");
+  };
   return (
     <div className="fixed top-0 w-full  shadow-md shadow-slate-900 mb-10 z-50 bg-white">
       {/* Header section */}
@@ -87,7 +93,50 @@ const Header = () => {
           <div className="text-3xl">
             <FiMessageSquare />
           </div>
-          <div className="bg-slate-500 rounded-full h-10 w-10"></div>
+          <div
+            onClick={() => setProfileVisible(!profileVisible)}
+            className="bg-slate-500 relative rounded-full flex justify-center items-center text-white h-10 w-10">
+            <CiUser size={27} />
+
+            {profileVisible ? (
+              <div className="w-56 bg-slate-500 absolute top-16 right-0 rounded-2xl h-72">
+                <p className="text-center text-2xl capitalize font-bold">
+                  {" "}
+                  {user?.user?.username}{" "}
+                </p>
+                <ul className="py-2" aria-labelledby="user-menu-button">
+                  <li>
+                    <a
+                      href={`/profile/${user?.user?.id}`}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dropdown-item dark:hover:text-orange-400">
+                      Profile
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={`/cv/${user?.user?.id}`}
+                      className="block px-4 py-2 text-sm dropdown-item hover:text-orange-400  dark:hover:text-orange-400">
+                      CV
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={`/candidatures/${user?.user?.id}`}
+                      className="block px-4 py-2 text-sm dropdown-item hover:text-orange-400  dark:hover:text-orange-400">
+                      Candidatures
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      onClick={() => logOut()}
+                      className="block cursor-pointer px-4 py-2 text-sm dropdown-item hover:text-orange-400  dark:hover:text-orange-400">
+                      Deconnexion
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
 

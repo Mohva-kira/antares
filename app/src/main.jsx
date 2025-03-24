@@ -1,19 +1,21 @@
+import { registerLicense } from "@syncfusion/ej2-base";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
-import "./index.css";
+import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import Offers from "./pages/Offers.jsx";
-import Interview from "./pages/Interview.jsx";
-import { registerLicense } from "@syncfusion/ej2-base";
-import Profiles from "./pages/Profiles.jsx";
-import Community from "./pages/Community.jsx";
-import CvDetails from "./pages/CvDetails.jsx";
+import { store } from "../../client/src/redux/Store.js";
+import ProtectedRoute from "./components/ProtectedRoute";
+import "./index.css";
 import ArticlesPage from "./pages/ArticlePage.jsx";
 import Auth from "./pages/Auth.jsx";
+import Community from "./pages/Community.jsx";
+import CvDetails from "./pages/CvDetails.jsx";
+import Home from "./pages/Home.jsx";
+import Interview from "./pages/Interview.jsx";
+import Offers from "./pages/Offers.jsx";
+import Profiles from "./pages/Profiles.jsx";
+import Reports from "./pages/Reports";
 import Users from "./pages/Users.jsx";
-import Reports from "./pages/Reports.jsx";
 
 // Registering Syncfusion license key
 registerLicense(
@@ -23,39 +25,39 @@ registerLicense(
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Auth />,
+    element: <ProtectedRoute element={<Home />} />,
   },
   {
     path: "/home",
-    element: <Home />,
+    element: <ProtectedRoute element={<Home />} />,
   },
   {
     path: "/jobs",
-    element: <Offers />,
+    element: <ProtectedRoute element={<Offers />} />,
   },
   {
     path: "/meets",
-    element: <Interview />,
+    element: <ProtectedRoute element={<Interview />} />,
   },
   {
     path: "/cvs",
-    element: <Profiles />,
+    element: <ProtectedRoute element={<Profiles />} />,
   },
   {
     path: "/community",
-    element: <Community />,
+    element: <ProtectedRoute element={<Community />} />,
   },
   {
     path: "/cv/:id",
-    element: <CvDetails />,
+    element: <ProtectedRoute element={<CvDetails />} />,
   },
   {
     path: "/article/:id",
-    element: <ArticlesPage />,
+    element: <ProtectedRoute element={<ArticlesPage />} />,
   },
   {
     path: "/rapports",
-    element: <Reports />,
+    element: <ProtectedRoute element={<Reports />} />,
   },
   {
     path: "/auth",
@@ -63,12 +65,14 @@ const router = createBrowserRouter([
   },
   {
     path: "/utilisateurs",
-    element: <Users />,
+    element: <ProtectedRoute element={<Users />} />,
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );

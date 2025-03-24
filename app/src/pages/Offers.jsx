@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import Layout from "../components/Layout";
-import JobCard from "../components/JobCard";
 import FilterForm from "../components/Filters";
+import JobCard from "../components/JobCard";
+import Layout from "../components/Layout";
 import ProfileCard from "../components/ProfileCard";
+import Modal from "../components/Modal";
+import Form from "../components/Form";
 
 const Offers = () => {
   const generateFakeJobs = () => {
@@ -50,6 +52,8 @@ const Offers = () => {
       // ...Autres jobs
     ];
   };
+
+  const [isVisible, setIsVisible] = useState(false);
 
   const [filters, setFilters] = useState({
     title: "",
@@ -105,7 +109,12 @@ const Offers = () => {
     <Layout>
       <div className="w-full min-h-screen flex flex-col lg:flex-row mt-10 p-4 space-y-6 lg:space-y-0 lg:space-x-6">
         {/* Section de filtres */}
-        <div className="w-full lg:w-1/3 h-fit bg-white p-4 rounded-lg shadow-md">
+        <div className="w-full lg:w-1/3 h-fit  flex flex-col p-4 rounded-lg shadow-md">
+          <div>
+            <button className="bg-orange-500 w-full py-2 rounded-2xl ">
+              Ajouter un poste
+            </button>
+          </div>
           <FilterForm
             filters={filters}
             handleFilterChange={handleFilterChange}
@@ -136,6 +145,11 @@ const Offers = () => {
           ))}
         </div>
       </div>
+      <Modal>
+          <Form
+            
+          />
+      </Modal>
     </Layout>
   );
 };

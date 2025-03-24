@@ -590,6 +590,53 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -741,53 +788,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
-  info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiApplicationApplication extends Schema.CollectionType {
   collectionName: 'applications';
   info: {
@@ -835,6 +835,7 @@ export interface ApiCandidatCandidat extends Schema.CollectionType {
     singularName: 'candidat';
     pluralName: 'candidats';
     displayName: 'candidat';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -844,10 +845,18 @@ export interface ApiCandidatCandidat extends Schema.CollectionType {
     prenom: Attribute.String;
     email: Attribute.Email;
     phone: Attribute.String;
-    cv: Attribute.String;
     profil_linkedin: Attribute.String;
     experience_totale: Attribute.String;
     competences: Attribute.String;
+    user: Attribute.Relation<
+      'api::candidat.candidat',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    pays: Attribute.String;
+    ville: Attribute.String;
+    role: Attribute.String;
+    university: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -970,6 +979,52 @@ export interface ApiJobJob extends Schema.CollectionType {
   };
 }
 
+export interface ApiResumeResume extends Schema.CollectionType {
+  collectionName: 'resumes';
+  info: {
+    singularName: 'resume';
+    pluralName: 'resumes';
+    displayName: 'resume';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    summary: Attribute.String;
+    experience: Attribute.JSON;
+    education: Attribute.JSON;
+    skills: Attribute.JSON;
+    certifications: Attribute.JSON;
+    languages: Attribute.JSON;
+    projects: Attribute.JSON;
+    video: Attribute.Text;
+    linkedin: Attribute.String;
+    portfolio: Attribute.String;
+    user: Attribute.Relation<
+      'api::resume.resume',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::resume.resume',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::resume.resume',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -984,15 +1039,16 @@ declare module '@strapi/types' {
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
       'api::application.application': ApiApplicationApplication;
       'api::candidat.candidat': ApiCandidatCandidat;
       'api::company.company': ApiCompanyCompany;
       'api::contrat.contrat': ApiContratContrat;
       'api::job.job': ApiJobJob;
+      'api::resume.resume': ApiResumeResume;
     }
   }
 }

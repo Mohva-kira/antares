@@ -1,0 +1,66 @@
+export const candidatField = [
+  {
+    class: "",
+    name: "nom",
+    placeholder: "Nom",
+    type: "text",
+    required: true,
+  },
+  {
+    class: "",
+    name: "prenom",
+    placeholder: "Prénom",
+    type: "text",
+    required: true,
+  },
+  {
+    class: "",
+    name: "email",
+    placeholder: "Email",
+    type: "email",
+    required: true,
+  },
+  {
+    class: "",
+    name: "phone",
+    placeholder: "Téléphone",
+    type: "text",
+    required: true,
+  },
+  {
+    class: "",
+    name: "profil_linkedin",
+    placeholder: "Linkedin",
+    type: "text",
+    required: true,
+  },
+  {
+    class: "",
+    name: "pays",
+    placeholder: "Pays",
+    type: "text",
+    required: true,
+  },
+  {
+    class: "",
+    name: "ville",
+    placeholder: "Ville",
+    type: "text",
+    required: true,
+  },
+  {
+    class: "",
+    name: "role",
+    placeholder: "Diplôme",
+    type: "text",
+    required: true,
+  },
+
+  {
+    class: "",
+    name: "university",
+    placeholder: "Université",
+    type: "text",
+    required: true,
+  },
+];
