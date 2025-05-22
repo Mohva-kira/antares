@@ -1,13 +1,13 @@
-import React from "react";
-import Layout from "../components/Layout";
 import {
   ColumnDirective,
   ColumnsDirective,
   GridComponent,
 } from "@syncfusion/ej2-react-grids";
-import { GrUserAdmin } from "react-icons/gr";
-import UserForm from "../components/UserForm";
+import React from "react";
 import { CiUser } from "react-icons/ci";
+import { GrUserAdmin } from "react-icons/gr";
+import Layout from "../components/Layout";
+import UserForm from "./../components/UserForm";
 
 let data = [
   {
@@ -44,14 +44,10 @@ const Users = () => {
   return (
     <Layout>
       <div className="flex w-full flex-col justify-center items-center">
-        <div className="w-full max-w-xl rounded-2xl bg-slate-200 mb-3 shadow-lg p-8">
+        <div className="w-full max-w-xl bg-slate-200 rounded-2xl  shadow-lg p-2 animate-fade-in">
           <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">
             Gestion des utilisateurs
           </h1>
-
-          <div className="transition-opacity mb-10 duration-500 ease-in-out">
-            <UserForm />
-          </div>
         </div>
         <div className="flex w-full flex-col lg:flex-row justify-center lg:w-[1080px] p-2 lg:space-x-2 ">
           <div className="bg-white p-2 h-32 lg:w-1/4 w-full rounded-2xl flex mb-4 justify-between items-center ">
@@ -69,7 +65,10 @@ const Users = () => {
             <p className="text-lg font-bold"> 5 </p>
           </div>
         </div>
-        <div className=" h-full lg:w-[1080px] p-2 bg-white m-6 w-10/12 rounded-2xl">
+        <div className="transition-opacity  lg:w-[1080px] duration-500 ease-in-out">
+          <UserForm />
+        </div>
+        <div className=" h-full lg:w-[1080px] p-2 bg-white m-0.5 w-10/12 rounded-2xl">
           <GridComponent dataSource={data} className="w-10/12 rounded-2xl">
             <ColumnsDirective>
               <ColumnDirective field="ID" headerText="ID" />

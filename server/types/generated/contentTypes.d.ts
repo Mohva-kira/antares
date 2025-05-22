@@ -788,12 +788,48 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiActualiteActualite extends Schema.CollectionType {
+  collectionName: 'actualites';
+  info: {
+    singularName: 'actualite';
+    pluralName: 'actualites';
+    displayName: 'actualite';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    slug: Attribute.String;
+    content: Attribute.String;
+    images: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
+    categorie: Attribute.String;
+    author: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::actualite.actualite',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::actualite.actualite',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiApplicationApplication extends Schema.CollectionType {
   collectionName: 'applications';
   info: {
     singularName: 'application';
     pluralName: 'applications';
     displayName: 'application';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -802,7 +838,7 @@ export interface ApiApplicationApplication extends Schema.CollectionType {
     candidat: Attribute.Relation<
       'api::application.application',
       'oneToOne',
-      'api::candidat.candidat'
+      'plugin::users-permissions.user'
     >;
     job: Attribute.Relation<
       'api::application.application',
@@ -972,6 +1008,10 @@ export interface ApiJobJob extends Schema.CollectionType {
       'api::company.company'
     >;
     experience: Attribute.String;
+    contratType: Attribute.String;
+    skills: Attribute.JSON;
+    objectif: Attribute.JSON;
+    education: Attribute.JSON;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1046,6 +1086,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::actualite.actualite': ApiActualiteActualite;
       'api::application.application': ApiApplicationApplication;
       'api::candidat.candidat': ApiCandidatCandidat;
       'api::company.company': ApiCompanyCompany;

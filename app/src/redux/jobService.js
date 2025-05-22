@@ -51,7 +51,7 @@ export const jobsApi = createApi({
 });
 
 // Hooks auto-générés par RTK Query
-export const { useGetJobsQuery, usePostJobsMutation, useGetJobsByIdQuery } = jobsApi;
+export const { useLazyGetJobsQuery, usePostJobsMutation, useGetJobsByIdQuery } = jobsApi;
 
 // Exporte le reducer (si tu veux stocker localement des jobs en plus de l'API)
 export const jobsReducer = jobsSlice.reducer;

@@ -1,18 +1,16 @@
 import { useState } from "react";
-import "./App.css";
-import img1 from "./assets/images/1.png";
-import img2 from "./assets/images/2.png";
-import img3 from "./assets/images/3.jpg";
-import img4 from "./assets/images/4.png";
-import Headers from "./components/Headers";
-import Search from "./components/Search";
-
 import {
   FaAccusoft,
   FaBullhorn,
   FaGraduationCap,
   FaUsers,
 } from "react-icons/fa6";
+import { IoIosPersonAdd } from "react-icons/io";
+import "./App.css";
+import img1 from "./assets/images/1.png";
+import img2 from "./assets/images/2.png";
+import img3 from "./assets/images/3.jpg";
+import img4 from "./assets/images/4.png";
 import job2 from "./assets/images/job-2.jpg";
 import p1 from "./assets/images/p1.jpg";
 import p2 from "./assets/images/p2.jpg";
@@ -23,8 +21,10 @@ import CategoryCard from "./components/CategoryCard";
 import Clients from "./components/Clients";
 import CvVideoCard from "./components/CvVideoCard";
 import Footer from "./components/Footer";
+import Headers from "./components/Headers";
 import JobCard from "./components/JobCard";
 import ProcessCard from "./components/ProcessCard";
+import Search from "./components/Search";
 
 import {
   A11y,
@@ -37,11 +37,13 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
+import { useNavigate } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { useGetCandidatsQuery } from "./redux/candidatService";
+import { useGetOffersQuery } from "./redux/offerService";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -231,8 +233,11 @@ function App() {
     },
   ];
 
+  const navigate = useNavigate();
+
   const { data, isLoading, isSuccess, isFetching, isError } =
     useGetCandidatsQuery();
+  const { data: jobs, isLoading: isLoadingJobs } = useGetOffersQuery();
 
   return (
     <>
@@ -340,7 +345,7 @@ function App() {
                   <div className="menu-grids mt-4">
                     <div className="row t-in">
                       <div className="col-lg-8 text-info-sec">
-                        {jobData.map((item) => (
+                        {jobs?.data.map((item) => (
                           <JobCard item={item} />
                         ))}
                       </div>
@@ -365,12 +370,13 @@ function App() {
                 vous de la concurrence!
               </h3>
               <p></p>
-              <div className="resume">
+              <div className="resume flex justify-center items-center">
                 <a
-                  href="#"
+                  className="flex items-center justify-center space-x-4 text-white font-bold bg-blue-500 p-3 rounded-lg w-1/3"
+                  onClick={() => navigate("/auth/register")}
                   data-toggle="modal"
                   data-target="#exampleModalCenter2">
-                  <i className="far fa-user"></i> Créer un compte
+                  <IoIosPersonAdd size={25} className="mr-2" /> Créer un compte
                 </a>
               </div>
             </div>

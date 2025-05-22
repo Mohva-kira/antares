@@ -38,12 +38,12 @@ const Login = ({ showLogin, setShowLogin }) => {
       <div class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
         <div class="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
           <div class="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
-            <div>
-              <img src={logo} class="w-mx-auto md:w-80" />
+            <div className="flex justify-center ">
+              <img src={logo} class="w-mx-auto md:w-56" />
             </div>
-            <div class="mt-12 flex flex-col items-center">
+            <div class=" flex flex-col items-center">
               <div class="w-full flex-1 mt-8">
-                <div class="flex flex-col items-center">
+                {/* <div class="flex flex-col items-center">
                   <button class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
                     <div class="bg-white p-2 rounded-full">
                       <svg class="w-4" viewBox="0 0 533.5 544.3">
@@ -73,7 +73,7 @@ const Login = ({ showLogin, setShowLogin }) => {
                   <div class="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
                     Ou se connecter grâve à votre E-mail
                   </div>
-                </div>
+                </div> */}
 
                 <div class="mx-auto max-w-xs">
                   <input

@@ -26,13 +26,13 @@ export function searchItems(data, query, key) {
  * @returns {Array} - Les éléments correspondant aux filtres.
  */
 export function filterItems(data, filters) {
-  return data.filter(item => {
+  return data?.filter(item => {
     return Object.keys(filters).every(key => {
       if (filters[key] === undefined || filters[key] === null) return true;
-      if (typeof item[key] === 'string') {
-        return item[key].toLowerCase().includes(filters[key].toLowerCase());
+      if (typeof item.attributes[key] === 'string') {
+        return item.attributes[key].toLowerCase().includes(filters[key].toLowerCase());
       }
-      return item[key] === filters[key];
+      return item.attributes[key] === filters[key];
     });
   });
 }

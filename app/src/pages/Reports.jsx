@@ -1,29 +1,28 @@
-import React, { useState, useEffect } from "react";
-import DynamicForm from "../components/DynamicForm";
 import {
-  ColumnDirective,
-  ColumnsDirective,
-  GridComponent,
-  Edit,
-  CommandColumn,
-} from "@syncfusion/ej2-react-grids";
-import {
-  ChartComponent,
   Category,
-  Inject,
-  LineSeries,
-  SeriesCollectionDirective,
-  SeriesDirective,
+  Category3D,
   Chart3DComponent,
   Chart3DSeriesCollectionDirective,
   Chart3DSeriesDirective,
-  Legend3D,
-  DataLabel3D,
-  Category3D,
+  ChartComponent,
   ColumnSeries3D,
+  DataLabel3D,
   Highlight3D,
+  Inject,
+  Legend3D,
+  LineSeries,
+  SeriesCollectionDirective,
+  SeriesDirective,
 } from "@syncfusion/ej2-react-charts";
+import {
+  ColumnDirective,
+  ColumnsDirective,
+  CommandColumn,
+  Edit,
+  GridComponent,
+} from "@syncfusion/ej2-react-grids";
 import { DialogComponent } from "@syncfusion/ej2-react-popups";
+import React, { useState } from "react";
 import Layout from "../components/Layout";
 
 const Reports = () => {
@@ -145,16 +144,16 @@ const Reports = () => {
   return (
     <Layout>
       <div className="min-h-screen w-full p-2 flex flex-col justify-center items-center">
-        <div className="w-full max-w-xl bg-slate-200 rounded-2xl mb-3 shadow-lg p-8 animate-fade-in">
-          <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">
-            Gestion des Entités
+        <div className="w-full max-w-xl bg-slate-200 rounded-2xl  shadow-lg p-2 animate-fade-in">
+          <h1 className="text-4xl font-bold text-center text-gray-800 ">
+            Rapports
           </h1>
-          <div className="transition-opacity mb-10 duration-500 ease-in-out">
+          {/* <div className="transition-opacity mb-10 duration-500 ease-in-out">
             <DynamicForm />
-          </div>
+          </div> */}
         </div>
 
-        <div className="w-full lg:w-[1080px] lg:flex-row flex-col p-2 h-full space-y-4 flex justify-between">
+        <div className="w-full lg:w-[1080px] lg:flex-row flex-col p-2 h-full  space-x-4 flex justify-between">
           <div className="lg:w-1/2 w-full h-full p-2 rounded-2xl bg-white animate-fade-in delay-100">
             <ChartComponent
               id="charts"

@@ -1,8 +1,11 @@
-import React from "react";
-import Layout from "../components/Layout";
+import React, { useState } from "react";
+import { Form } from "react-router-dom";
 import ArticlesCard from "../components/ArticlesCard";
+import Layout from "../components/Layout";
+import Modal from "../components/Modal";
 import NewsLetter from "../components/NewsLetter";
 import PopularCard from "../components/PopularCard";
+import { actualiteField } from "../constants";
 
 const Community = () => {
   const contentArray = [
@@ -75,6 +78,12 @@ const Community = () => {
     //   bgImage: "https://unsplash.com/photos/8K62atzbulI", // Marketing Digital - publicité en ligne, réseaux sociaux
     // },
   ];
+
+  const [isVisible, setIsVisible] = useState();
+
+  const send = (data) => {
+    console.log("les données", data);
+  };
   return (
     <Layout>
       <div className="flex w-full flex-col lg:flex-row lg:space-x-6 p-4 space-y-6 lg:space-y-0">
@@ -85,6 +94,13 @@ const Community = () => {
 
         {/* Articles Section */}
         <div className="w-full lg:w-full flex flex-wrap gap-4">
+          <div className="w-full flex flex-wrap space-x-4">
+            <button
+              onClick={() => setIsVisible(!isVisible)}
+              className="bg-orange-500 text-white font-semibold py-2 w-60 rounded-2xl ">
+              Ajouter un article
+            </button>
+          </div>
           {contentArray.map((article, index) => (
             <ArticlesCard key={index} article={article} />
           ))}
@@ -96,6 +112,15 @@ const Community = () => {
       </div>
 
       {/* Popular Card Section */}
+
+      <Modal isVisible={isVisible} setIsVisible={setIsVisible}>
+        <Form
+          fields={actualiteField}
+          setIsVisible={setIsVisible}
+          post={send}
+          title={"Créer un job"}
+        />
+      </Modal>
     </Layout>
   );
 };

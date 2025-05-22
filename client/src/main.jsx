@@ -28,6 +28,10 @@ const router = createBrowserRouter([
     element: <Auth />,
   },
   {
+    path: "/auth/:action",
+    element: <Auth />,
+  },
+  {
     path: "/how",
     element: <How />,
   },

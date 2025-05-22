@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { TbLoaderQuarter } from "react-icons/tb";
+import { toast } from "react-toastify";
 import FilterForm from "../components/Filters";
 import Form from "../components/Form";
 import JobCard from "../components/JobCard";
@@ -7,10 +9,11 @@ import Modal from "../components/Modal";
 import ProfileCard from "../components/ProfileCard";
 import { companyFields, jobsFIelds } from "../constants";
 import {
-  useGetCompanyQuery,
+  useLazyGetCompanyQuery,
   usePostCompanyMutation,
 } from "../redux/companyService";
-import { useGetJobsQuery, usePostJobsMutation } from "../redux/jobService";
+import { useLazyGetJobsQuery, usePostJobsMutation } from "../redux/jobService";
+import { filterItems } from "../utils/utils";
 const Offers = () => {
   const generateFakeJobs = () => {
     return [
@@ -58,20 +61,20 @@ const Offers = () => {
     ];
   };
 
-  const {
-    data: entreprises,
-    isFetching,
-    isSuccess,
-    isLoading,
-    isError,
-  } = useGetCompanyQuery();
+  const [
+    getCompany,
+    { data: entreprises, isFetching, isSuccess, isLoading, isError },
+  ] = useLazyGetCompanyQuery();
 
-  const {
-    data: JobsData,
-    isSuccess: isJobSuccess,
-    isLoading: isJobLoading,
-    isError: isJobError,
-  } = useGetJobsQuery();
+  const [
+    getJobs,
+    {
+      data: JobsData,
+      isSuccess: isJobSuccess,
+      isLoading: isJobLoading,
+      isError: isJobError,
+    },
+  ] = useLazyGetJobsQuery();
 
   const [postJobs] = usePostJobsMutation();
   const [postCompany] = usePostCompanyMutation();
@@ -98,14 +101,22 @@ const Offers = () => {
     });
   };
 
-  const filteredJobs = jobs.filter((job) => {
+  const filtered = filterItems(JobsData?.data, filters);
+
+  console.log("les filtrés", filtered);
+
+  const filteredJobs = JobsData?.data?.filter((job) => {
     return (
-      job.title.toLowerCase().includes(filters.title.toLowerCase()) &&
-      job.experience.includes(filters.experience) &&
-      job.location.includes(filters.location) &&
-      job.company.toLowerCase().includes(filters.company.toLowerCase()) &&
-      job.applications >= filters.minApplications &&
-      job.applications <= filters.maxApplications
+      job?.attributes?.titre
+        .toLowerCase()
+        ?.includes(filters.title.toLowerCase()) &&
+      job?.attributes?.experience?.includes(filters.experience) &&
+      job?.attributes?.lieu?.includes(filters.location) &&
+      job?.attributes?.company?.data?.attributes?.name
+        .toLowerCase()
+        ?.includes(filters.company.toLowerCase()) &&
+      job?.attributes?.applications >= filters.minApplications &&
+      job?.attributes?.applications <= filters.maxApplications
     );
   });
 
@@ -137,8 +148,15 @@ const Offers = () => {
   const send = (data) => {
     console.log("les données envoyées", data);
     title === "jobs"
-      ? postJobs({ data }).then((rep) => console.log("reponse", rep))
-      : postCompany({ data }).then((rep) => console.log("reponse", rep));
+      ? postJobs({ data }).then((rep) => {
+          toast.success("Offre publié avec succès");
+          getJobs();
+        })
+      : postCompany({ data }).then((rep) => {
+          console.log("reponse", rep);
+          toast.success("Entreprise enregistré avec succès");
+          getCompany();
+        });
   };
 
   useEffect(() => {
@@ -159,6 +177,11 @@ const Offers = () => {
     console.log("jobs", JobsData);
   }, [JobsData]);
 
+  useEffect(() => {
+    getCompany();
+    getJobs();
+  }, []);
+
   return (
     <Layout>
       <div className="w-full min-h-screen flex flex-col lg:flex-row mt-10 p-4 space-y-6 lg:space-y-0 lg:space-x-6">
@@ -172,35 +195,44 @@ const Offers = () => {
 
         {/* Section des offres d'emploi */}
         <div className="w-full lg:w-2/3 space-y-4">
-          <div className="w-full flex flex-wrap space-x-4">
+          <div className="w-full flex justify-center items-center flex-wrap space-x-4">
             <button
               onClick={() => selectForm(companyFields, "company")}
-              className="bg-orange-500 text-white font-semibold py-2 w-60 rounded-2xl ">
+              className="bg-orange-500 text-white shadow-md font-semibold py-2 w-60 rounded-2xl ">
               Ajouter une entreprise
             </button>
             <button
               onClick={() => selectForm(jobsFIelds, "jobs")}
-              className="bg-orange-500 py-2 text-white font-semibold  w-60 rounded-2xl ">
+              className="bg-orange-500 py-2 shadow-md text-white font-semibold  w-60 rounded-2xl ">
               Ajouter un poste
             </button>
+            {console.log("filtered", filteredJobs)}
           </div>
-          {JobsData.data.map((job, index) => (
-            <JobCard
-              key={index}
-              title={job.attributes.titre}
-              experience={job.attributes.experience}
-              location={job.attributes.lieu}
-              date={job.attributes.date}
-              company={job.attributes?.company?.data?.attributes?.name}
-              applications={job.applications}
-              inProgress={job.inProgress}
-              rejected={job.rejected}
-            />
-          ))}
+          {JobsData ? (
+            (filteredJobs.length > 0 ? filteredJobs : JobsData?.data).map(
+              (job, index) => (
+                <JobCard
+                  key={index}
+                  title={job.attributes.titre}
+                  experience={job.attributes.experience}
+                  location={job.attributes.lieu}
+                  date={job.attributes.date}
+                  company={job.attributes?.company?.data?.attributes?.name}
+                  applications={job.applications}
+                  inProgress={job.inProgress}
+                  rejected={job.rejected}
+                />
+              )
+            )
+          ) : (
+            <div className="w-full text-black text-3xl items-center justify-center text-center">
+              <TbLoaderQuarter className="animate-spin" />
+            </div>
+          )}
         </div>
 
         {/* Section des profils */}
-        <div className="w-full lg:w-1/4 bg-gray-50 p-4 rounded-lg shadow-md h-auto lg:h-full space-y-2 overflow-y-auto">
+        <div className="w-full lg:w-[350px]  p-4 rounded-lg  h-auto lg:h-full space-y-2 ">
           {profiles.map((profile, index) => (
             <ProfileCard key={index} profile={profile} />
           ))}

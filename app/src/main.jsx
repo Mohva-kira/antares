@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./index.css";
 import ArticlesPage from "./pages/ArticlePage.jsx";
@@ -16,7 +17,6 @@ import Profiles from "./pages/Profiles.jsx";
 import Reports from "./pages/Reports";
 import Users from "./pages/Users.jsx";
 import { store } from "./redux/Store.js";
-
 // Registering Syncfusion license key
 registerLicense(
   "Ngo9BigBOggjHTQxAR8/V1NDaF5cWWtCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXZccHRQRGFZUUV2V0o="

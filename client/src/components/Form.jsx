@@ -16,7 +16,7 @@ const Form = ({ fields, title, setIsVisible, post }) => {
   };
 
   return (
-    <div className="lg:w-1/2 w-full bg-slate-400 dark:bg-gray-700 p-5 rounded-2xl flex flex-col justify-center shadow-md">
+    <div className="lg:w-4/5 w-full bg-slate-400 dark:bg-gray-700 p-5 rounded-2xl flex flex-col justify-center shadow-md">
       <div className="w-full flex justify-end relative">
         <p
           onClick={() => setIsVisible(false)}
@@ -34,23 +34,23 @@ const Form = ({ fields, title, setIsVisible, post }) => {
           e.preventDefault();
           handleSubmit(dataToSend, fields, setErrors, send, setIsVisible);
         }}
-        className="p-5 bg-gray-100 flex flex-wrap gap-4 rounded-lg w-full mx-auto">
+        className="p-5 bg-gray-100 flex flex-wrap space-x-4  rounded-lg w-full mx-auto">
         {fields.map((field) => (
-          <div key={field.name} className="w-full sm:w-1/2 mb-4">
+          <div key={field.name} className="w-full sm:w-[450px] mb-4">
             {field.type === "textarea" ? (
               <textarea
                 id={field.name}
                 placeholder={field.placeholder}
                 value={(dataToSend && dataToSend[field.name]) || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded-2xl"
               />
             ) : field.type === "select" ? (
               <select
                 id={field.name}
                 value={(dataToSend && dataToSend[field.name]) || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-full p-2 border rounded">
+                className="w-full p-2 border rounded-2xl">
                 <option value="">{field.placeholder}</option>
                 {field.options.map((option) => (
                   <option key={option} value={option}>
@@ -67,7 +67,7 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                   (item, index) => (
                     <div
                       key={index}
-                      className="mb-4 p-4 border rounded bg-white">
+                      className="mb-4 p-4 border rounded-2xl shadow-md bg-white ">
                       {field?.fields?.map((subField) => (
                         <div key={subField.name} className="mb-2">
                           <input
@@ -84,7 +84,7 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                                 setDataToSend
                               )
                             }
-                            className="w-full p-2 border rounded"
+                            className="w-full p-2 border rounded-2xl"
                             required={subField.required}
                           />
                         </div>
@@ -116,7 +116,7 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                 placeholder={field.placeholder}
                 value={(dataToSend && dataToSend[field.name]) || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded-2xl shadow-md"
               />
             )}
             {errors && errors[field.name] && (

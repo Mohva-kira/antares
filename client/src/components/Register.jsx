@@ -6,13 +6,13 @@ import bg from "../assets/images/1.png";
 import logo from "../assets/images/logo_antares.png";
 import { setAuth, useRegisterMutation } from "../redux/auth/authService";
 
-const Register = () => {
+const Register = ({ setShowLogin }) => {
   const [register] = useRegisterMutation();
   const dispatch = useDispatch();
   const [email, setEmail] = useState(null);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
-  const [showLogin, setShowLogin] = useState(null);
+
   const [secondPassword, setSecondPassword] = useState(null);
   const navigate = useNavigate();
   const send = async () => {
@@ -49,12 +49,12 @@ const Register = () => {
       <div class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
         <div class="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
           <div class="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
-            <div>
-              <img src={logo} class="w-mx-auto md:w-80" />
+            <div className="flex justify-center ">
+              <img src={logo} class="w-mx-auto md:w-56" />
             </div>
             <div class="mt-12 flex flex-col items-center">
               <div class="w-full flex-1 mt-8">
-                <div class="flex flex-col items-center">
+                {/* <div class="flex flex-col items-center">
                   <button class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
                     <div class="bg-white p-2 rounded-full">
                       <svg class="w-4" viewBox="0 0 533.5 544.3">
@@ -84,7 +84,7 @@ const Register = () => {
                   <div class="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
                     Ou se connecter grâve à votre E-mail
                   </div>
-                </div>
+                </div> */}
 
                 <div class="mx-auto max-w-xs">
                   <input
@@ -130,7 +130,7 @@ const Register = () => {
                   <p class="mt-6 text-xs text-gray-600 text-center">
                     Vous avez un compte
                     <Link
-                      onClick={() => setShowLogin(!showLogin)}
+                      onClick={() => setShowLogin(true)}
                       class="border-b border-gray-500 ml-3 border-dotted">
                       Connexion
                     </Link>

@@ -11,21 +11,19 @@ const UserForm = () => {
     switch (formType) {
       case "user":
         return <Form />;
-      default:
-        return <p>Veuillez cliquer pour ajouter un utilisateur.</p>;
     }
   };
 
   return (
-    <div className="p-2 max-w-2xl mx-auto bg-white rounded-2xl shadow-lg">
+    <div className="p-2 flex w-full justify-end items-end rounded-2xl ">
       <div className="flex justify-center space-x-4 mb-6">
         <button
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+          className="px-4 py-2 bg-orange-500 text-white rounded-lg shadow-lg"
           onClick={() => handleFormChange("user")}>
           Ajouter un utilisateur
         </button>
       </div>
-      
+
       {renderForm()}
     </div>
   );

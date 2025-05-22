@@ -34,6 +34,18 @@
     },
     "experience": {
       "type": "string"
+    },
+    "contratType": {
+      "type": "string"
+    },
+    "skills": {
+      "type": "json"
+    },
+    "objectif": {
+      "type": "json"
+    },
+    "education": {
+      "type": "json"
     }
   }
 }

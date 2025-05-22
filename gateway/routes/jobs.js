@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-const token = "bb4c1fcf6200a9409a44165baa8ef2872f16cfaa72073158caa01673351d6773dcb1cddeea6e2d9539182f44666cad44a14b228dca6eb9c52cd2bfbe9ef321f8ef21bb1bd7830ba3cef86c21f98d5e16b603d4c08c9af16f9f6d0ca832e08f5989e7fd0e710dafdd280f117b1af5b2a375fc1d402374394222fcd62fef3e742c";
+const token = "f280a1d17f90aadb250ef613c679289adcca1336a22a7e8a5d877dd1426f8c00c5d50d8804cf746c9657f9fc897cd6a4f0518eb11f24394d66eee7e63e48460dd9dfc0f69b12e7f583d1efda68194ab8f067f515db0871d6f0b7ab4837e27d40856c0fcf7a5d183fbb70ad3abbc0ad6fb026ad4005adc92471faded8d7acbe17";
 
 const headers = {
     'Content-Type': 'application/json',
@@ -13,8 +13,9 @@ const strapiApi = "http://localhost:1337/api/jobs";
 
 /* GET redevances listing. */
 router.get('/', async (req, res) => {
+
     try {
-        const response = await axios.get(`${strapiApi}?populate=*`, { headers });
+        const response = await axios.get(`${strapiApi}?populate=*&sort[0]=createdAt:desc`, { headers });
         console.log('jobs GET', response.data);
         res.json(response.data);
     } catch (error) {
@@ -24,9 +25,9 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-    console.log('req params', req.params)
+
     try {
-        const response = await axios.get(`${strapiApi}?populate=*&filters[user][$eq]=${req.params.id}`, { headers });
+        const response = await axios.get(`${strapiApi}/${req.params.id}?populate=*`, { headers });
         console.log('jobs GET', response.data);
         res.json(response.data);
     } catch (error) {
@@ -35,6 +36,28 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.get('/getbyname/:id', async (req, res) => {
+    console.log('id', req.params.id);
+    try {
+        const response = await axios.get(`${strapiApi}?populate=*&filters[titre][$eq]=${encodeURIComponent(req.params.id)}`, { headers });
+        console.log('jobs GET', response.data);
+        res.json(response.data);
+    } catch (error) {
+        console.error('Erreur GET jobs', error);
+        res.status(500).send({ error: "Erreur lors de la récupération des jobs" });
+    }
+});
+router.get('/getbyid/:id', async (req, res) => {
+
+    try {
+        const response = await axios.get(`${strapiApi}?populate=*&filters[id][$eq]=${req.params.id}`, { headers });
+        console.log('jobs GET', response.data);
+        res.json(response.data);
+    } catch (error) {
+        console.error('Erreur GET jobs', error);
+        res.status(500).send({ error: "Erreur lors de la récupération des jobs" });
+    }
+});
 router.post('/', async (req, res) => {
     try {
         console.log('jobs POST:', req.body.data);

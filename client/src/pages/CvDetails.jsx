@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import Breadcumb from "../components/Breadcumb";
 import Container from "../components/Container";
 import Form from "../components/Form";
@@ -13,6 +14,7 @@ import {
   useGetResumesQuery,
   usePostResumesMutation,
 } from "../redux/candidatService";
+
 
 // Composant pour afficher une section d'expérience professionnelle
 const ExperienceSection = ({ experiences }) => (
@@ -41,7 +43,7 @@ const EducationSection = ({ education }) => (
       Éducation
     </h2>
     <div className="space-y-4">
-      {education.map((edu, index) => (
+      {education?.map((edu, index) => (
         <div key={index} className="bg-gray-50 p-4 rounded-2xl shadow-md">
           <h3 className="text-lg font-semibold">
             {edu.degree} - {edu.institution}
@@ -210,7 +212,13 @@ const CvDetails = ({ cv }) => {
   console.log("mon cv", data);
   const send = (data) => {
     data.user = user?.user?.id;
-    postResume({ data }).then((rep) => console.log("la reponse", rep));
+    postResume({ data }).then((rep) => {
+      console.log("le rep", rep);
+      if (rep?.data) {
+        toast.success("CV créé avec succès");
+        setIsVisible(false);
+      }
+    });
   };
 
   console.log("find", findCv);

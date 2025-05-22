@@ -52,7 +52,7 @@ export const companyApi = createApi({
 });
 
 // Hooks auto-générés par RTK Query
-export const { useGetCompanyQuery, usePostCompanyMutation, useGetCompanyByIdQuery } = companyApi;
+export const { useLazyGetCompanyQuery, useGetCompanyQuery, usePostCompanyMutation, useGetCompanyByIdQuery } = companyApi;
 
 // Exporte le reducer (si tu veux stocker localement des company en plus de l'API)
 export const companyReducer = companySlice.reducer;

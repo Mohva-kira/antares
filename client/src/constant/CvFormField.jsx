@@ -2,7 +2,8 @@ export const CvFormField = [
   {
     class: "",
     name: "title",
-    placeholder: "Titre",
+    placeholder:
+      "Profil du candidat (Ingénieur, Développeur, Gestionnaire, Secrétaire  etc.)",
     type: "text",
     required: true,
   },

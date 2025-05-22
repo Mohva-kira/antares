@@ -4,14 +4,16 @@ import { addArrayElement, handleInputChange, handleSubmit } from "../utils";
 const Form = ({ fields, title, setIsVisible, post }) => {
   const [dataToSend, setDataToSend] = useState();
   const [errors, setErrors] = useState();
+
+  console.log("title", title);
   const send = (data) => {
     console.log("Données envoyées :", data);
     post(data);
   };
 
   return (
-    <div className="lg:w-1/2 w-full bg-slate-400 dark:bg-gray-700 p-5 rounded-2xl flex flex-col justify-center shadow-md">
-      <div className="w-full flex justify-end relative">
+    <div className="lg:w-3/4 w-full bg-slate-400 dark:bg-gray-700 p-5 rounded-2xl flex flex-col justify-center shadow-md">
+      <div className="w-full flex justify-end relative  mt-16">
         <p
           onClick={() => setIsVisible(false)}
           className="text-white cursor-pointer dark:text-white">
@@ -28,7 +30,7 @@ const Form = ({ fields, title, setIsVisible, post }) => {
           e.preventDefault();
           handleSubmit(dataToSend, fields, setErrors, send, setIsVisible);
         }}
-        className="p-5 bg-gray-100 flex flex-wrap justify-center items-center gap-4 rounded-2xl w-full mx-auto">
+        className="p-5 bg-gray-100  flex flex-wrap justify-center items-center gap-4 rounded-2xl w-full mx-auto">
         {fields?.map((field) => (
           <>
             {field.type === "textarea" ? (
@@ -37,14 +39,14 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                 placeholder={field.placeholder}
                 value={(dataToSend && dataToSend[field.name]) || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-full p-2 border rounded"
+                className="w-1/2 p-2 border rounded-2xl shadow-md"
               />
             ) : field.type === "select" ? (
               <select
                 id={field.name}
                 value={(dataToSend && dataToSend[field.name]) || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-2/5 p-2 border rounded">
+                className="w-2/5 p-2 border rounded-2xl shadow-md">
                 <option value="">{field.placeholder}</option>
                 {field?.options?.map((option, index) => (
                   <option key={index} value={option.value}>
@@ -53,7 +55,7 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                 ))}
               </select>
             ) : field.type === "array" ? (
-              <div className="w-full">
+              <div className="w-1/3 h-full overflow-y-auto">
                 <label className="block mb-2 font-semibold">
                   {field.placeholder}
                 </label>
@@ -61,34 +63,65 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                   (item, index) => (
                     <div
                       key={index}
-                      className="mb-4 p-4 w-2/5 border rounded bg-white">
-                      {field?.fields?.map((subField) => (
-                        <div key={subField.name} className="mb-2 w-full">
-                          <input
-                            type={subField.type}
-                            name={subField.name}
-                            placeholder={subField.placeholder}
-                            value={(item && item[subField.name]) || ""}
-                            onChange={(e) =>
-                              updateNestedArrayElement(
-                                field.name,
-                                index,
-                                subField.name,
-                                e.target.value,
-                                setDataToSend
-                              )
+                      className="mb-4 p-4 w-full border rounded-2xl shadow-md bg-white">
+                      {field?.fields?.map((subField) =>
+                        subField.type === "select" ? (
+                          <select
+                            id={subField.name}
+                            value={
+                              (dataToSend && dataToSend[subField.name]) || ""
                             }
-                            className="w-full p-2 border rounded"
-                            required={subField.required}
+                            onChange={(e) =>
+                              handleInputChange(e, setDataToSend, setErrors)
+                            }
+                            className="w-full p-2 border rounded-2xl mb-2 shadow-md">
+                            <option value="">{subField.placeholder}</option>
+                            {subField?.options?.map((option, index) => (
+                              <option key={index} value={option.value}>
+                                {option.name}
+                              </option>
+                            ))}
+                          </select>
+                        ) : subField.type == "textarea" ? (
+                          <textarea
+                            id={subField.name}
+                            placeholder={subField.placeholder}
+                            value={
+                              (dataToSend && dataToSend[subField.name]) || ""
+                            }
+                            onChange={(e) =>
+                              handleInputChange(e, setDataToSend, setErrors)
+                            }
+                            className="w-full p-2 border rounded-2xl shadow-md"
                           />
-                        </div>
-                      ))}
+                        ) : (
+                          <div key={subField.name} className="mb-2 mt-2 w-full">
+                            <input
+                              type={subField.type}
+                              name={subField.name}
+                              placeholder={subField.placeholder}
+                              value={(item && item[subField.name]) || ""}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  field.name,
+                                  index,
+                                  subField.name,
+                                  e.target.value,
+                                  setDataToSend
+                                )
+                              }
+                              className="w-full p-2 border rounded-2xl shadow-md"
+                              required={subField.required}
+                            />
+                          </div>
+                        )
+                      )}
                       <button
                         type="button"
                         onClick={() =>
                           removeArrayElement(field.name, index, setDataToSend)
                         }
-                        className="bg-red-500 text-white p-2 rounded w-full">
+                        className="bg-red-500 text-white p-2 mt-3 rounded-2xl shadow-md w-full">
                         Supprimer cette expérience
                       </button>
                     </div>
@@ -99,7 +132,7 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                   onClick={() =>
                     addArrayElement(field.name, setDataToSend, field.fields)
                   }
-                  className="bg-blue-500 text-white p-2 rounded w-full">
+                  className="bg-blue-500 text-white p-2 rounded-2xl shadow-md w-full">
                   Ajouter une expérience
                 </button>
               </div>
@@ -110,7 +143,7 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                 placeholder={field.placeholder}
                 value={(dataToSend && dataToSend[field.name]) || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-2/5 p-2 border rounded"
+                className="w-2/5 p-2 border rounded-2xl shadow-md"
               />
             )}
             {errors && errors[field.name] && (
@@ -121,7 +154,7 @@ const Form = ({ fields, title, setIsVisible, post }) => {
 
         <button
           type="submit"
-          className="bg-green-500 text-white p-2 rounded w-full hover:bg-green-600 transition">
+          className="bg-green-500 text-white p-2 rounded-2xl shadow-md w-full hover:bg-green-600 transition">
           Envoyer
         </button>
       </form>

@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import applicationReducer, { applicationApi } from "./application";
 import auth, { authApi } from "./auth/authService";
 import candidatReducer, { candidatApi } from "./candidatService";
+import offersReducer, { offersApi } from "./offerService";
 import profileReducer, { profileApi } from "./profileServices";
 import redevableReducer, { redevableApi } from "./redevableService";
 import redevanceReducer, { redevanceApi } from "./redevanceService";
-
 export const store = configureStore({
   reducer: {
     redevables: redevableReducer,
@@ -13,6 +14,10 @@ export const store = configureStore({
     profile: profileReducer,
     candidat: candidatReducer,
     redevances: redevanceReducer,
+    offers: offersReducer,
+    applications: applicationReducer,
+    [applicationApi.reducerPath]: applicationReducer,
+    [offersApi.reducerPath]: offersApi.reducer,
     [redevableApi.reducerPath]: redevableApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [candidatApi.reducerPath]: candidatApi.reducer,
@@ -26,7 +31,9 @@ export const store = configureStore({
       authApi.middleware,
       profileApi.middleware,
       redevanceApi.middleware,
-      candidatApi.middleware
+      candidatApi.middleware,
+      offersApi.middleware,
+      applicationApi.middleware
     ),
 });
 

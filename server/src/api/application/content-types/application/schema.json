@@ -4,7 +4,8 @@
   "info": {
     "singularName": "application",
     "pluralName": "applications",
-    "displayName": "application"
+    "displayName": "application",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -14,7 +15,7 @@
     "candidat": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::candidat.candidat"
+      "target": "plugin::users-permissions.user"
     },
     "job": {
       "type": "relation",
