@@ -44,6 +44,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { useGetCandidatsQuery } from "./redux/candidatService";
 import { useGetOffersQuery } from "./redux/offerService";
+import { useGetActualitesQuery } from "./redux/actualite";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -235,9 +236,16 @@ function App() {
 
   const navigate = useNavigate();
 
+  const user = JSON.parse(localStorage.getItem("auth")) || null;
   const { data, isLoading, isSuccess, isFetching, isError } =
     useGetCandidatsQuery();
   const { data: jobs, isLoading: isLoadingJobs } = useGetOffersQuery();
+
+  const {
+    data: actualiteData,
+    isLoading: actualiteIsLoading,
+    isFetching: actualiteIsFetching,
+  } = useGetActualitesQuery();
 
   return (
     <>
@@ -361,28 +369,31 @@ function App() {
         </div>
       </section>
 
-      <section className="banner-bottom-wthree mid py-lg-5 py-3 bg-slate-700">
-        <div className="container">
-          <div className="inner-sec-w3ls py-lg-5  py-3">
-            <div className="mid-info text-center pt-3">
-              <h3 className="tittle text-center cen mb-lg-5 mb-3">
-                <span>Faites la différence</span>Avec nos CV vidéos demarquez
-                vous de la concurrence!
-              </h3>
-              <p></p>
-              <div className="resume flex justify-center items-center">
-                <a
-                  className="flex items-center justify-center space-x-4 text-white font-bold bg-blue-500 p-3 rounded-lg w-1/3"
-                  onClick={() => navigate("/auth/register")}
-                  data-toggle="modal"
-                  data-target="#exampleModalCenter2">
-                  <IoIosPersonAdd size={25} className="mr-2" /> Créer un compte
-                </a>
+      {!user && (
+        <section class="banner-bottom-wthree mid py-lg-5 py-3">
+          <div class="container">
+            <div class="inner-sec-w3ls py-lg-5   py-md-3 py-3">
+              <div class="mid-info text-center pt-3">
+                <h3 class="tittle text-center cen mb-lg-5 mb-3">
+                  <span>Vers la reussite</span>Faites la difference avec votre
+                  cv en ligne!
+                </h3>
+                <p></p>
+                <div class="flex justify-center space-x-4 mt-5 ">
+                  <a
+                    className="flex items-center justify-center space-x-4 text-white font-bold bg-blue-500 p-3 rounded-lg w-1/3"
+                    onClick={() => navigate("/auth/register")}
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter2">
+                    <IoIosPersonAdd size={25} className="mr-2" /> Créer un
+                    compte
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="banner-bottom-wthree py-lg-5 py-md-5 py-3">
         <div className="container">
@@ -413,8 +424,8 @@ function App() {
             </h3>
             <div className="row mt-5">
               <div className="card-deck">
-                {[0, 1, 2].map((item) => (
-                  <ArticleCard />
+                {actualiteData?.data.map((item) => (
+                  <ArticleCard item={item} />
                 ))}
               </div>
             </div>
@@ -422,16 +433,6 @@ function App() {
         </div>
       </section>
 
-      <section className="clents-slide py-lg-5 py-3">
-        <div className="container">
-          <div className="inner-sec-w3ls py-lg-5  py-3">
-            <h3 className="tittle text-center mb-lg-5 mb-3">
-              <span>Temoignages</span> Ils sont passé par Antares?
-            </h3>
-            <Clients />
-          </div>
-        </div>
-      </section>
 
       <Footer />
     </>

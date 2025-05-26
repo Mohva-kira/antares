@@ -75,7 +75,7 @@ const Headers = () => {
                   </li>
                   <li>
                     <a
-                      href={`/candidatures/${user?.user?.id}`}
+                      href={`/candidatures`}
                       className="block px-4 py-2 text-sm dropdown-item hover:text-orange-400  dark:hover:text-orange-400">
                       Candidatures
                     </a>

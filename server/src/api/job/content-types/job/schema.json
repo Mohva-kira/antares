@@ -46,6 +46,38 @@
     },
     "education": {
       "type": "json"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "INFORMATIQUE",
+        "ADMINISTRATION",
+        "COMMERCIAL",
+        "MARKETING",
+        "RH",
+        "FINANCE",
+        "JURIDIQUE",
+        "LOGISTIQUE",
+        "INDUSTRIE",
+        "BTP",
+        "SANTE",
+        "EDUCATION",
+        "HOTELLERIE",
+        "AGRICULTURE",
+        "ARTISANAT",
+        "SECURITE",
+        "ENERGIE",
+        "RECHERCHE",
+        "SERVICE_CLIENT",
+        "ACHATS",
+        "IMMOBILIER",
+        "CULTURE",
+        "SPORT",
+        "TRANSLATION",
+        "ASSOCIATIF",
+        "FREELANCE",
+        "AUTRE"
+      ]
     }
   }
 }

@@ -28,8 +28,6 @@ export const applicationApi = createApi({
         baseUrl: "http://localhost:1337/api",
         prepareHeaders: (headers, { getState }) => {
             const token = JSON.parse(localStorage.getItem("auth")).jwt;
-
-            // If we have a token set in state, let's assume that we should be passing it.
             if (token) {
                 headers.set("authorization", `Bearer ${token}`);
             }
@@ -42,7 +40,6 @@ export const applicationApi = createApi({
         getApplication: builder.query({
             query: (id) => `/applications?populate=*&filters[user][$eq]=${id}`,
         }),
-
         postApplication: builder.mutation({
             query: (data) => ({
                 url: `/applications`,
@@ -50,13 +47,19 @@ export const applicationApi = createApi({
                 body: data,
             }),
         }),
-
-
         getApplicationById: builder.query({
             query: (id) => `/applications/${id}`,
-
+        }),
+        getApplicationByUserId: builder.query({
+            query: (id) => `/applications?filters[candidat][id][$eq]=${id}&populate[0]=candidat&populate[1]=job&populate[2]=job.company&populate[3]=job.category&populate[4]=job.contratType`,
         }),
     }),
 });
 
-export const { useGetApplicationQuery, usePostApplicationMutation, useGetApplicationByIdQuery } = applicationApi;   
+// Exports des hooks générés automatiquement par RTK Query
+export const {
+    useGetApplicationQuery,
+    usePostApplicationMutation,
+    useGetApplicationByIdQuery,
+    useGetApplicationByUserIdQuery
+} = applicationApi;

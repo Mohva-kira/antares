@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from "react";
 import aziz from "../assets/images/aziz_diarra.png";
 import Modal from "./Modal";
+import { CiFacebook } from "react-icons/ci";
+import { TiSocialLinkedinCircular } from "react-icons/ti";
 
 const CvVideoCard = ({ item }) => {
-  const { title, img, summary, user } = item?.attributes;
+  const { title, img, summary, user, linkedin } = item?.attributes;
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -29,24 +31,24 @@ const CvVideoCard = ({ item }) => {
               <a href="candidates_single.html"> {title}</a>
             </h4>
 
-            <p className="my-4"> {summary}</p>
+            <p className="my-4 truncate"> {summary}</p>
             <div className="mt-3 team-social text-center">
               <ul className="social-icons text-center">
                 <li>
                   <a href="#">
-                    <i className="fab fa-facebook-f"></i>
+                  <CiFacebook size={35} />
                   </a>
                 </li>
                 <li className="mx-3">
-                  <a href="#">
-                    <i className="fab fa-twitter"></i>
+                  <a href={linkedin}>
+                    <TiSocialLinkedinCircular size={35} />
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <a href="#">
                     <i className="fab fa-google-plus-g"></i>
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -58,7 +60,7 @@ const CvVideoCard = ({ item }) => {
         isVisible={isVisible}
         setIsVisible={setIsVisible}
         video={aziz}
-        id={user?.data.id}
+        id={user?.data}
       />
     </div>
   );

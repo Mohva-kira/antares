@@ -8,6 +8,8 @@ import p3 from "../assets/images/p3.jpg"
 import p4 from "../assets/images/p4.jpg"
 import { FaBullhorn, FaGraduationCap, FaAccusoft, FaUsers } from "react-icons/fa6";
 import ProcessCard from '../components/ProcessCard'
+import { IoIosPersonAdd } from 'react-icons/io'
+import { useNavigate } from 'react-router-dom'
 
 const How = () => {
 
@@ -53,6 +55,12 @@ const How = () => {
   ]
 
 
+  const navigate = useNavigate();
+
+
+  const user = JSON.parse(localStorage.getItem("auth")) || null;
+  
+
   return (
     <Container>
     <ol class="breadcrumb justify-content-left">
@@ -67,7 +75,7 @@ const How = () => {
             <div class="inner-sec-w3ls py-lg-5  py-3">
 		
                 <h3 class="tittle text-center mb-lg-4 mb-3">
-                    <span>Some Info</span>Comment ça marche</h3>
+                    <span>Quelques informations</span>Comment ça marche</h3>
 			
                   {<Steps />}
           
@@ -97,16 +105,23 @@ const How = () => {
         </div>
       </section>
 
-      <section class="banner-bottom-wthree mid py-lg-5 py-3">
+
+                                  { !user && 
+                                  <section class="banner-bottom-wthree mid py-lg-5 py-3">
         <div class="container">
             <div class="inner-sec-w3ls py-lg-5   py-md-3 py-3">
                 <div class="mid-info text-center pt-3">
                     <h3 class="tittle text-center cen mb-lg-5 mb-3">
                         <span>Vers la reussite</span>Faites la difference avec votre cv en ligne!</h3>
                     <p></p>
-                    <div class="resume">
-                        <a href="#" data-toggle="modal" data-target="#exampleModalCenter2">
-                            <i class="far fa-user"></i> Créer un compte</a>
+                    <div class="flex justify-center space-x-4 mt-5 ">
+                                          <a
+                                          className="flex items-center justify-center space-x-4 text-white font-bold bg-blue-500 p-3 rounded-lg w-1/3"
+                                          onClick={() => navigate("/auth/register")}
+                                          data-toggle="modal"
+                                          data-target="#exampleModalCenter2">
+                                          <IoIosPersonAdd size={25} className="mr-2" /> Créer un compte
+                                        </a>  
                     </div>
                 </div>
 
@@ -114,6 +129,9 @@ const How = () => {
         </div>
     </section>
 
+
+                                  }
+     
     <section class="banner-bottom-wthree py-lg-5 py-md-5 py-3">
                     <div class="container">
                       <ProcessCard />

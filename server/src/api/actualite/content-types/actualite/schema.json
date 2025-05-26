@@ -4,7 +4,8 @@
   "info": {
     "singularName": "actualite",
     "pluralName": "actualites",
-    "displayName": "actualite"
+    "displayName": "actualite",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -17,24 +18,25 @@
     "slug": {
       "type": "string"
     },
-    "content": {
-      "type": "string"
-    },
     "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "categorie": {
       "type": "string"
     },
     "author": {
       "type": "string"
+    },
+    "content": {
+      "type": "richtext"
     }
   }
 }

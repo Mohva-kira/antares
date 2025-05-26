@@ -4,6 +4,7 @@ import Container from '../components/Container'
 import JobCard from '../components/JobCard'
 import job2 from "../assets/images/job-2.jpg"
 import Breadcumb from '../components/Breadcumb'
+import { useGetApplicationByIdQuery, useGetApplicationByUserIdQuery } from '../redux/application'
 const Applications = () => {
 
     const jobData =[
@@ -128,8 +129,11 @@ const Applications = () => {
             appliedDate: new Date()
         }
     ]
+   const auth = JSON.parse(localStorage.getItem("auth"));
+    const user = auth?.user;
 
-    
+    const {data, isLoading, isSuccess, isFetching, isError} = useGetApplicationByUserIdQuery(user?.id);
+
   return (
     <Container>
       <Breadcumb title="Mes candidatures" />
@@ -157,9 +161,9 @@ const Applications = () => {
                                       <div class="menu-grids mt-4">
                                           <div class="row t-in">
                                               <div class="col-lg-8 text-info-sec">
-                                                      {jobData.map(item => 
+                                                      {data?.data?.map(item => 
                                                         
-                                                        <JobCard item={item} />
+                                                        <JobCard item={item?.attributes?.job?.data} applied={item} />
                                                       )
 
                                                       }

@@ -1,16 +1,19 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
-const ArticleCard = () => {
-  return (
-     <div class="card">
-            <img src="images/g1.jpg" alt="Card image cap" class="img-fluid card-img-top"/>
-            <div class="card-body">
-                <h5 class="card-title">Le travail à distance est-ce une solution viable?</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit sedc dnmo
-                    eiusmod tempor incididunt ut labore et dolore .</p>
+const ArticleCard = ({item}) => {
+    const {id, title, images, content, createdAt} = item.attributes || {}
+
+    const navigate = useNavigate();
+ return (
+     <div onClick={() => navigate(`/news/${title}`)} className="card w-96 cursor-pointer shadow-lg hover:shadow-2xl transition-shadow duration-300">
+            <img src={`http://localhost:1337${images.data[0]?.attributes?.url}`} alt="Card image cap" className="img-fluid object-contain card-img-top"/>
+            <div className="card-body">
+                <h5 className="card-title">{title}?</h5>
+                <p className="card-text w-72 overflow-hidden">{content} .</p>
             </div>
-            <div class="card-footer">
-                <small class="text-muted">mise à jour il y'a 3 min</small>
+            <div className="card-footer">
+                <small className="text-muted">{new Date(createdAt ?? "")?.toLocaleDateString() }</small>
             </div>
         </div>
   )

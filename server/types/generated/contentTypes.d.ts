@@ -742,7 +742,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -771,6 +770,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    phone: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -794,6 +794,7 @@ export interface ApiActualiteActualite extends Schema.CollectionType {
     singularName: 'actualite';
     pluralName: 'actualites';
     displayName: 'actualite';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -801,10 +802,10 @@ export interface ApiActualiteActualite extends Schema.CollectionType {
   attributes: {
     title: Attribute.String;
     slug: Attribute.String;
-    content: Attribute.String;
     images: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
     categorie: Attribute.String;
     author: Attribute.String;
+    content: Attribute.RichText;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1012,6 +1013,37 @@ export interface ApiJobJob extends Schema.CollectionType {
     skills: Attribute.JSON;
     objectif: Attribute.JSON;
     education: Attribute.JSON;
+    category: Attribute.Enumeration<
+      [
+        'INFORMATIQUE',
+        'ADMINISTRATION',
+        'COMMERCIAL',
+        'MARKETING',
+        'RH',
+        'FINANCE',
+        'JURIDIQUE',
+        'LOGISTIQUE',
+        'INDUSTRIE',
+        'BTP',
+        'SANTE',
+        'EDUCATION',
+        'HOTELLERIE',
+        'AGRICULTURE',
+        'ARTISANAT',
+        'SECURITE',
+        'ENERGIE',
+        'RECHERCHE',
+        'SERVICE_CLIENT',
+        'ACHATS',
+        'IMMOBILIER',
+        'CULTURE',
+        'SPORT',
+        'TRANSLATION',
+        'ASSOCIATIF',
+        'FREELANCE',
+        'AUTRE'
+      ]
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

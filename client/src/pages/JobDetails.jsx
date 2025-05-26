@@ -59,6 +59,10 @@ const EducationSection = ({ education }) => (
 );
 
 const JobDetails = () => {
+
+  const auth = JSON.parse(localStorage.getItem("auth")) || null;
+  const {user} = auth || {}
+  const userId = user?.id || null;
   const cvDataList = [
     {
       id: 1,
@@ -262,26 +266,25 @@ const JobDetails = () => {
     company?.data?.attributes || {};
   console.log("Data", data);
 
-  const postCandidature = async (data) => {
-    postApplication({
-      data: {
-        ...data,
-        job: data?.id,
-      },
-    })
-      .unwrap()
-      .then((res) => {
-        console.log("Candidature envoyée avec succès", res);
-        toast.success(
-          "Candidature envoyée avec succès, vous serez contacté par l'employeur"
-        );
-        navigate("/candidatures");
-      })
-      .catch((err) => {
-        console.error("Erreur lors de l'envoi de la candidature", err);
-      });
+  const postCandidature = async () => {
+    const date = new Date();
+    try {
+      const res = await postApplication({
+        data: {
+          job: data?.data[0]?.id,
+          candidat: userId,
+          date_candidature: date,
+          statut: "En attente",
+        },
+      }).unwrap();
+      toast.success(
+        "Candidature envoyée avec succès, vous serez contacté par l'employeur"
+      );
+      navigate("/candidatures");
+    } catch (err) {
+      console.error("Erreur lors de l'envoi de la candidature", err);
+    }
   };
-
   
 
   if (isLoading) {
@@ -330,9 +333,9 @@ const JobDetails = () => {
                 Êtes-vous sûr de vouloir postuler à cette offre d'emploi ?
               </p>
               <div className="flex  gap-2 w-full">
-                <button className="w-full bg-blue-700 ">Oui</button>
+                <button onClick={() => postCandidature()} className="w-full bg-blue-700 rounded-2xl">Oui</button>
                 <button
-                  className="w-1/2  bg-red-500"
+                  className="w-1/2  bg-red-500 rounded-2xl"
                   onClick={() => setisVisible(false)}>
                   Non
                 </button>

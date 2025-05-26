@@ -10,6 +10,7 @@ var usersRouter = require('./routes/users');
 var candidatRouter = require('./routes/candidats');
 var jobsRouter = require('./routes/jobs');
 var redevablesRouter = require('./routes/redevables');
+var actualtiesRouter = require('./routes/actuality');
 var app = express();
 const port = 3010
 // view engine setup
@@ -30,6 +31,7 @@ app.use('/users', usersRouter);
 app.use('/candidats', candidatRouter);
 app.use('/jobs', jobsRouter);
 app.use('/redevances', redevablesRouter);
+app.use('/actualites', actualtiesRouter);
 
 
 // catch 404 and forward to error handler

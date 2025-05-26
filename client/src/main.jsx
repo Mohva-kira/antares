@@ -18,6 +18,7 @@ import JobDetails from "./pages/JobDetails.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
 import Offers from "./pages/Offers.jsx";
 import { store } from "./redux/Store.js";
+import Actualite from "./pages/Actualite.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
   {
     path: "/job/:name",
     element: <JobDetails />,
+  },
+  {
+    path: "/news/:name",
+    element: <Actualite />,
   },
 
   {

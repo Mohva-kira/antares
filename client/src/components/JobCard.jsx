@@ -1,7 +1,7 @@
 import React from "react";
 import { MdLocationPin, MdWork } from "react-icons/md";
 import edm from "../assets/edm.jpeg";
-const JobCard = ({ item }) => {
+const JobCard = ({ item, applied}) => {
   const {
     name,
     titre,
@@ -11,9 +11,11 @@ const JobCard = ({ item }) => {
     contratType,
     category,
     date,
-    applied,
+
     appliedDate,
   } = item?.attributes || {};
+
+
 
   return (
     <div className="job-post-main row">
@@ -63,7 +65,7 @@ const JobCard = ({ item }) => {
           href={`/job/${titre}`}
           className={
             applied
-              ? "bg-green-500 p-2 rounded-lg text-white font-medium"
+              ? "bg-green-500 px-2 py-0.5 rounded-lg text-white font-medium"
               : "aply-btn "
           }>
           {" "}
@@ -71,7 +73,7 @@ const JobCard = ({ item }) => {
         </a>
         {applied ? (
           <div className="text-slate-500 mt-2 font-semibold text-xs">
-            {appliedDate.toLocaleDateString()}
+            {new Date(applied.attributes.date_candidature).toLocaleDateString()}
           </div>
         ) : null}
       </div>
