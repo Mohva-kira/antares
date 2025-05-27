@@ -10,7 +10,7 @@ const Contact = () => {
           <div class="mx-auto max-w-7xl px-4 bg-blue-50 my-4 rounded-lg py-16 sm:px-6 lg:px-8 lg:py-20">
               <div class="mb-4">
                   <div class="mb-6 max-w-3xl text-center sm:text-center md:mx-auto md:mb-12">
-                      <p class="tittle text-center font-semibold uppercase tracking-wide ">
+                      <p class="title text-center font-semibold uppercase tracking-wide ">
                           Contact
                       </p>
                       <h2
@@ -43,14 +43,14 @@ const Contact = () => {
                                       </svg>
                                   </div>
                                   <div class="ml-4 mb-4">
-                                      <h3 class="mb-2 text-lg font-medium leading-6 text-gray-900 dark:text-white">Notre adresse
+                                      <h3 class="mb-2 text-lg font-medium leading-6 text-gray-900 dark:text-black">Notre adresse
                                       </h3>
                                       <p class="text-gray-600 dark:text-slate-400">ACI 2000  pres de Bougie ba</p>
                                       <p class="text-gray-600 dark:text-slate-400">Bamako, Mali</p>
                                   </div>
                               </li>
                               <li class="flex">
-                                  <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-900 text-gray-50">
+                                  <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-900 text-black">
                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                           stroke-linejoin="round" class="h-6 w-6">
@@ -62,7 +62,7 @@ const Contact = () => {
                                       </svg>
                                   </div>
                                   <div class="ml-4 mb-4">
-                                      <h3 class="mb-2 text-lg font-medium leading-6 text-gray-900 dark:text-white">Contact
+                                      <h3 class="mb-2 text-lg font-medium leading-6 text-gray-900 dark:text-black">Contact
                                       </h3>
                                       <p class="text-gray-600 dark:text-slate-400">Mobile: +223 20 29 20 40</p>
                                       <p class="text-gray-600 dark:text-slate-400">Mail: info@antares-rh.com</p>
@@ -78,7 +78,7 @@ const Contact = () => {
                                       </svg>
                                   </div>
                                   <div class="ml-4 mb-4">
-                                      <h3 class="mb-2 text-lg font-medium leading-6 text-gray-900 dark:text-white">Working
+                                      <h3 class="mb-2 text-lg font-medium leading-6 text-gray-900 dark:text-black">Working
                                           hours</h3>
                                       <p class="text-gray-600 dark:text-slate-400">Lundi - Vendredi: 08:00 - 17:00</p>
                                       {/* <p class="text-gray-600 dark:text-slate-400">Saturday &amp; Sunday: 08:00 - 12:00</p> */}

@@ -26,7 +26,7 @@ export default candidatSlice.reducer;
 export const candidatApi = createApi({
   reducerPath: "candidatApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3010",
+    baseUrl: "http://localhost:3011",
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.data.jwt;
 

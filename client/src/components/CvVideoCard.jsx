@@ -7,10 +7,11 @@ import { TiSocialLinkedinCircular } from "react-icons/ti";
 const CvVideoCard = ({ item }) => {
   const { title, img, summary, user, linkedin } = item?.attributes;
 
+  console.log('CvVideoCard', item);
   const [isVisible, setIsVisible] = useState(false);
 
   return (
-    <div className="col-lg-3 member-main text-center bg-light m-2 rounded-lg p-2">
+    <div className="col-lg-3 member-main text-center shadow-md hover:shadow-2xl  bg-light m-2 rounded-2xl p-2">
       <div
         className="card cv__card"
         data-toggle="modal"

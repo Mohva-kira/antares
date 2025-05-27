@@ -26,7 +26,7 @@ export default actualiteSlice.reducer;
 export const actualiteApi = createApi({
   reducerPath: "actualiteApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3010",
+    baseUrl: "http://localhost:3011",
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.data.jwt;
 

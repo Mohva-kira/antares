@@ -11,7 +11,7 @@ import img1 from "./assets/images/1.png";
 import img2 from "./assets/images/2.png";
 import img3 from "./assets/images/3.jpg";
 import img4 from "./assets/images/4.png";
-import job2 from "./assets/images/job-2.jpg";
+import job2 from "./assets/images/job-2.png";
 import p1 from "./assets/images/p1.jpg";
 import p2 from "./assets/images/p2.jpg";
 import p3 from "./assets/images/p3.jpg";
@@ -69,7 +69,7 @@ function App() {
     },
 
     {
-      title: "Rssources Humaine",
+      title: "Ressources Humaine",
       nb: "4",
       img: p4,
       icon: <FaUsers />,
