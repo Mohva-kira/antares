@@ -28,7 +28,7 @@ export default offersSlice.reducer;
 export const offersApi = createApi({
     reducerPath: 'OffersApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3011',
+        baseUrl: 'https://gateway.antares-rh.net',
         prepareHeaders: (headers, { getState }) => {
             const token = JSON.parse(localStorage.getItem('auth'))?.jwt;
 

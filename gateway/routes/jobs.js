@@ -9,7 +9,7 @@ const headers = {
     'Authorization': `Bearer ${token}`
 };
 
-const strapiApi = "http://localhost:1337/api/jobs";
+const strapiApi = "https://api.antares-rh.net/api/jobs";
 
 /* GET redevances listing. */
 router.get('/', async (req, res) => {

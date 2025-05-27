@@ -26,7 +26,7 @@ export default actualiteSlice.reducer;
 export const actualiteApi = createApi({
   reducerPath: "actualiteApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3011",
+    baseUrl: "https://gateway.antares-rh.net",
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.data.jwt;
 

@@ -26,7 +26,7 @@ export default redevableSlice.reducer;
 export const redevableApi = createApi({
   reducerPath: "redevableApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:1338/api",
+    baseUrl: "https://gateway.antares-rh.net",
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.data.jwt;
 
