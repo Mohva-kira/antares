@@ -75,7 +75,7 @@ const ArticleContent = ({ titre, auteur, date, contenu }) => {
 };
 
 const TableOfContents = ({ headings }) => (
-  <div className="lg:fixed w-full left-5 top-30 bg-white shadow-lg p-4 rounded-2xl">
+  <div className="lg:fixed md:w-fit w-full left-5 top-30 bg-white shadow-lg p-4 rounded-2xl">
     <h3 className="text-lg font-bold mb-2">Sommaire</h3>
     <ul className="space-y-2">
       {headings.map((heading) => (
@@ -225,10 +225,10 @@ const ArticlePage = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col lg:flex-row  w-full">
+      <div className="flex   w-full">
         <ReadingProgress />
 
-        <div className="lg:w-1/4 w-full p-2  justify-around lg:h-full ">
+        <div className="md:w-1/4 w-full p-2  justify-around lg:h-full ">
           <TableOfContents headings={headings} />
           <SocialShare />
         </div>

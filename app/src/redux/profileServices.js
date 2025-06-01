@@ -26,7 +26,7 @@ export default profileSlice.reducer;
 export const profileApi = createApi({
   reducerPath: "profileApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:1337/api",
+    baseUrl: "https://api.antares-rh.net/api",
     prepareHeaders: (headers, { getState }) => {
       const token = JSON.parse(localStorage.getItem('auth')).jwt;
 
@@ -41,12 +41,15 @@ export const profileApi = createApi({
   }),
   endpoints: (builder) => ({
     getProfile: builder.query({
-      query: (id) => `/candidats?populate=*&filters[user][$eq]=${id}`,
+      query: (id) => `/resumes?populate=*`,
     }),
 
+    getProfileById: builder.query({
+      query: (id) => `/resumes/${id}?populate=*`,
+    }),
     postProfile: builder.mutation({
       query: (data) => ({
-        url: `/candidats`,
+        url: `/resumes`,
         method: "POST",
         body: data,
       }),
@@ -61,4 +64,4 @@ export const profileApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetProfileQuery, usePostProfileMutation, } = profileApi;
+export const { useGetProfileQuery, usePostProfileMutation, useLazyGetProfileByIdQuery } = profileApi;

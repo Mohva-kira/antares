@@ -1,4 +1,6 @@
 export const handleInputChange = (e, setDataToSend, setErrors) => {
+    console.log('handleInputChange', e)
+    if (!e || !e.target) return;
     const { id, value, files } = e.target;
 
     setDataToSend((prev) => ({
@@ -17,7 +19,7 @@ export const validateForm = (dataToSend, selected) => {
 
     console.log('les champs', selected)
     selected.forEach((item) => {
-        if (!dataToSend[item.name]) {
+        if (!dataToSend[item.name] && item.required) {
             newErrors[item.name] = `Ce champ ${item.name} est requis`;
         }
     });

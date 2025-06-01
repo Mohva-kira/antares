@@ -3,14 +3,14 @@ import { HiPencilSquare } from "react-icons/hi2";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 const ArticlesCard = ({ article }) => {
-  const { title, description, bgImage } = article;
+  const { title, content, images } = article.attributes || {};
   const navigate = useNavigate();
   return (
     <div className="lg:w-1/3 w-full lg:h-40 h-40  pb-10 items-end  justify-end m-2 p-2 rounded-2xl bg-white">
       <div
-        onClick={() => navigate("/article/1")}
+        onClick={() => navigate("/article/"+ article.id)}
         style={{
-          backgroundImage: "url(" + bgImage + ")",
+          backgroundImage: "url(https://api.antares-rh.net" + images?.data[0]?.attributes?.url + ")",
           backgroundSize: "cover ",
           backgroundRepeat: "no-repeat",
         }}
@@ -18,7 +18,7 @@ const ArticlesCard = ({ article }) => {
         <div className="w-full text-white flex h-full    items-end">
           <span>
             <h1 className="text-lg font-bold line-clamp-1"> {title} :</h1>{" "}
-            <p className="text-sm line-clamp-1 ">{description}</p>
+            <p className="text-sm line-clamp-1 ">{content}</p>
           </span>
         </div>
         <div className="w-full text-black mb-5 space-x-4  flex h-full items-end">

@@ -94,21 +94,61 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                             }
                             className="w-full p-2 border rounded-2xl shadow-md"
                           />
+                        ) :  subField.type == "array" ? (
+                          <div
+                            key={index}
+                            className="mb-2 mt-2 w-full flex flex-col">
+                            <label className="block mb-2 font-semibold">
+                              {subField.placeholder}
+                            </label>
+                            {((dataToSend &&
+                              dataToSend[subField.name]) ||
+                              subField.fields)?.map((subItem, subIndex) => subItem.type == "textarea" ? (
+                                
+                                <textarea
+                                  id={subItem.name}
+                                  placeholder={subItem.placeholder}
+                                  value={
+                                    (dataToSend && dataToSend[subItem.name]) || ""
+                                  }
+                                  onChange={(e) =>
+                                    handleInputChange(e, setDataToSend, setErrors)
+                                  }
+                                  className="w-full p-2 border rounded-2xl shadow-md"
+                                />
+                              ) : (
+                              <input
+                                key={subIndex}
+                                type={subField.type}
+                                id={subItem.name}
+                                name={subItem.name}
+                                placeholder={subItem.placeholder}
+                                value={
+                                  (dataToSend &&
+                                    dataToSend[subField.name]) ||
+                                  ""
+                                }
+                                onChange={(e) =>
+                                  handleInputChange(e, setDataToSend, setErrors)
+                                }
+                                className="w-full p-2 border rounded-2xl shadow-md mb-2"
+                              />
+                            ))}
+                          </div>
+
+                          
                         ) : (
-                          <div key={subField.name} className="mb-2 mt-2 w-full">
+                          <div key={index} className="mb-2 mt-2 w-full">
                             <input
                               type={subField.type}
+                              id={subField.name}
                               name={subField.name}
                               placeholder={subField.placeholder}
-                              value={(item && item[subField.name]) || ""}
+                              value={
+                                (dataToSend && dataToSend[subField.name]) || ""
+                              }
                               onChange={(e) =>
-                                handleInputChange(
-                                  field.name,
-                                  index,
-                                  subField.name,
-                                  e.target.value,
-                                  setDataToSend
-                                )
+                                handleInputChange(e, setDataToSend, setErrors)
                               }
                               className="w-full p-2 border rounded-2xl shadow-md"
                               required={subField.required}
@@ -122,7 +162,7 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                           removeArrayElement(field.name, index, setDataToSend)
                         }
                         className="bg-red-500 text-white p-2 mt-3 rounded-2xl shadow-md w-full">
-                        Supprimer cette expérience
+                        Supprimer 
                       </button>
                     </div>
                   )
@@ -133,7 +173,7 @@ const Form = ({ fields, title, setIsVisible, post }) => {
                     addArrayElement(field.name, setDataToSend, field.fields)
                   }
                   className="bg-blue-500 text-white p-2 rounded-2xl shadow-md w-full">
-                  Ajouter une expérience
+                  Ajouter 
                 </button>
               </div>
             ) : (

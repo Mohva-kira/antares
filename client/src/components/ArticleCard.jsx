@@ -7,7 +7,7 @@ const ArticleCard = ({item}) => {
     const navigate = useNavigate();
  return (
      <div onClick={() => navigate(`/news/${title}`)} className="card w-96 cursor-pointer shadow-lg hover:shadow-2xl transition-shadow duration-300">
-            <img src={`http://localhost:1337${images.data[0]?.attributes?.url}`} alt="Card image cap" className="img-fluid object-contain card-img-top"/>
+            <img src={`https://api.antares-rh.net${images.data[0]?.attributes?.url}`} alt="Card image cap" className="img-fluid object-contain card-img-top"/>
             <div className="card-body">
                 <h5 className="card-title">{title}?</h5>
                 <p className="card-text w-72 overflow-hidden">{content} .</p>

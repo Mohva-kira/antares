@@ -1,5 +1,5 @@
 import React from "react";
-import job2 from "../assets/images/job-2.jpg";
+import job2 from "../assets/images/job-2.png";
 import Breadcumb from "../components/Breadcumb";
 import Container from "../components/Container";
 import JobCard from "../components/JobCard";

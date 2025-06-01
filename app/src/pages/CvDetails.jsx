@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import LocationMap from "../components/LocationMap";
 import SkillsChart from "../components/SkillsChart";
-
+import { useLazyGetProfileByIdQuery } from "../redux/profileServices";
+import { use } from "react";
+import { IoPersonOutline } from "react-icons/io5";
 // Composant pour afficher une section d'expérience professionnelle
 const ExperienceSection = ({ experiences }) => (
   <div className="mb-6">
@@ -11,13 +13,13 @@ const ExperienceSection = ({ experiences }) => (
       Expérience Professionnelle
     </h2>
     <div className="space-y-4">
-      {experiences.map((exp, index) => (
+      {experiences?.map((exp, index) => (
         <div key={index} className="bg-gray-50 p-4 rounded-2xl shadow-md">
           <h3 className="text-lg font-semibold">
             {exp.title} - {exp.company}
           </h3>
-          <p className="text-gray-600">{exp.dates}</p>
-          <ul className="list-disc ml-6 mt-2 text-gray-700">{exp.details}</ul>
+          <p className="text-gray-600">{exp.begin} - {exp.end}</p>
+          <ul className="list-disc  font-thin mt-2 text-gray-700">{exp.details}</ul>
         </div>
       ))}
     </div>
@@ -31,13 +33,13 @@ const EducationSection = ({ education }) => (
       Éducation
     </h2>
     <div className="space-y-4">
-      {education.map((edu, index) => (
+      {education?.map((edu, index) => (
         <div key={index} className="bg-gray-50 p-4 rounded-2xl shadow-md">
           <h3 className="text-lg font-semibold">
             {edu.degree} - {edu.institution}
           </h3>
-          <p className="text-gray-600">{edu.dates}</p>
-          <p className="text-gray-700">{edu.details}</p>
+          <p className="text-gray-600">{edu.begin} - {edu.end}</p>
+          <p className="text-gray-700 font-thin mt-2">{edu.details}</p>
         </div>
       ))}
     </div>
@@ -186,8 +188,28 @@ const CvDetails = ({ cv }) => {
   ];
 
   const id = useParams();
+
+  const [getResumeById, { data: cvData, isLoading, isError }] =
+    useLazyGetProfileByIdQuery();
+  
+
   const findCv = cvDataList.find((cv, index) => cv.name == "Mamadou Keita");
 
+
+  useEffect(() => {
+    if (id.id) {
+      getResumeById(id.id).then((response) => {
+        if (response.data) {
+          console.log("CV trouvé:", response.data);
+        } else {
+          console.error("CV non trouvé");
+        }
+      }
+      ).catch((error) => {
+        console.error("Erreur lors de la récupération du CV:", error);
+      });
+    }
+  }, [id.id, getResumeById]);
   console.log("find", findCv);
   return (
     <Layout>
@@ -204,23 +226,37 @@ const CvDetails = ({ cv }) => {
         <div className="container mx-auto p-4">
           <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-6">
             {/* En-tête du CV */}
+           
             <div className="flex items-center mb-6">
-              <img
-                src={findCv.photoUrl || "https://via.placeholder.com/100"}
-                alt="Photo du candidat"
-                className="w-24 h-24 rounded-full border border-gray-300 mr-4"
-              />
+            {cvData?.data?.attributes?.user?.data?.attributes?.photo ? (
+              <div className="flex items-center mb-6">
+                <img
+                  src={cvData?.data?.attributes?.user?.data?.attributes?.photo}
+                  alt="Photo du candidat"
+                  className="w-24 h-24 rounded-full border border-gray-300 mr-4"
+                />
+              </div>
+            ) : (
+              <div className="flex items-center mb-6">
+                <div className="w-24 h-24 bg-gray-200 rounded-full flex flex-col items-center justify-center mr-4">
+                <IoPersonOutline size={25} />
+                  <span className="text-gray-500 text-xs">Pas de photo</span>
+                </div>
+              </div>
+            )
+
+            }
               <div>
-                <h1 className="text-2xl font-bold mb-1">{findCv.name}</h1>
-                <p className="text-gray-600 mb-2">{findCv.jobTitle}</p>
-                <p className="text-gray-600 mb-1">{findCv.email}</p>
-                <p className="text-gray-600">{findCv.phone}</p>
+                <h1 className="text-2xl font-bold mb-1">{cvData?.data?.attributes?.user?.data?.attributes?.username}</h1>
+                <p className="text-gray-600 mb-2">{cvData?.data?.attributes?.title}</p>
+                <p className="text-gray-600 mb-1">{cvData?.data?.attributes?.user?.data?.attributes?.email}</p>
+                <p className="text-gray-600">{cvData?.data?.attributes?.user?.data?.attributes?.phone}</p>
               </div>
             </div>
 
             {/* Sections dynamiques */}
-            <ExperienceSection experiences={findCv.experience} />
-            <EducationSection education={findCv.education} />
+            <ExperienceSection experiences={cvData?.data?.attributes?.experience} />
+            <EducationSection education={cvData?.data?.attributes?.education} />
 
             {/* Section Compétences */}
             <div className="mb-6">
@@ -228,19 +264,19 @@ const CvDetails = ({ cv }) => {
                 Compétences
               </h2>
               <ul className="list-disc ml-6 text-gray-700">
-                {findCv.skills.map((skill, index) => (
+                {cvData?.data?.attributes?.skills.map((skill, index) => (
                   <li key={index}>{skill.name}</li>
                 ))}
               </ul>
             </div>
 
             {/* Section Autres Informations */}
-            <div>
+            {/* <div>
               <h2 className="text-xl font-semibold mb-2 border-b border-gray-200 pb-1">
                 Autres Informations
               </h2>
               <p className="text-gray-700">{findCv.additionalInfo}</p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

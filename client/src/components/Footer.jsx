@@ -12,11 +12,7 @@ const Footer = () => {
             <div class="footer-text">
               <p>
                 {" "}
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Blanditiis voluptate exercitationem quidem, maiores ea possimus
-                voluptatem accusantium ullam nesciunt mollitia distinctio quod
-                tempora doloremque, quas vel rerum repudiandae. Nisi,
-                architecto!
+                Antarès RH est une plateforme innovante de gestion du recrutement qui connecte efficacement les entreprises aux meilleurs talents. Conçue pour répondre aux enjeux modernes du marché de l'emploi, Antarès simplifie l’ensemble du processus de recrutement, depuis la publication d’offres jusqu’à la sélection et l’intégration des candidats.
               </p>
               <ul class="footer-social text-left mt-lg-4 mt-3">
                 <li class="mx-2">

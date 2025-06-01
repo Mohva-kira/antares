@@ -29,7 +29,7 @@ export default authSlice.reducer
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:1337/api' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.antares-rh.net/api' }),
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({

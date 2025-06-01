@@ -47,7 +47,7 @@ const EducationSection = ({ education }) => (
       Profil candidat
     </h2>
     <div className="space-y-4">
-      {education.map((edu, index) => (
+      {education?.map((edu, index) => (
         <div key={index} className="bg-gray-50 p-4 rounded-2xl shadow-md">
           <h3 className="text-lg font-semibold"> {edu.titleProfil} </h3>
           {/* <p className="text-gray-600">{edu.dates}</p> */}

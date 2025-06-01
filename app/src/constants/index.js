@@ -60,14 +60,14 @@ export const jobsFIelds = [
                 name: "titleObjectif",
                 placeholder: "Titre",
                 type: "text",
-                required: true,
+             
             },
             {
                 class: "",
-                name: "description",
+                name: "descriptionObjectif",
                 placeholder: "Description",
                 type: "textarea",
-                required: true,
+                
             },
             {
                 class: "",
@@ -84,11 +84,11 @@ export const jobsFIelds = [
                     { name: "Prestataire de services", value: "Prestataire de services" },
                     { name: "Autre", value: "Autre" },
                 ],
-                required: true,
+                
             },
 
         ],
-        required: true,
+     
     },
     {
         class: "",
@@ -101,7 +101,7 @@ export const jobsFIelds = [
                 name: "titleProfil",
                 placeholder: "Titre",
                 type: "text",
-                required: true,
+            
             },
 
             {
@@ -117,7 +117,7 @@ export const jobsFIelds = [
                     { name: "Bac + 5", value: "Bac + 5" },
                     { name: "Doctorat", value: "Doctorat" },
                 ],
-                required: true,
+            
             },
 
             {
@@ -133,10 +133,17 @@ export const jobsFIelds = [
                     { name: "Bac + 5", value: "Bac + 5" },
                     { name: "Doctorat", value: "Doctorat" },
                 ],
-                required: true,
+            
             },
 
         ],
+
+    },
+    {
+        class: "",
+        name: "experience",
+        placeholder: "Expérience",
+        type: "number",
         required: true,
     },
 ]
@@ -206,18 +213,12 @@ export const actualiteField = [
     },
     {
         class: "",
-        name: "slug",
-        placeholder: "Slug",
+        name: "text",
+        placeholder: "text",
         type: "text",
 
     },
-    {
-        class: "",
-        name: "content",
-        placeholder: "Content",
-        type: "text",
 
-    },
     {
         class: "",
         name: "images",
@@ -232,12 +233,66 @@ export const actualiteField = [
         type: "text",
 
     },
+    {
+        class: "",
+        name: "slug",
+        placeholder: "Slug",
+        type: "text",
+
+    },
 
     {
         class: "",
         name: "categorie",
         placeholder: "Catégorie",
         type: "text",
+
+    },
+    {
+        class: "",
+        name: "content",
+        placeholder: "Content",
+        type: "array",
+        fields: [
+            {
+                class: "",
+                name: "contanteTitle",
+                placeholder: "Titre",
+                type: "text",
+            },
+            {
+                class: "",
+                name: "descriptionContent",
+                placeholder: "Description",
+                type: "textarea",
+            },
+            {
+                class: "",
+                name: "sousSections",
+                placeholder: "Sous section",
+                type: "array",
+                fields: [
+                    {
+                        class: "",
+                        name: "sousContentTitle",
+                        placeholder: "Titre",
+                        type: "text",
+                    },
+                    {
+                        class: "",
+                        name: "sousContentText",
+                        placeholder: "Texte",
+                        type: "textarea",
+                    },
+                    {
+                        class: "",
+                        name: "id",
+                        placeholder: "ID",
+                        type: "text",
+                    },
+                ],
+            }
+        ],
 
     },
 ]

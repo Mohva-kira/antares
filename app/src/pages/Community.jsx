@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Form } from "react-router-dom";
 import ArticlesCard from "../components/ArticlesCard";
 import Layout from "../components/Layout";
 import Modal from "../components/Modal";
 import NewsLetter from "../components/NewsLetter";
 import PopularCard from "../components/PopularCard";
-import { actualiteField } from "../constants";
+
+import { useGetActualityQuery, usePostActualityMutation } from "../redux/actualityService";
+import { actualiteField } from './../constants/index';
+import Form from './../components/Form';
+import { json } from "react-router-dom";
 
 const Community = () => {
   const contentArray = [
@@ -79,11 +82,35 @@ const Community = () => {
     // },
   ];
 
+  const [fields, setFields] = useState(actualiteField);
+
+  const {data, isLoading, isError} = useGetActualityQuery();
   const [isVisible, setIsVisible] = useState();
 
+  const {data: actualiteData} = data || {};
+
+
+  const [postActualite, {isLoading: isPosting}] = usePostActualityMutation();
+  console.log("data", actualiteData);
   const send = (data) => {
     console.log("les données", data);
+
+    
+    const formData = new FormData();
+    // formData.append("images", data.images);
+    formData.append("data", JSON.stringify(data));
+    postActualite(formData).then((response) => {
+      if (response.data) {
+        setIsVisible(false);
+        toast.success("Article publié avec succès");
+      } else {
+        toast.error("Erreur lors de la publication de l'article");
+      }
+    });
   };
+
+  if (isLoading) return <div>Chargement...</div>;
+  if (isError) return <div>Erreur lors du chargement des actualités</div>;
   return (
     <Layout>
       <div className="flex w-full flex-col lg:flex-row lg:space-x-6 p-4 space-y-6 lg:space-y-0">
@@ -101,7 +128,7 @@ const Community = () => {
               Ajouter un article
             </button>
           </div>
-          {contentArray.map((article, index) => (
+          {actualiteData?.map((article, index) => (
             <ArticlesCard key={index} article={article} />
           ))}
         </div>
@@ -115,10 +142,10 @@ const Community = () => {
 
       <Modal isVisible={isVisible} setIsVisible={setIsVisible}>
         <Form
-          fields={actualiteField}
+          fields={fields}
           setIsVisible={setIsVisible}
           post={send}
-          title={"Créer un job"}
+          title={"Créer un article"}
         />
       </Modal>
     </Layout>

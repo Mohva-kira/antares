@@ -29,7 +29,7 @@ const CvVideoCard = ({ item }) => {
           <div className="member-info text-center py-lg-4 py-2">
             <h4>
               {" "}
-              <a href="candidates_single.html"> {title}</a>
+              <a onClick={() => useCallback(setIsVisible(!isVisible))}> {title}</a>
             </h4>
 
             <p className="my-4 truncate"> {summary}</p>

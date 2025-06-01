@@ -78,8 +78,7 @@ const Contact = () => {
                                       </svg>
                                   </div>
                                   <div class="ml-4 mb-4">
-                                      <h3 class="mb-2 text-lg font-medium leading-6 text-gray-900 dark:text-black">Working
-                                          hours</h3>
+                                      <h3 class="mb-2 text-lg font-medium leading-6 text-gray-900 dark:text-black">Heure d'ouvertures</h3>
                                       <p class="text-gray-600 dark:text-slate-400">Lundi - Vendredi: 08:00 - 17:00</p>
                                       {/* <p class="text-gray-600 dark:text-slate-400">Saturday &amp; Sunday: 08:00 - 12:00</p> */}
                                   </div>

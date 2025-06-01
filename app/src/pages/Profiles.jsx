@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import FilterForm from "../components/Filters";
 import ProfileCard from "../components/ProfileCard";
 import { useNavigate } from "react-router-dom";
+import { useGetProfileQuery } from "../redux/profileServices";
 
 const Profiles = () => {
   const profiles = [
@@ -25,10 +26,11 @@ const Profiles = () => {
     // ... autres profils
   ];
 
+
+  const {data, isLoading, isError} = useGetProfileQuery();
   const [filters, setFilters] = useState({
-    name: "", // Non utilisé dans cet exemple
+    profile: "", // Filtrer par nom de profil
     experience: "",
-    location: "", // Non utilisé dans cet exemple
     skills: "", // Filtrer par compétences
   });
 
@@ -41,15 +43,17 @@ const Profiles = () => {
   };
 
   // Logique de filtrage
-  const filteredProfiles = profiles.filter((profile) => {
+  const filteredProfiles = data?.data.filter((profile) => {
     const filterByExperience =
-      !filters.experience || profile.experience >= Number(filters.experience);
+      !filters.experience || profile.attributes.total_exp >= Number(filters.experience);
     const filterBySkills =
       !filters.skills ||
-      profile.skills.some((skill) =>
-        skill.toLowerCase().includes(filters.skills.toLowerCase())
+      profile.attributes?.skills.some((skill) =>
+        skill?.name.toLowerCase().includes(filters.skills.toLowerCase())
       );
-    return filterByExperience && filterBySkills;
+      const filterByProfile =
+      !filters.profile || profile.attributes.title.toLowerCase().includes(filters.profile.toLowerCase());
+    return filterByExperience && filterBySkills && filterByProfile;
   });
 
   const navigate = useNavigate();
@@ -58,7 +62,7 @@ const Profiles = () => {
     <Layout>
       <div className="w-full h-full flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 p-4">
         {/* Section des filtres */}
-        <div className="w-full lg:w-1/4 p-4 bg-white rounded-lg shadow-md">
+        <div className="w-full lg:w-1/4 p-4  rounded-lg shadow-md">
           <FilterForm
             filters={filters}
             handleFilterChange={handleFilterChange}
@@ -67,10 +71,10 @@ const Profiles = () => {
 
         {/* Section des profils */}
         <div className="w-full lg:w-3/4 flex flex-wrap gap-4 justify-center">
-          {filteredProfiles.map((profile, index) => (
+          {filteredProfiles?.map((profile, index) => (
             <div
               className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 p-4 cursor-pointer"
-              onClick={() => navigate(`/cv/${index}`)}
+              
               key={index}>
               <ProfileCard profile={profile} />
             </div>

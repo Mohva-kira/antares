@@ -8,7 +8,7 @@ import { jobsApi } from "./jobService";
 import profileReducer, { profileApi } from "./profileServices";
 import redevableReducer, { redevableApi } from "./redevableService";
 import redevanceReducer, { redevanceApi } from "./redevanceService";
-
+import actualitesReducer, {actualitiesApi} from "./actualityService";
 export const store = configureStore({
   reducer: {
     redevables: redevableReducer,
@@ -16,6 +16,7 @@ export const store = configureStore({
     profile: profileReducer,
     redevances: redevanceReducer,
     candidat: candidatReducer,
+    actualites: actualitesReducer,
     [candidatApi.reducerPath]: candidatApi.reducer,
     [redevableApi.reducerPath]: redevableApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
@@ -23,7 +24,8 @@ export const store = configureStore({
     [profileApi.reducerPath]: profileApi.reducer,
     [redevanceApi.reducerPath]: redevanceApi.reducer,
     [jobsApi.reducerPath]: jobsApi.reducer,
-    [companyApi.reducerPath]: companyApi.reducer
+    [companyApi.reducerPath]: companyApi.reducer,
+    [actualitiesApi.reducerPath]: actualitiesApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -36,6 +38,7 @@ export const store = configureStore({
       redevanceApi.middleware,
       candidatApi.middleware,
       companyApi.middleware,
+      actualitiesApi.middleware
     ),
 });
 
