@@ -16,6 +16,7 @@ import "swiper/css";
 import Layout from "../components/Layout";
 import InterviewDetail from "../components/InterviewDetail";
 import DynamicForm from "../components/DynamicForm";
+import { useGetApplicationQuery } from "../redux/application";
 
 const Interview = () => {
   const entretiens = [
@@ -170,12 +171,32 @@ const Interview = () => {
     },
   ];
 
+  const user = JSON.parse(localStorage.getItem("auth"))?.user || {};
+
   const [selected, setSelected] = useState(null);
+  const { data, isLoading, isSuccess, isFetching, isError } =
+    useGetApplicationQuery(user?.id);
+
+
+    console.log("data", data);
+  if (isLoading) {
+    return <p>Chargement des candidatures...</p>;
+  }
+  if (isError) {
+    return <p>Erreur lors du chargement des candidatures.</p>;
+  }
+  if (!isSuccess || !data?.data?.length) {
+    return <p>Aucune candidature trouvée.</p>;
+  }
+  console.log("data", data);
+  console.log("selected", selected);
 
   return (
     <Layout>
-      <div className="w-full p-2 flex flex-col">
-        <div className="w-full">
+      <div className=" p-2 flex flex-col lg:flex-row w-full h-screen space-y-4 lg:space-y-0 lg:space-x-4 overflow-hidden">
+        <div className="w-full h-full flex flex-col  space-y-4 lg:space-y-0 lg:space-x-4 p-4 ">
+
+         <h2 className="text-3xl font-bold mx-2 p-2">Les candidatures</h2>
           {/* Swiper */}
           <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}
@@ -198,22 +219,46 @@ const Interview = () => {
             className="w-full"
             onSlideChange={() => console.log("slide change")}
             onSwiper={(swiper) => console.log(swiper)}>
-            {entretiens.map((item) => (
+            {data?.data?.map((item) => (
               <SwiperSlide
-                key={item.profil.email}
+                key={item.id}
                 onClick={() => setSelected(item)}
-                className="flex justify-center">
-                <InterviewCard
-                  profile={item.profil}
-                  entreprise={item.entreprise}
-                />
+                className="flex justify-center   cursor-pointer">
+                <div
+                  className="h-24 w-72 bg-slate-700 m-2 p-2 rounded-lg flex items-center justify-center shadow-xl text-white cursor-pointer"
+                  key={item.id}
+                  onClick={() => setSelected(item)}>
+                  <div>
+                    <h3 className="text-lg font-bold">
+                      {item.attributes.job?.data.attributes.titre}
+                    </h3>
+                    <p className="text-sm">
+                      {
+                        item.attributes.job?.data.attributes.entreprise?.data
+                          .attributes.name
+                      }
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {new Date(
+                        item.attributes.date_candidature
+                      ).toLocaleDateString()}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      Candidat :{" "}
+                      {item.attributes.candidat?.data.attributes.username}
+                    </p>
+                  </div>
+                </div>
               </SwiperSlide>
             ))}
+            {isLoading && <p>Chargement des candidatures...</p>}
+            {isError && <p>Erreur lors du chargement des candidatures.</p>}
           </Swiper>
 
+
           {/* Schedule Component */}
-          <div className="w-full p-4">
-            <ScheduleComponent>
+          <div className="w-full mt-8 h-[480px] overflow-scroll">
+            <ScheduleComponent className="w-full h-full shadow-lg rounded-2xl">
               <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
             </ScheduleComponent>
           </div>
@@ -221,10 +266,10 @@ const Interview = () => {
 
         {/* Détails de l'entretien sélectionné */}
         {selected && (
-          <div className="w-full m-2">
+          <div className="w-1/4 h-fit m-2">
             <InterviewDetail
-              profile={selected.profil}
-              enterprise={selected.entreprise}
+              profile={selected?.attributes?.candidat?.data?.attributes}
+              enterprise={selected?.attributes?.job?.data?.attributes.company?.data?.attributes}
             />
           </div>
         )}

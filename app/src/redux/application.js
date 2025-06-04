@@ -38,7 +38,7 @@ export const applicationApi = createApi({
     }),
     endpoints: (builder) => ({
         getApplication: builder.query({
-            query: (id) => `/applications?populate=*&filters[user][$eq]=${id}`,
+            query: () => `/applications?populate[candidat]=*&populate[job][populate]=*`,
         }),
         postApplication: builder.mutation({
             query: (data) => ({

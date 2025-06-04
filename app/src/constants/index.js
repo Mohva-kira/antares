@@ -211,14 +211,14 @@ export const actualiteField = [
         type: "text",
 
     },
+   
     {
         class: "",
-        name: "text",
-        placeholder: "text",
+        name: "slug",
+        placeholder: "Slug",
         type: "text",
 
     },
-
     {
         class: "",
         name: "images",
@@ -233,21 +233,9 @@ export const actualiteField = [
         type: "text",
 
     },
-    {
-        class: "",
-        name: "slug",
-        placeholder: "Slug",
-        type: "text",
+ 
 
-    },
 
-    {
-        class: "",
-        name: "categorie",
-        placeholder: "Catégorie",
-        type: "text",
-
-    },
     {
         class: "",
         name: "content",
@@ -256,7 +244,7 @@ export const actualiteField = [
         fields: [
             {
                 class: "",
-                name: "contanteTitle",
+                name: "contentTitle",
                 placeholder: "Titre",
                 type: "text",
             },
@@ -266,33 +254,38 @@ export const actualiteField = [
                 placeholder: "Description",
                 type: "textarea",
             },
+            
+        ],
+
+    },
+
+    {
+        class: "",
+        name: "sousContent",
+        placeholder: "Sous Contenu",
+        type: "array",
+        fields: [
             {
                 class: "",
-                name: "sousSections",
-                placeholder: "Sous section",
-                type: "array",
-                fields: [
-                    {
-                        class: "",
-                        name: "sousContentTitle",
-                        placeholder: "Titre",
-                        type: "text",
-                    },
-                    {
-                        class: "",
-                        name: "sousContentText",
-                        placeholder: "Texte",
-                        type: "textarea",
-                    },
-                    {
-                        class: "",
-                        name: "id",
-                        placeholder: "ID",
-                        type: "text",
-                    },
-                ],
-            }
+                name: "SoustContentTitle",
+                placeholder: "Titre",
+                type: "text",
+            },
+            {
+                class: "",
+                name: "SousContentText",
+                placeholder: "Sous Contenu text",
+                type: "textarea",
+            },
+            
         ],
+
+    },
+    {
+        class: "",
+        name: "categorie",
+        placeholder: "Catégorie",
+        type: "text",
 
     },
 ]

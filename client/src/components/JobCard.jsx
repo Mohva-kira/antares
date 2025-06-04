@@ -11,8 +11,8 @@ const JobCard = ({ item, applied}) => {
     contratType,
     category,
     date,
-
-    appliedDate,
+    job,
+    date_candidature,
   } = item?.attributes || {};
 
 

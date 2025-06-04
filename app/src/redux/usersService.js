@@ -5,10 +5,10 @@ const initialState = {
 };
 
 export const actualitySlice = createSlice({
-  name: "Actuality",
+  name: "Users",
   initialState,
   reducers: {
-    setActuality: (state) => {
+    setUsers: (state) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
@@ -19,12 +19,12 @@ export const actualitySlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setActuality } = actualitySlice.actions;
+export const { setUsers } = actualitySlice.actions;
 
 export default actualitySlice.reducer;
 
-export const actualitiesApi = createApi({
-  reducerPath: "actualitiesApi",
+export const usersApi = createApi({
+  reducerPath: "usersApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://api.antares-rh.net/api",
     prepareHeaders: (headers, { getState, endpoint }) => {
@@ -34,7 +34,7 @@ export const actualitiesApi = createApi({
       }
     
       // Ne pas fixer Content-Type si on va uploader un fichier
-      if (endpoint !== 'postActuality' && endpoint !== 'updateActuality') {
+      if (endpoint !== 'postUsers' && endpoint !== 'updateUsers') {
         // Pour les autres requêtes, on peut fixer Content-Type à application/json
         headers.set("Content-Type", "application/json");
       }
@@ -43,21 +43,21 @@ export const actualitiesApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getActuality: builder.query({
-      query: () => `/actualites?populate=*`,
+    getUsers: builder.query({
+      query: () => `/users?populate=*`,
     }),
-    postActuality: builder.mutation({
+    postUsers: builder.mutation({
       query: (formData) => ({
-        url: `/actualites`,
+        url: `/users`,
         method: "POST",
         body: formData, // doit être un FormData natif
         // NE PAS mettre Content-Type
       }),
     }),
 
-    updateActuality: builder.mutation({
+    updateUsers: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/actualites/${id}`,
+        url: `/users/${id}`,
         method: "PUT",
         body: data, // doit être un FormData natif
         // NE PAS mettre Content-Type
@@ -69,4 +69,4 @@ export const actualitiesApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetActualityQuery, usePostActualityMutation, useUpdateActualityMutation } = actualitiesApi;
+export const { useGetUsersQuery, usePostUsersMutation, useUpdateUsersMutation } = usersApi;

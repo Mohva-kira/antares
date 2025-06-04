@@ -4,15 +4,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import bg from "../assets/images/1.png";
 import logo from "../assets/images/logo_antares.png";
-import { setAuth, useRegisterMutation } from "../redux/auth/authService";
+import { setAuth, useRegisterMutation, useUploadPhotoMutation } from "../redux/auth/authService";
 
 const Register = ({ setShowLogin }) => {
   const [register] = useRegisterMutation();
+  const [uploadPhoto] = useUploadPhotoMutation(); // Assuming you have a mutation for uploading photos
   const dispatch = useDispatch();
   const [email, setEmail] = useState(null);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
-
+  const [photo, setPhoto] = useState();
   const [secondPassword, setSecondPassword] = useState(null);
   const navigate = useNavigate();
   const send = async () => {
@@ -30,12 +31,39 @@ const Register = ({ setShowLogin }) => {
     const dataToSend = { email, password, username };
     console.log("Data to send", dataToSend);
 
+    const formData = new FormData();
+
+
+    // Convert FormData to a regular object for logging
+
     try {
       const rep = await register(dataToSend);
       if (rep.data) {
         localStorage.setItem("auth", JSON.stringify(rep.data));
         toast.success("Vous êtes connecté");
         dispatch(setAuth(rep.data));
+
+        // Envoi de la photo si elle existe
+        toast.info("Téléchargement de la photo en cours...");
+        const formData = new FormData();
+        formData.append("files", photo); // le fichier
+        formData.append("ref", "plugin::users-permissions.user");
+        formData.append("refId", rep.data?.user.id); // l'id du user créé
+        formData.append("field", "photo"); // le nom du champ media dans le model user
+
+        uploadPhoto(formData)
+          .then((response) => {
+            if (response.data) {
+              toast.success("Photo téléchargée avec succès");
+            } else {
+              toast.error("Erreur lors du téléchargement de la photo");
+            }
+          })
+          .catch((error) => {
+            console.error("Erreur lors du téléchargement de la photo", error);
+            toast.error("Erreur lors du téléchargement de la photo");
+          });
+        // Redirection vers la page d'accueil
         navigate("/");
       } else if (rep.error) {
         toast.error("Email ou mot de passe incorrect");
@@ -99,6 +127,19 @@ const Register = ({ setShowLogin }) => {
                     placeholder="Email"
                     onChange={(e) => setEmail(e.target.value)}
                   />
+                  <label
+                    class="block mb-2 text-sm font-medium text-black mt-2"
+                    for="file_input">
+                    Photo
+                  </label>
+                  <input
+                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    id="photo"
+                    name="photo"
+                    onChange={(e) => setPhoto(e.target.files[0])}
+                    type="file"
+                  />
+
                   <input
                     class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
                     type="password"

@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo_antares.png";
+import { useGetMeQuery } from "../redux/auth/authService";
 
 const Headers = () => {
   const [visible, setVisible] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const userState = useSelector((state) => state.auth);
   const user = JSON.parse(localStorage.getItem("auth"));
+  const { data: userData } = useGetMeQuery();
 
+  console.log('userData', userData);
   const navigate = useNavigate();
-  console.log("user", user);
+  
   useEffect(() => {
     if (user) setLoggedIn(true);
   }, [user]);
@@ -37,9 +40,9 @@ const Headers = () => {
             data-dropdown-placement="bottom">
             <span className="sr-only">Open user menu</span>
             <img
-              className="w-8 h-8 rounded-full"
-              src="/docs/images/people/profile-picture-3.jpg"
-              alt="user photo"
+              className="w-20 h-20 rounded-full object-cover"
+              src={'https://api.antares-rh.net'+ userData?.photo?.url }
+              alt="user photo "
             />
           </button>
 

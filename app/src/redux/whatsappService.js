@@ -4,8 +4,8 @@ const initialState = {
     data: null,
 };
 
-export const applicationSlice = createSlice({
-    name: "application",
+export const whatsappSlice = createSlice({
+    name: "whatsapp",
     initialState,
     reducers: {
         setApplication: (state) => {
@@ -19,15 +19,22 @@ export const applicationSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setApplication } = applicationSlice.actions;
-export default applicationSlice.reducer;
+export const { setApplication } = whatsappSlice.actions;
+export default whatsappSlice.reducer;
 
-export const applicationApi = createApi({
-    reducerPath: "applicationApi",
+const APIURL = import.meta.env.WHATSAPP_API_URL 
+const APIKEY = import.meta.env.WHATSAPP_API_KEY;
+
+if(!APIURL || !APIKEY) {
+    console.error("Environment variables WHATSAPP_API_URL and WHATSAPP_API_KEY must be set.");
+    throw new Error("Missing required environment variables for WhatsApp API.");
+}
+export const whatsappApi = createApi({
+    reducerPath: "whatsappApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://api.antares-rh.net/api",
+        baseUrl: "https://graph.facebook.com/v22.0/587745037765750",
         prepareHeaders: (headers, { getState }) => {
-            const token = JSON.parse(localStorage.getItem("auth")).jwt;
+            const token = APIKEY;
             if (token) {
                 headers.set("authorization", `Bearer ${token}`);
             }
@@ -37,29 +44,26 @@ export const applicationApi = createApi({
         },
     }),
     endpoints: (builder) => ({
-        getApplication: builder.query({
-            query: (id) => `/applications?populate=*&filters[user][$eq]=${id}`,
-        }),
-        postApplication: builder.mutation({
+        sendMessage: builder.mutation({
             query: (data) => ({
-                url: `/applications`,
+                url: "/messages",
                 method: "POST",
-                body: data,
+                body: {
+                    messaging_product: "whatsapp",
+                    to: data.to,
+                    type: "text",
+                    text: {
+                        body: data.body,
+                    },
+                },
             }),
         }),
-        getApplicationById: builder.query({
-            query: (id) => `/applications/${id}`,
-        }),
-        getApplicationByUserId: builder.query({
-            query: (id) => `/applications?filters[candidat][id][$eq]=${id}&populate[candidat]=*&populate[job][populate]=*`,
-        }),
+       
     }),
 });
 
 // Exports des hooks générés automatiquement par RTK Query
 export const {
-    useGetApplicationQuery,
-    usePostApplicationMutation,
-    useGetApplicationByIdQuery,
-    useGetApplicationByUserIdQuery
-} = applicationApi;
+    useSendMessageQuery,
+  
+} = whatsappApi;

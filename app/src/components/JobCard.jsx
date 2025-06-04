@@ -15,7 +15,7 @@ const JobCard = ({
   rejected,
 }) => {
   return (
-    <div className="flex w-full p-2 m-2 bg-slate-500 h-32 rounded-2xl ">
+    <div className="flex w-full p-2 m-2 bg-slate-500 h-32 shadow-lg rounded-2xl ">
       <div className="flex flex-col w-full justify-between">
         <h1 className="text-white text-2xl font-bold">{title}</h1>
         <div className="flex flex-wrap gap-2 font-semibold">

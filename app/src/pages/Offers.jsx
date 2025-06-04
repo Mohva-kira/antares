@@ -14,6 +14,7 @@ import {
 } from "../redux/companyService";
 import { useLazyGetJobsQuery, usePostJobsMutation } from "../redux/jobService";
 import { filterItems } from "../utils/utils";
+import { useGetProfileQuery } from "../redux/profileServices";
 const Offers = () => {
   const generateFakeJobs = () => {
     return [
@@ -76,6 +77,8 @@ const Offers = () => {
     },
   ] = useLazyGetJobsQuery();
 
+  const {data: cvsData, isLoading: isCvsLoading} = useGetProfileQuery();
+
   const [postJobs] = usePostJobsMutation();
   const [postCompany] = usePostCompanyMutation();
   const [isVisible, setIsVisible] = useState(false);
@@ -83,8 +86,7 @@ const Offers = () => {
   const [filters, setFilters] = useState({
     title: "",
     experience: "",
-    location: "",
-    company: "",
+    entreprise: "",
     minApplications: 0,
     maxApplications: Infinity,
   });
@@ -101,24 +103,31 @@ const Offers = () => {
     });
   };
 
-  const filtered = filterItems(JobsData?.data, filters);
-
-  console.log("les filtrés", filtered);
 
   const filteredJobs = JobsData?.data?.filter((job) => {
-    return (
-      job?.attributes?.titre
-        .toLowerCase()
-        ?.includes(filters.title.toLowerCase()) &&
-      job?.attributes?.experience?.includes(filters.experience) &&
-      job?.attributes?.lieu?.includes(filters.location) &&
-      job?.attributes?.company?.data?.attributes?.name
-        .toLowerCase()
-        ?.includes(filters.company.toLowerCase()) &&
-      job?.attributes?.applications >= filters.minApplications &&
-      job?.attributes?.applications <= filters.maxApplications
-    );
+    const jobTitle = job?.attributes?.titre?.toLowerCase() || "";
+    const jobExperience = Number(job?.attributes?.experience) || 0;
+  console.log("job", job);
+  console.log("filters", filters);
+  console.log("jobExperience", jobExperience);
+    const jobCompany = job?.attributes?.company?.data?.attributes?.name?.toLowerCase() || "";
+    const jobApplications = job?.applications?.length || 0;
+    
+    console.log("jobCompany", jobCompany);
+    const filterByCompany = !filters.entreprise || jobCompany.includes(filters.entreprise.toLowerCase());
+    const filterByApplications = !filters.minApplications || jobApplications >= filters.minApplications;
+    const filterByMaxApplications = !filters.maxApplications || jobApplications <= filters.maxApplications;
+
+    const filterByExperience =
+      !filters.experience || jobExperience >= Number(filters.experience);
+  
+    const filterByTitle =
+      !filters.title || jobTitle.includes(filters.title.toLowerCase());
+  
+    return filterByExperience && filterByTitle && filterByCompany && filterByApplications && filterByMaxApplications;
   });
+  
+  
 
   const profiles = [
     {
@@ -186,7 +195,7 @@ const Offers = () => {
     <Layout>
       <div className="w-full min-h-screen flex flex-col lg:flex-row mt-10 p-4 space-y-6 lg:space-y-0 lg:space-x-6">
         {/* Section de filtres */}
-        <div className="w-full lg:w-1/3 h-fit  flex flex-col p-4 rounded-lg shadow-md">
+        <div className="w-full lg:w-1/3 h-fit  flex flex-col p-4 rounded-lg ">
           <FilterForm
             filters={filters}
             handleFilterChange={handleFilterChange}
@@ -209,7 +218,7 @@ const Offers = () => {
             {console.log("filtered", filteredJobs)}
           </div>
           {JobsData ? (
-            (filteredJobs.length > 0 ? filteredJobs : JobsData?.data).map(
+            (filteredJobs).map(
               (job, index) => (
                 <JobCard
                   key={index}
@@ -233,7 +242,7 @@ const Offers = () => {
 
         {/* Section des profils */}
         <div className="w-full lg:w-[350px]  p-4 rounded-lg  h-auto lg:h-full space-y-2 ">
-          {profiles.map((profile, index) => (
+          {cvsData?.data?.map((profile, index) => (
             <ProfileCard key={index} profile={profile} />
           ))}
         </div>

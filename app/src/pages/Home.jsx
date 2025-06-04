@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../components/Header";
 import { TiStarburst } from "react-icons/ti";
 import { CiClock1 } from "react-icons/ci";
@@ -10,6 +10,14 @@ import { IoMdBusiness } from "react-icons/io";
 import { ImOffice } from "react-icons/im";
 import { SiLibreofficewriter } from "react-icons/si";
 import { IoNewspaperOutline } from "react-icons/io5";
+import { useGetCompanyQuery } from "../redux/companyService";
+import Candidat from './Candidat';
+import { useGetCandidatsQuery } from "../redux/candidatService";
+import { useGetJobsByIdQuery, useLazyGetJobsQuery } from "../redux/jobService";
+import { useGetApplicationQuery } from "../redux/application";
+import JobList from "../components/JobList";
+import CandidatList from "../components/CandidatList";
+import ArticleList from "../components/ArticleList";
 const Home = () => {
   const stats = {
     candidates: 120,
@@ -17,6 +25,22 @@ const Home = () => {
     interviews: 20,
     hired: 10,
   };
+
+  const {data, isLoading, isError} = useGetCompanyQuery();
+  const [getJobs, {data: jobData, isLoading: isLoadingJob, isError: isErrorJob} ]= useLazyGetJobsQuery();
+  const {data: CandidatsData, isLoading: isLoadingCandidat, isError: isErrorCandidat} = useGetCandidatsQuery();
+  const {data: applicationData, isLoading: isLoadingApplication, isError: isErrorApplication} = useGetApplicationQuery();
+
+  const candidatsTotal = CandidatsData?.meta?.pagination?.total || [];
+  const jobsTotal = jobData?.meta?.pagination?.total || [];
+  const applicationTotal = applicationData?.meta?.pagination?.total || [];
+  
+
+  console.log('CandidatsData', candidatsTotal);
+
+  useEffect(() => {
+    getJobs();
+  }, []);
 
   return (
     <Layout>
@@ -35,7 +59,7 @@ const Home = () => {
             </div>
 
             <span className="text-xl text-black font-bold">
-              {stats.candidates}
+              {candidatsTotal}
             </span>
           </div>
           <div className="w-full h-32 bg-white rounded-2xl p-2 flex justify-between items-center">
@@ -47,22 +71,22 @@ const Home = () => {
               </h2>
             </div>
 
-            <span className="text-xl text-black font-bold">{stats.offers}</span>
+            <span className="text-xl text-black font-bold">{jobsTotal}</span>
           </div>
           <div className="w-full h-32 bg-white rounded-2xl p-2 flex justify-between items-center">
             <div className="w-full flex space-x-2">
               <CiClock1 className="text-orange-500 w-14 h-14" />
 
               <h2 className="text-xl text-black flex justify-between items-center  font-bold">
-                Interviews:
+                Candidatures:
               </h2>
             </div>
 
             <span className="text-xl text-black font-bold">
-              {stats.interviews}
+              {applicationTotal}
             </span>
           </div>
-          <div className="w-full h-32 bg-white rounded-2xl p-2 flex justify-between items-center">
+          {/* <div className="w-full h-32 bg-white rounded-2xl p-2 flex justify-between items-center">
             <div className="w-full flex space-x-2">
               <ImOffice className="text-orange-500 w-14 h-14" />
 
@@ -75,7 +99,7 @@ const Home = () => {
               {" "}
               {stats.hired}{" "}
             </span>
-          </div>
+          </div> */}
         </div>
 
         {/* Section principale */}
@@ -84,78 +108,16 @@ const Home = () => {
             <div className="bg-white flex justify-center items-center h-4 w-32 relative top-3 ml-2 rounded-3xl text-blue-900">
               <span className="font-bold text-base"> Immediat </span>
             </div>
-
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="flex w-full p-2 m-2 h-1/3 bg-white  lg:h-1/5 rounded-2xl">
-                <div className="flex flex-col w-full justify-between">
-                  <h1 className="text-black text-2xl font-bold">
-                    Maketer digital
-                  </h1>
-                  <div className="flex flex-wrap gap-2 font-semibold">
-                    <p className="text-slate-700 text-base">Sans experience</p>
-                    <p className="text-slate-700">A distance</p>
-                  </div>
-                  <div className="flex flex-wrap gap-2 font-thin text-base">
-                    <p className="text-slate-900">5 Mars</p>
-                    <p className="text-slate-900">Radio Keldu</p>
-                  </div>
-                </div>
-                <div className="w-[45%] flex items-end justify-end">
-                  <div className="bg-white h-full w-1"></div>
-                  <div className="flex flex-col h-full ml-5">
-                    <div className="w-full flex h-full">
-                      <TiStarburst className="text-orange-500 text-2xl" />
-                      <span className="flex text-black text-base">
-                        {" "}
-                        14 Candidatures
-                      </span>
-                    </div>
-                    <div className="w-full flex h-full">
-                      <CiClock1 className="text-orange-500 text-2xl" />
-                      <span className="flex text-black text-base">
-                        {" "}
-                        5 en cours
-                      </span>
-                    </div>
-                    <div className="w-full flex h-full">
-                      <FcCancel className="text-orange-500 text-2xl" />
-                      <span className="flex text-black text-base">
-                        {" "}
-                        20 Refusés
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+              <JobList page={1} size={3} />
+        
           </div>
 
           <div className="flex w-full lg:w-1/2 flex-col h-full">
             <div className="flex items-center flex-col lg:flex-row w-full justify-between h-full p-4 m-1 rounded-2xl bg-slate-200">
-              {[...Array(3)].map((_, i) => (
-                <div
-                  key={i}
-                  className="lg:w-1/3 w-full m-2 p-2 bg-white h-full rounded-2xl">
-                  <div className="flex justify-between items-center p-4">
-                    <span className="w-20 h-20 bg-blue-950 rounded-full"></span>
-                    <span className="bg-orange-500 rounded-3xl p-2 h-full text-white">
-                      12:00
-                    </span>
-                  </div>
-                  <div className="p-4">
-                    <h1 className="text-lg font-bold text-black">
-                      Candidat {i + 1}
-                    </h1>
-                    <p className="text-black">
-                      Developpeur fullstack avec 10 ans d'experience
-                    </p>
-                  </div>
-                </div>
-              ))}
+              <CandidatList page={1} size={3} />
+          
             </div>
-
+{/* 
             <div className="lg:h-1/3 h-full p-4 m-1 rounded-2xl">
               <div className="flex lg:flex-row flex-col space-y-2  h-full lg:justify-around">
                 {[...Array(2)].map((_, i) => (
@@ -177,27 +139,12 @@ const Home = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             <div className="h-1/3 p-4 m-1 rounded-2xl bg-slate-200">
               <div className="flex lg:flex-row flex-col h-full">
-                {[...Array(2)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="lg:w-1/2 w-full m-2 p-2 rounded-2xl bg-white">
-                    <div className="bg-blue-900 h-full w-full p-4 rounded-2xl">
-                      <div className="w-full text-white flex h-full items-end">
-                        <span>
-                          <h1 className="text-lg font-bold">Recherche :</h1>
-                          <p>
-                            Ce que peuvent vous apporter les journées portes
-                            ouvertes des entreprises
-                          </p>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                <ArticleList page={1} size={2} />
+             
               </div>
             </div>
           </div>

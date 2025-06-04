@@ -22,7 +22,7 @@ export const { setCompany } = companySlice.actions;
 export const companyApi = createApi({
     reducerPath: "companyApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:1337/api",
+        baseUrl: "https://api.antares-rh.net/api",
         prepareHeaders: (headers, { getState }) => {
             const token = JSON.parse(localStorage.getItem('auth')).jwt; // Sécuriser l'accès au token
             console.log('le token', token)

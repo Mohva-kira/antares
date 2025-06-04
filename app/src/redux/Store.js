@@ -9,6 +9,9 @@ import profileReducer, { profileApi } from "./profileServices";
 import redevableReducer, { redevableApi } from "./redevableService";
 import redevanceReducer, { redevanceApi } from "./redevanceService";
 import actualitesReducer, {actualitiesApi} from "./actualityService";
+import applicationReducer, { applicationApi } from "./application";
+import usersReducer, {usersApi} from "./usersService";
+import whatsappReducer, {whatsappApi} from "./whatsappService";
 export const store = configureStore({
   reducer: {
     redevables: redevableReducer,
@@ -17,6 +20,9 @@ export const store = configureStore({
     redevances: redevanceReducer,
     candidat: candidatReducer,
     actualites: actualitesReducer,
+    applications: applicationReducer, // Assuming this is the correct reducer for applications
+    whatsapp: whatsappReducer,
+    users: usersReducer,
     [candidatApi.reducerPath]: candidatApi.reducer,
     [redevableApi.reducerPath]: redevableApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
@@ -26,6 +32,9 @@ export const store = configureStore({
     [jobsApi.reducerPath]: jobsApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
     [actualitiesApi.reducerPath]: actualitiesApi.reducer,
+    [applicationApi.reducerPath]: applicationApi.reducer,
+    [usersApi.reducerPath]: usersApi.reducer,
+    [whatsappApi.reducerPath]: whatsappApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -38,7 +47,10 @@ export const store = configureStore({
       redevanceApi.middleware,
       candidatApi.middleware,
       companyApi.middleware,
-      actualitiesApi.middleware
+      actualitiesApi.middleware,
+      applicationApi.middleware,
+      usersApi.middleware,
+      whatsappApi.middleware
     ),
 });
 

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import Form from './../../../../app/src/components/Form';
 const initialState = {
   data: 0,
 }
@@ -26,26 +27,45 @@ export const { setAuth, } = authSlice.actions
 
 export default authSlice.reducer
 
-
+const token = JSON.parse(localStorage.getItem('auth'))?.jwt
+console.log('token', token)
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://api.antares-rh.net/api' }),
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({
-        url: `/auth/local`,
+        url: `/auth/local?populate=photo`,
 
         method: 'POST',
         body: data
       }),
     }),
 
-    register: builder.mutation({
-      query: (data) => ({
-        url: `/auth/local/register`,
-
+    uploadPhoto: builder.mutation({
+      query: (formData) => ({
+        url: `/upload`,
         method: 'POST',
-        body: data
+        body: formData, // FormData object for file upload
+      }),
+    }),
+
+    getMe: builder.query({
+      query: (formData) => ({
+        url: `/users/me?populate[0]=photo`,
+        body: formData, // FormData object for file upload
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Assuming JWT is stored in localStorage
+        },
+      }),
+    }),
+    register: builder.mutation({
+      query: (formData) => ({
+        url: `/auth/local/register`,
+        method: 'POST',
+        body: formData, 
+      
       }),
     }),
   }),
@@ -53,4 +73,4 @@ export const authApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useLoginMutation, useRegisterMutation } = authApi
+export const { useLoginMutation, useRegisterMutation, useUploadPhotoMutation, useGetMeQuery } = authApi

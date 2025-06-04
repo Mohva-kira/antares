@@ -1,19 +1,45 @@
-import React, { useState } from "react";
-import { addArrayElement, handleInputChange, handleSubmit } from "../utils";
+import React, { useEffect, useState } from "react";
+import {
+  addArrayElement,
+  handleInputChange,
+  handleSubmit,
+  removeArrayElement,
+  updateNestedArrayElement, 
+} from "../utils";
 
-const Form = ({ fields, title, setIsVisible, post }) => {
-  const [dataToSend, setDataToSend] = useState();
+const Form = ({ fields, title, setIsVisible, post, selected}) => {
+
+  console.log('selected', selected);
+  const [dataToSend, setDataToSend] = useState(selected?.attributes );
   const [errors, setErrors] = useState();
 
-  console.log("title", title);
+
+  useEffect(() => {
+    if (selected?.attributes) {
+      // Préremplir tous les champs avec selected.attributes
+      const initialData = {};
+
+      fields.forEach((field) => {
+        if (field.type === "array" && Array.isArray(selected.attributes[field.name])) {
+          initialData[field.name] = selected.attributes[field.name].map((item) => ({ ...item }));
+        } else {
+          initialData[field.name] = selected.attributes[field.name] ?? "";
+        }
+      });
+
+      setDataToSend(initialData);
+    }
+  }, [selected, fields]);
+
+
   const send = (data) => {
     console.log("Données envoyées :", data);
     post(data);
   };
 
   return (
-    <div className="lg:w-3/4 w-full bg-slate-400 dark:bg-gray-700 p-5 rounded-2xl flex flex-col justify-center shadow-md">
-      <div className="w-full flex justify-end relative  mt-16">
+    <div className="lg:w-4/5 w-full bg-slate-400 dark:bg-gray-700 p-5 rounded-2xl flex flex-col justify-center shadow-md">
+      <div className="w-full flex justify-end relative">
         <p
           onClick={() => setIsVisible(false)}
           className="text-white cursor-pointer dark:text-white">
@@ -30,171 +56,143 @@ const Form = ({ fields, title, setIsVisible, post }) => {
           e.preventDefault();
           handleSubmit(dataToSend, fields, setErrors, send, setIsVisible);
         }}
-        className="p-5 bg-gray-100  flex flex-wrap justify-center items-center gap-4 rounded-2xl w-full mx-auto">
+        className="p-5 bg-gray-100 flex flex-wrap space-x-4 rounded-lg w-full mx-auto">
         {fields?.map((field) => (
-          <>
+          <div key={field.name} className="w-full sm:w-[450px] mb-4">
             {field.type === "textarea" ? (
               <textarea
                 id={field.name}
                 placeholder={field.placeholder}
-                value={(dataToSend && dataToSend[field.name]) || ""}
+                value={dataToSend &&  dataToSend[field.name] || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-1/2 p-2 border rounded-2xl shadow-md"
+                className="w-full p-2 border rounded-2xl"
               />
             ) : field.type === "select" ? (
               <select
                 id={field.name}
-                value={(dataToSend && dataToSend[field.name]) || ""}
+                value={dataToSend[field.name] || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-2/5 p-2 border rounded-2xl shadow-md">
+                className="w-full p-2 border rounded-2xl">
                 <option value="">{field.placeholder}</option>
-                {field?.options?.map((option, index) => (
-                  <option key={index} value={option.value}>
+                {field.options.map((option) => (
+                  <option key={option} value={option.value}>
                     {option.name}
                   </option>
                 ))}
               </select>
             ) : field.type === "array" ? (
-              <div className="w-1/3 h-full overflow-y-auto">
-                <label className="block mb-2 font-semibold">
-                  {field.placeholder}
-                </label>
-                {((dataToSend && dataToSend[field.name]) || [{}])?.map(
-                  (item, index) => (
-                    <div
-                      key={index}
-                      className="mb-4 p-4 w-full border rounded-2xl shadow-md bg-white">
-                      {field?.fields?.map((subField) =>
-                        subField.type === "select" ? (
+              <div className="w-full">
+                <label className="block mb-2 font-semibold">{field.placeholder}</label>
+                {(dataToSend && dataToSend[field.name] || [{}]).map((item, index) => (
+                  <div
+                    key={index}
+                    className="mb-4 p-4 border rounded-2xl shadow-md bg-white">
+                    {field?.fields?.map((subField) => (
+                      <div key={subField.name} className="mb-2">
+                        {subField.type === "textarea" ? (
+                          <textarea
+                            id={subField.name}
+                            placeholder={subField.placeholder}
+                            value={item[subField.name] || ""}
+                            onChange={(e) =>
+                              updateNestedArrayElement(
+                                field.name,
+                                index,
+                                subField.name,
+                                e.target.value,
+                                setDataToSend
+                              )
+                            }
+                            className="w-full p-2 border rounded-2xl"
+                          />
+                        ) : subField.type === "select" ? (
                           <select
                             id={subField.name}
-                            value={
-                              (dataToSend && dataToSend[subField.name]) || ""
-                            }
+                            value={item[subField.name] || ""}
                             onChange={(e) =>
-                              handleInputChange(e, setDataToSend, setErrors)
+                              updateNestedArrayElement(
+                                field.name,
+                                index,
+                                subField.name,
+                                e.target.value,
+                                setDataToSend
+                              )
                             }
-                            className="w-full p-2 border rounded-2xl mb-2 shadow-md">
+                            className="w-full p-2 border rounded-2xl">
                             <option value="">{subField.placeholder}</option>
-                            {subField?.options?.map((option, index) => (
-                              <option key={index} value={option.value}>
+                            {subField.options.map((option) => (
+                              <option key={option} value={option.value}>
                                 {option.name}
                               </option>
                             ))}
                           </select>
-                        ) : subField.type == "textarea" ? (
-                          <textarea
-                            id={subField.name}
-                            placeholder={subField.placeholder}
-                            value={
-                              (dataToSend && dataToSend[subField.name]) || ""
-                            }
-                            onChange={(e) =>
-                              handleInputChange(e, setDataToSend, setErrors)
-                            }
-                            className="w-full p-2 border rounded-2xl shadow-md"
-                          />
-                        ) :  subField.type == "array" ? (
-                          <div
-                            key={index}
-                            className="mb-2 mt-2 w-full flex flex-col">
-                            <label className="block mb-2 font-semibold">
-                              {subField.placeholder}
-                            </label>
-                            {((dataToSend &&
-                              dataToSend[subField.name]) ||
-                              subField.fields)?.map((subItem, subIndex) => subItem.type == "textarea" ? (
-                                
-                                <textarea
-                                  id={subItem.name}
-                                  placeholder={subItem.placeholder}
-                                  value={
-                                    (dataToSend && dataToSend[subItem.name]) || ""
-                                  }
-                                  onChange={(e) =>
-                                    handleInputChange(e, setDataToSend, setErrors)
-                                  }
-                                  className="w-full p-2 border rounded-2xl shadow-md"
-                                />
-                              ) : (
-                              <input
-                                key={subIndex}
-                                type={subField.type}
-                                id={subItem.name}
-                                name={subItem.name}
-                                placeholder={subItem.placeholder}
-                                value={
-                                  (dataToSend &&
-                                    dataToSend[subField.name]) ||
-                                  ""
-                                }
-                                onChange={(e) =>
-                                  handleInputChange(e, setDataToSend, setErrors)
-                                }
-                                className="w-full p-2 border rounded-2xl shadow-md mb-2"
-                              />
-                            ))}
-                          </div>
-
-                          
                         ) : (
-                          <div key={index} className="mb-2 mt-2 w-full">
-                            <input
-                              type={subField.type}
-                              id={subField.name}
-                              name={subField.name}
-                              placeholder={subField.placeholder}
-                              value={
-                                (dataToSend && dataToSend[subField.name]) || ""
-                              }
-                              onChange={(e) =>
-                                handleInputChange(e, setDataToSend, setErrors)
-                              }
-                              className="w-full p-2 border rounded-2xl shadow-md"
-                              required={subField.required}
-                            />
-                          </div>
-                        )
-                      )}
-                      <button
-                        type="button"
-                        onClick={() =>
-                          removeArrayElement(field.name, index, setDataToSend)
-                        }
-                        className="bg-red-500 text-white p-2 mt-3 rounded-2xl shadow-md w-full">
-                        Supprimer 
-                      </button>
-                    </div>
-                  )
-                )}
+                          <input
+                            type={subField.type}
+                            name={subField.name}
+                            placeholder={subField.placeholder}
+                            value={item[subField.name] || ""}
+                            onChange={(e) =>
+                              updateNestedArrayElement(
+                                field.name,
+                                index,
+                                subField.name,
+                                e.target.value,
+                                setDataToSend
+                              )
+                            }
+                            className="w-full p-2 border rounded-2xl"
+                            required={subField.required}
+                          />
+                        )}
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        removeArrayElement(field.name, index, setDataToSend)
+                      }
+                      className="bg-red-500 text-white p-2 rounded w-full">
+                      Supprimer cette expérience
+                    </button>
+                  </div>
+                ))}
                 <button
                   type="button"
                   onClick={() =>
                     addArrayElement(field.name, setDataToSend, field.fields)
                   }
-                  className="bg-blue-500 text-white p-2 rounded-2xl shadow-md w-full">
-                  Ajouter 
+                  className="bg-blue-500 text-white p-2 rounded w-full">
+                  Ajouter une expérience
                 </button>
               </div>
+            ) : field.type === "file" ? (
+              <input
+                id={field.name}
+                type="file"
+                placeholder={field.placeholder}
+                onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
+                className="w-full p-2 border rounded-2xl shadow-md"
+              />
             ) : (
               <input
                 id={field.name}
                 type={field.type}
                 placeholder={field.placeholder}
-                value={(dataToSend && dataToSend[field.name]) || ""}
+                value={dataToSend && dataToSend[field.name] || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-2/5 p-2 border rounded-2xl shadow-md"
+                className="w-full p-2 border rounded-2xl shadow-md"
               />
             )}
             {errors && errors[field.name] && (
               <p className="text-red-500 text-sm">{errors[field.name]}</p>
             )}
-          </>
+          </div>
         ))}
 
         <button
           type="submit"
-          className="bg-green-500 text-white p-2 rounded-2xl shadow-md w-full hover:bg-green-600 transition">
+          className="bg-green-500 text-white p-2 rounded w-full hover:bg-green-600 transition">
           Envoyer
         </button>
       </form>

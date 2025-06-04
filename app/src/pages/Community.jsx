@@ -5,10 +5,15 @@ import Modal from "../components/Modal";
 import NewsLetter from "../components/NewsLetter";
 import PopularCard from "../components/PopularCard";
 
-import { useGetActualityQuery, usePostActualityMutation } from "../redux/actualityService";
-import { actualiteField } from './../constants/index';
-import Form from './../components/Form';
+import {
+  useGetActualityQuery,
+  usePostActualityMutation,
+  useUpdateActualityMutation,
+} from "../redux/actualityService";
+import { actualiteField } from "./../constants/index";
+import Form from "./../components/Form";
 import { json } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Community = () => {
   const contentArray = [
@@ -84,21 +89,44 @@ const Community = () => {
 
   const [fields, setFields] = useState(actualiteField);
 
-  const {data, isLoading, isError} = useGetActualityQuery();
+  const { data, isLoading, isError } = useGetActualityQuery();
   const [isVisible, setIsVisible] = useState();
+  const [selected, setSelected] = useState();
+  const [isUpdating, setIsUpdating] = useState(false)
 
-  const {data: actualiteData} = data || {};
+  const { data: actualiteData } = data || {};
 
-
-  const [postActualite, {isLoading: isPosting}] = usePostActualityMutation();
+  const [postActualite, { isLoading: isPosting }] = usePostActualityMutation();
+  const [updateActualite, { isLoading: isUpdatingData }] = useUpdateActualityMutation()
   console.log("data", actualiteData);
   const send = (data) => {
     console.log("les données", data);
 
-    
+    const { images, ...fields } = data;
     const formData = new FormData();
-    // formData.append("images", data.images);
-    formData.append("data", JSON.stringify(data));
+    formData.append("data", JSON.stringify(fields)); // données textuelles
+
+    if (images instanceof FileList) {
+      // Plusieurs fichiers
+      Array.from(images).forEach((file) => {
+        formData.append("files.images", file);
+      });
+    } else if (images instanceof File) {
+      // Un seul fichier
+      formData.append("files.images", images);
+    }
+    
+    if( isUpdating) {
+      updateActualite({ id: selected.id, data: formData }).then((response) => {
+        if (response.data) {
+          setIsVisible(false);
+          toast.success("Article mis à jour avec succès");
+        } else {
+          toast.error("Erreur lors de la mise à jour de l'article");
+        }
+      });
+      return;
+    }
     postActualite(formData).then((response) => {
       if (response.data) {
         setIsVisible(false);
@@ -124,12 +152,18 @@ const Community = () => {
           <div className="w-full flex flex-wrap space-x-4">
             <button
               onClick={() => setIsVisible(!isVisible)}
-              className="bg-orange-500 text-white font-semibold py-2 w-60 rounded-2xl ">
+              className="bg-orange-500 text-white font-semibold py-2 w-60 rounded-2xl shadow-xl hover:bg-orange-600 transition-colors duration-300">
               Ajouter un article
             </button>
           </div>
           {actualiteData?.map((article, index) => (
-            <ArticlesCard key={index} article={article} />
+            <ArticlesCard
+              key={article.id}
+              article={article}
+              setSelected={setSelected}
+              setIsVisible={setIsVisible}
+              setIsUpdating={setIsUpdating}
+            />
           ))}
         </div>
 
@@ -146,6 +180,8 @@ const Community = () => {
           setIsVisible={setIsVisible}
           post={send}
           title={"Créer un article"}
+          selected={selected}
+          setSelected={setSelected}
         />
       </Modal>
     </Layout>

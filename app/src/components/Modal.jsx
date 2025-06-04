@@ -20,7 +20,7 @@ const Modal = ({ children, isVisible, setIsVisible }) => {
         class="fixed inset-0  w-full bg-gray-500/75 transition-opacity"
         aria-hidden="true"></div>
 
-      <div class="fixed inset-0  z-10 w-full overflow-y-auto">
+      <div class="fixed inset-0 top-16  z-10 w-full overflow-y-auto">
         <div class="flex min-h-full items-end justify-center p-4  w-full text-center sm:items-center sm:p-0">
           {children}
         </div>
