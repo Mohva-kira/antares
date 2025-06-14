@@ -22,8 +22,8 @@ export const whatsappSlice = createSlice({
 export const { setApplication } = whatsappSlice.actions;
 export default whatsappSlice.reducer;
 
-const APIURL = import.meta.env.WHATSAPP_API_URL 
-const APIKEY = import.meta.env.WHATSAPP_API_KEY;
+const APIURL = import.meta.env.VITE_WHATSAPP_API_URL 
+const APIKEY = import.meta.env.VITE_WHATSAPP_API_KEY;
 
 if(!APIURL || !APIKEY) {
     console.error("Environment variables WHATSAPP_API_URL and WHATSAPP_API_KEY must be set.");
@@ -64,6 +64,6 @@ export const whatsappApi = createApi({
 
 // Exports des hooks générés automatiquement par RTK Query
 export const {
-    useSendMessageQuery,
+    useSendMessageMutation,
   
 } = whatsappApi;

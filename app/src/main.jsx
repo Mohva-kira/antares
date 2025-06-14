@@ -17,6 +17,7 @@ import Profiles from "./pages/Profiles.jsx";
 import Reports from "./pages/Reports";
 import Users from "./pages/Users.jsx";
 import { store } from "./redux/Store.js";
+import JobDetails from "./pages/JobDetails.jsx";
 // Registering Syncfusion license key
 registerLicense(
   "Ngo9BigBOggjHTQxAR8/V1NDaF5cWWtCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXZccHRQRGFZUUV2V0o="
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: "/cv/:id",
     element: <ProtectedRoute element={<CvDetails />} />,
+  },
+  {
+    path: "/job/:id",
+    element: <ProtectedRoute element={<JobDetails />} />,
   },
   {
     path: "/article/:id",

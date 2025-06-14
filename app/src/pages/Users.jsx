@@ -9,7 +9,7 @@ import { GrUserAdmin } from "react-icons/gr";
 import Layout from "../components/Layout";
 import UserForm from "./../components/UserForm";
 import { useGetUsersQuery } from "../redux/usersService";
-import { useSendMessageQuery } from "../redux/whatsappService";
+import { useSendMessageMutation } from "../redux/whatsappService";
 
 let data = [
   {
@@ -48,7 +48,7 @@ const Users = () => {
   // Supposons que tu utilises la variable data récupérée de l'API
   const users = data || []; // adapte selon la structure de ta réponse
 
-  const [sendMessage] = useSendMessageQuery();
+  const [sendMessage] = useSendMessageMutation();
   const admins = users.filter((user) => user.role.name === "Admin");
   const editeurs = users.filter((user) => user.role.name === "Authenticated");
 
@@ -68,7 +68,7 @@ const Users = () => {
   return (
     <Layout>
       <div className="flex w-full flex-col justify-center items-center">
-        <div className="w-full max-w-xl bg-slate-200 rounded-2xl  shadow-lg p-2 animate-fade-in">
+        <div className="w-full max-w-xl bg-white mb-2 rounded-2xl  shadow-lg p-2 animate-fade-in">
           <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">
             Gestion des utilisateurs
           </h1>
@@ -104,7 +104,7 @@ const Users = () => {
                 type="date"
                 format="dd-MM-yyyy"
               />
-              <ColumnDirective field="Adress" headerText="Adresse" />
+              <ColumnDirective field="adresse" headerText="Adresse" />
             </ColumnsDirective>
           </GridComponent>
         </div>

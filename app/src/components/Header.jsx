@@ -22,7 +22,7 @@ const Header = () => {
     { name: "Entretien", path: "/meets" },
     { name: "Base de CV", path: "/cvs" },
     { name: "Communauté", path: "/community" },
-    { name: "Rapports", path: "/rapports" },
+    // { name: "Rapports", path: "/rapports" },
     { name: "Utilisateurs", path: "/utilisateurs" },
   ];
 

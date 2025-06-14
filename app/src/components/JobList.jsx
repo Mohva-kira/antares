@@ -4,9 +4,11 @@ import { useLazyGetJobsQuery } from "../redux/jobService";
 import { TiStarburst } from "react-icons/ti";
 import { CiClock1 } from "react-icons/ci";
 import { FcCancel } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 
 const JobList = ({ page, size }) => {
   const [getJobs, { data, isLoading, isError }] = useLazyGetJobsQuery();
+  const navigate = useNavigate();
   const jobs = data?.data || [];
 
 
@@ -23,7 +25,7 @@ const JobList = ({ page, size }) => {
           key={index}
           className="flex w-full p-2 m-2 h-1/3 bg-white  lg:h-1/5 rounded-2xl">
           <div className="flex flex-col w-full justify-between">
-            <h1 className="text-black text-2xl font-bold">{job?.attributes?.titre}</h1>
+            <h1 onClick={() => navigate('/job/' +job?.id)} className="text-black cursor-pointer text-2xl font-bold">{job?.attributes?.titre}</h1>
             <div className="flex flex-wrap gap-2 font-semibold">
               <p className="text-slate-700 text-base">Nombre d'expérience  {job?.attributes?.experience}</p>
               <p className="text-slate-700"> - {job?.attributes?.contratType ?? 'Non défini'}</p>
