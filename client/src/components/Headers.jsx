@@ -27,7 +27,7 @@ const Headers = () => {
     <nav className=" border-gray-200 ">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src={logo} className="h-52 w-52" alt="Flowbite Logo" />
+          <img src={logo} className="w-28" alt="Flowbite Logo" />
         </a>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <button
@@ -152,6 +152,13 @@ const Headers = () => {
                 href="/offres"
                 className="block py-2 px-3 nav-item rounded  md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700md:dark:hover:bg-transparent dark:border-gray-700">
                 Offres d'emploi
+              </a>
+            </li>
+            <li>
+              <a
+                href="/appels-offre"
+                className="block py-2 px-3 nav-item rounded  md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700md:dark:hover:bg-transparent dark:border-gray-700">
+                Appel d'offre
               </a>
             </li>
             <li>

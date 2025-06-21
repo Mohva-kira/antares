@@ -15,13 +15,17 @@ import {
   useGetProfileQuery,
   usePostProfileMutation,
 } from "../redux/profileServices";
+import { useGetMeQuery } from "../redux/auth/authService";
 
 const MyProfile = () => {
   const user = JSON.parse(localStorage.getItem("auth"));
   const [isVisible, setIsVisible] = useState();
   const [postProfile] = usePostProfileMutation();
+    const { data: userData } = useGetMeQuery();
+  
   const {
     data: profile,
+    
     isLoading,
     isSuccess,
     isFetching,
@@ -72,17 +76,14 @@ const MyProfile = () => {
             </div>
             <div class="relative flex flex-col justify-center items-center space-y-4">
               <div class="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl  -mt-24 flex items-center justify-center text-indigo-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-24 w-24"
-                  viewBox="0 0 20 20"
-                  fill="currentColor">
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
+                <img
+                  src={
+                    userData?.photo
+                      ? `https://api.antares-rh.net${userData?.photo?.url}`
+                      : "https://api.antares-rh.net/uploads/2023/10/01/default-avatar.png"
+                  }
+                  alt="user profile"
+                  className="rounded-full w-48 h-48 object-cover" />
               </div>
               <div className="flex space-x-2">
                 <button
@@ -124,21 +125,21 @@ const MyProfile = () => {
             </div>
           </div>
 
-          {profile ? (
+          {userData ? (
             <div class="mt-20 text-center border-b pb-12">
               <h1 class="text-4xl font-medium text-gray-700">
-                {`${profile?.data[0]?.attributes?.nom} ${profile?.data[0]?.attributes?.prenom} `}
+                {`${userData?.username} `}
                 {/* , <span class="font-light text-gray-500">27</span> */}
               </h1>
               <p class="font-light text-gray-600 mt-3 ">
-                {`${profile?.data[0]?.attributes?.phone}, ${profile?.data[0]?.attributes?.email}   `}
+                {`${userData?.country_code} ${userData?.phone}, ${userData?.email}   `}
               </p>
               <p class="font-light text-gray-600 mt-3 capitalize">
-                {` ${profile?.data[0]?.attributes?.ville}, ${profile?.data[0]?.attributes?.pays}`}
+                {` ${userData?.adresse}`}
               </p>
-              <p class="mt-8 text-gray-500">
+              {/* <p class="mt-8 text-gray-500">
                 {`${profile?.data[0]?.attributes?.role} - ${profile?.data[0]?.attributes?.university}`}
-              </p>
+              </p> */}
             </div>
           ) : (
             <div>

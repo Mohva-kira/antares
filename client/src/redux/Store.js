@@ -8,6 +8,9 @@ import profileReducer, { profileApi } from "./profileServices";
 import redevableReducer, { redevableApi } from "./redevableService";
 import redevanceReducer, { redevanceApi } from "./redevanceService";
 import actualtiteReducer, { actualiteApi } from "./actualite";
+import partenaireReducer, { partenaireApi} from './partenaire';
+import daoReducer, {daoApi} from './dao';
+import bulletinReducer, {bulletinApi} from './bulletin';
 export const store = configureStore({
   reducer: {
     redevables: redevableReducer,
@@ -18,6 +21,9 @@ export const store = configureStore({
     offers: offersReducer,
     applications: applicationReducer,
     actualites: actualtiteReducer,
+    partenaire: partenaireReducer,
+    dao: daoReducer,
+    bulletin: bulletinReducer,
     [actualiteApi.reducerPath]: actualiteApi.reducer,
     [applicationApi.reducerPath]: applicationApi.reducer,
     [offersApi.reducerPath]: offersApi.reducer,
@@ -26,6 +32,10 @@ export const store = configureStore({
     [candidatApi.reducerPath]: candidatApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [redevanceApi.reducerPath]: redevanceApi.reducer,
+    [partenaireApi.reducerPath]: partenaireApi.reducer,
+    [daoApi.reducerPath]: daoApi.reducer,
+    [bulletinApi.reducerPath]: bulletinApi.reducer,
+    
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -37,7 +47,10 @@ export const store = configureStore({
       candidatApi.middleware,
       offersApi.middleware,
       applicationApi.middleware,
-      actualiteApi.middleware
+      actualiteApi.middleware,
+      partenaireApi.middleware,
+      daoApi.middleware,
+      bulletinApi.middleware
     ),
 });
 

@@ -1054,6 +1054,37 @@ export interface ApiJobJob extends Schema.CollectionType {
   };
 }
 
+export interface ApiPartenairePartenaire extends Schema.CollectionType {
+  collectionName: 'partenaires';
+  info: {
+    singularName: 'partenaire';
+    pluralName: 'partenaires';
+    displayName: 'partenaire';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    image: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::partenaire.partenaire',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::partenaire.partenaire',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiResumeResume extends Schema.CollectionType {
   collectionName: 'resumes';
   info: {
@@ -1124,6 +1155,7 @@ declare module '@strapi/types' {
       'api::company.company': ApiCompanyCompany;
       'api::contrat.contrat': ApiContratContrat;
       'api::job.job': ApiJobJob;
+      'api::partenaire.partenaire': ApiPartenairePartenaire;
       'api::resume.resume': ApiResumeResume;
     }
   }

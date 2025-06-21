@@ -19,6 +19,8 @@ import MyProfile from "./pages/MyProfile.jsx";
 import Offers from "./pages/Offers.jsx";
 import { store } from "./redux/Store.js";
 import Actualite from "./pages/Actualite.jsx";
+import Dao from "./pages/Dao.jsx";
+import DaoDetails from "./pages/DaoDetails.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -72,6 +74,14 @@ const router = createBrowserRouter([
   {
     path: "/candidatures",
     element: <ProtectedRoute element={<Applications />} />,
+  },
+  {
+    path: "/appels-offre",
+    element: <ProtectedRoute element={<Dao />} />,
+  },
+  {
+    path: "/appels-offre/:name",
+    element: <DaoDetails />,
   },
   {
     path: "/contact",

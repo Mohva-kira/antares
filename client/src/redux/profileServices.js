@@ -41,7 +41,7 @@ export const profileApi = createApi({
   }),
   endpoints: (builder) => ({
     getProfile: builder.query({
-      query: (id) => `/candidats?populate=*&filters[user][$eq]=${id}`,
+      query: (id) => `/users?populate=*&filters[user][$eq]=${id}`,
     }),
 
     postProfile: builder.mutation({

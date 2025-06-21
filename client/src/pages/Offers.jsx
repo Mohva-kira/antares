@@ -4,6 +4,7 @@ import Breadcumb from "../components/Breadcumb";
 import Container from "../components/Container";
 import JobCard from "../components/JobCard";
 import { useGetOffersQuery } from "../redux/offerService";
+import { useGetPartenaireQuery } from "../redux/partenaire";
 
 const Offers = () => {
   const jobData = [
@@ -110,7 +111,7 @@ const Offers = () => {
   ];
 
   const { data, isLoading, error } = useGetOffersQuery();
-
+const {data: partenaireData, isLoading: partenaireIsLoading} = useGetPartenaireQuery();
   console.log("les offres", data);
 
   if (isLoading) {
@@ -173,7 +174,10 @@ const Offers = () => {
                         ))}
                       </div>
                       <div class="col-lg-4 text-info-sec">
-                        <img src={job2} alt=" " class="img-fluid" />
+                      {partenaireData?.data?.map(item =>  (
+                          <img src={'https://api.antares-rh.net' + item?.attributes?.image?.data?.attributes?.url} alt=" " className="img-fluid h-44 object-cover mb-2 shadow-md" />
+                        ))
+                        }
                       </div>
                     </div>
                   </div>

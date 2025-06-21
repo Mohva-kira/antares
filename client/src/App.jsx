@@ -45,6 +45,7 @@ import "swiper/css/scrollbar";
 import { useGetCandidatsQuery } from "./redux/candidatService";
 import { useGetOffersQuery } from "./redux/offerService";
 import { useGetActualitesQuery } from "./redux/actualite";
+import { useGetPartenaireQuery } from "./redux/partenaire";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -234,6 +235,8 @@ function App() {
     },
   ];
 
+
+  const {data: partenaireData, isLoading: partenaireIsLoading} = useGetPartenaireQuery();
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("auth")) || null;
@@ -289,7 +292,7 @@ function App() {
           <Search />
         </div>
       </div>
-      <section className="banner-bottom-wthree py-lg-5 py-md-5 py-3">
+      {/* <section className="banner-bottom-wthree py-lg-5 py-md-5 py-3">
         <div className="container">
           <div className="inner-sec-w3ls py-lg-5  py-3">
             <h3 className="tittle text-center mb-lg-4 mb-3">
@@ -308,7 +311,7 @@ function App() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="banner-bottom-wthree pb-lg-5 pb-md-4 pb-3">
         <div className="container">
@@ -354,11 +357,15 @@ function App() {
                     <div className="row t-in">
                       <div className="col-lg-8 text-info-sec">
                         {jobs?.data.map((item) => (
-                          <JobCard item={item} />
+                          <JobCard item={item} />   
                         ))}
                       </div>
                       <div className="col-lg-4 text-info-sec">
-                        <img src={job2} alt=" " className="img-fluid" />
+                        {partenaireData?.data?.map(item =>  (
+                          <img src={'https://api.antares-rh.net' + item?.attributes?.image?.data?.attributes?.url} alt=" " className="img-fluid h-44 object-cover mb-2 shadow-md" />
+                        ))
+                        }
+                        {/* <img src={job2} alt=" " className="img-fluid" /> */}
                       </div>
                     </div>
                   </div>
