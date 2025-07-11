@@ -11,6 +11,7 @@ import actualtiteReducer, { actualiteApi } from "./actualite";
 import partenaireReducer, { partenaireApi} from './partenaire';
 import daoReducer, {daoApi} from './dao';
 import bulletinReducer, {bulletinApi} from './bulletin';
+import companyReducer, { companyApi } from "./companyService";
 export const store = configureStore({
   reducer: {
     redevables: redevableReducer,
@@ -24,6 +25,7 @@ export const store = configureStore({
     partenaire: partenaireReducer,
     dao: daoReducer,
     bulletin: bulletinReducer,
+    companies: companyReducer,
     [actualiteApi.reducerPath]: actualiteApi.reducer,
     [applicationApi.reducerPath]: applicationApi.reducer,
     [offersApi.reducerPath]: offersApi.reducer,
@@ -35,6 +37,7 @@ export const store = configureStore({
     [partenaireApi.reducerPath]: partenaireApi.reducer,
     [daoApi.reducerPath]: daoApi.reducer,
     [bulletinApi.reducerPath]: bulletinApi.reducer,
+    [companyApi.reducerPath]: companyApi.reducer,
     
   },
 
@@ -50,7 +53,8 @@ export const store = configureStore({
       actualiteApi.middleware,
       partenaireApi.middleware,
       daoApi.middleware,
-      bulletinApi.middleware
+      bulletinApi.middleware,
+      companyApi.middleware
     ),
 });
 

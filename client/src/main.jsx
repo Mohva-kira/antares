@@ -21,6 +21,7 @@ import { store } from "./redux/Store.js";
 import Actualite from "./pages/Actualite.jsx";
 import Dao from "./pages/Dao.jsx";
 import DaoDetails from "./pages/DaoDetails.jsx";
+import { ToastContainer } from 'react-toastify';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -60,7 +61,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/job/:name",
-    element: <JobDetails />,
+    element: <ProtectedRoute element={ <JobDetails />} />,
   },
   {
     path: "/news/:name",
@@ -81,7 +82,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/appels-offre/:name",
-    element: <DaoDetails />,
+    element: <ProtectedRoute element={<DaoDetails />} /> ,
   },
   {
     path: "/contact",
@@ -92,6 +93,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
+      <ToastContainer />
       <RouterProvider router={router} />
     </Provider>
   </StrictMode>

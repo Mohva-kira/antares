@@ -55,6 +55,12 @@ export const offersApi = createApi({
                 body: data,
             }),
         }),
+        getOfferByCompany: builder.query({
+            query: (companyName) => `/jobs?filters[company][id][$eq]=${encodeURIComponent(companyName)}&populate=*`,
+        }),
+        getOfferById: builder.query({
+            query: (id) => `/jobs/${id}?populate=*`,
+        }),
     }),
 });
-export const { useGetOffersQuery, usePostulateOfferMutation, useGetOffersByNameQuery } = offersApi;
+export const { useGetOffersQuery, usePostulateOfferMutation, useGetOffersByNameQuery, useLazyGetOfferByCompanyQuery } = offersApi;

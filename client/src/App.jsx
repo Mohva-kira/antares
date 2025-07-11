@@ -9,7 +9,7 @@ import { IoIosPersonAdd } from "react-icons/io";
 import "./App.css";
 import img1 from "./assets/images/1.png";
 import img2 from "./assets/images/2.png";
-import img3 from "./assets/images/3.jpg";
+import img3 from "./assets/images/3.png";
 import img4 from "./assets/images/4.png";
 import job2 from "./assets/images/job-2.png";
 import p1 from "./assets/images/p1.jpg";
@@ -48,192 +48,8 @@ import { useGetActualitesQuery } from "./redux/actualite";
 import { useGetPartenaireQuery } from "./redux/partenaire";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const categories = [
-    {
-      title: "Multimedia",
-      nb: "15",
-      img: p1,
-      icon: <FaBullhorn />,
-    },
-    {
-      title: "Education",
-      nb: "22",
-      img: p2,
-      icon: <FaGraduationCap />,
-    },
-    {
-      title: "Comptabilité",
-      nb: "16",
-      img: p3,
-      icon: <FaAccusoft />,
-    },
 
-    {
-      title: "Ressources Humaine",
-      nb: "4",
-      img: p4,
-      icon: <FaUsers />,
-    },
-    {
-      title: "Ingenieur",
-      nb: "8",
-      img: p4,
-      icon: <FaUsers />,
-    },
-    {
-      title: "Construction",
-      nb: "18",
-      img: p4,
-      icon: <FaUsers />,
-    },
-  ];
 
-  const jobData = [
-    {
-      name: "Sotram",
-      title: "Service de transport public et privé",
-      adresse: "Avenue de la Liberté, Hamdallaye ACI 2000",
-      ville: "Bamako",
-      pays: "Mali",
-      contratType: "Prestataire de services",
-    },
-    {
-      name: "BamakoTech",
-      title: "Développement de logiciels et solutions digitales",
-      adresse: "Rue 314, Baco-Djicoroni ACI",
-      ville: "Bamako",
-      pays: "Mali",
-      contratType: "Contrat de prestation",
-    },
-    {
-      name: "AgroMali",
-      title: "Production et exportation de produits agricoles",
-      adresse: "Boulevard du Peuple, Quinzambougou",
-      ville: "Bamako",
-      pays: "Mali",
-      contratType: "Fournisseur",
-    },
-    {
-      name: "Kéné Group",
-      title: "Conseil et formation en entrepreneuriat",
-      adresse: "Avenue de l'Indépendance, Badalabougou",
-      ville: "Bamako",
-      pays: "Mali",
-      contratType: "Partenariat",
-    },
-    {
-      name: "Africafé Mali",
-      title: "Production et distribution de café et produits dérivés",
-      adresse: "Rue 465, Lafiabougou",
-      ville: "Bamako",
-      pays: "Mali",
-      contratType: "Contrat de distribution",
-    },
-    {
-      name: "Tiguida Design",
-      title: "Agence de design et communication visuelle",
-      adresse: "Quartier Hippodrome, Rue 251",
-      ville: "Bamako",
-      pays: "Mali",
-      contratType: "Contrat de service",
-    },
-    {
-      name: "BKO Logistics",
-      title: "Transport et logistique internationale",
-      adresse: "Rue Mohamed V, Sogoniko",
-      ville: "Bamako",
-      pays: "Mali",
-      contratType: "Contrat de sous-traitance",
-    },
-    {
-      name: "Toumaï Énergie",
-      title: "Solutions énergétiques renouvelables",
-      adresse: "Rue 18, Hamdallaye ACI",
-      ville: "Bamako",
-      pays: "Mali",
-      contratType: "Contrat de fourniture",
-    },
-    {
-      name: "Saveurs du Mali",
-      title: "Production et distribution de produits alimentaires locaux",
-      adresse: "Quartier Djikoroni Para",
-      ville: "Bamako",
-      pays: "Mali",
-      contratType: "Contrat de vente",
-    },
-    {
-      name: "MaliMédic",
-      title: "Fourniture de matériel médical et pharmaceutique",
-      adresse: "Boulevard de l’Afrique, Médina Coura",
-      ville: "Bamako",
-      pays: "Mali",
-      contratType: "Contrat de distribution",
-    },
-  ];
-
-  const cvData = [
-    {
-      name: "Fatoumata Diarra",
-      img: "https://example.com/images/fatoumata_diarra.jpg",
-      profil:
-        "Spécialiste en marketing digital avec 5 ans d’expérience dans la gestion de campagnes sur les réseaux sociaux et l’optimisation SEO.",
-    },
-    {
-      name: "Ibrahim Coulibaly",
-      img: "https://example.com/images/ibrahim_coulibaly.jpg",
-      profil:
-        "Développeur full-stack maîtrisant JavaScript, React, et Node.js, avec une expérience en développement de solutions SaaS.",
-    },
-    {
-      name: "Aminata Keita",
-      img: "https://example.com/images/aminata_keita.jpg",
-      profil:
-        "Gestionnaire de projet certifiée PMP, spécialisée dans la transformation digitale et la gestion d'équipes multidisciplinaires.",
-    },
-    {
-      name: "Mohamed Sangaré",
-      img: "https://example.com/images/mohamed_sangare.jpg",
-      profil:
-        "Analyste financier avec une expertise dans l’analyse de risques et la gestion de portefeuilles d’investissement en Afrique de l’Ouest.",
-    },
-    {
-      name: "Oumou Traoré",
-      img: "https://example.com/images/oumou_traore.jpg",
-      profil:
-        "Ingénieure en génie civil spécialisée dans les infrastructures routières et les projets de construction durable.",
-    },
-    {
-      name: "Seydou Konaté",
-      img: "https://example.com/images/seydou_konate.jpg",
-      profil:
-        "Consultant en cybersécurité avec des compétences avancées en gestion des risques, tests d'intrusion, et sécurité des réseaux.",
-    },
-    {
-      name: "Kadiatou Sidibé",
-      img: "https://example.com/images/kadiatou_sidibe.jpg",
-      profil:
-        "Graphiste créative avec une expertise en design d’identité visuelle, illustration, et création de contenus pour les réseaux sociaux.",
-    },
-    {
-      name: "Mamadou Diakité",
-      img: "https://example.com/images/mamadou_diakite.jpg",
-      profil:
-        "Responsable logistique avec 8 ans d’expérience dans la gestion de la chaîne d’approvisionnement et l’optimisation des processus.",
-    },
-    {
-      name: "Awa Cissé",
-      img: "https://example.com/images/awa_cisse.jpg",
-      profil:
-        "Data Scientist spécialisée en apprentissage automatique et analyse de données, avec une solide expérience en Python et R.",
-    },
-    {
-      name: "Yacouba Dembélé",
-      img: "https://example.com/images/yacouba_dembele.jpg",
-      profil:
-        "Ingénieur en énergie renouvelable, expert en solutions solaires et éoliennes pour des projets d’électrification rurale.",
-    },
-  ];
 
 
   const {data: partenaireData, isLoading: partenaireIsLoading} = useGetPartenaireQuery();
@@ -249,6 +65,9 @@ function App() {
     isLoading: actualiteIsLoading,
     isFetching: actualiteIsFetching,
   } = useGetActualitesQuery();
+
+  console.log("actualiteData", actualiteData);
+  console.log("partenaireData", partenaireData);
 
   return (
     <>
@@ -288,7 +107,7 @@ function App() {
 
         <div className="demo-inner-content relative">
           <Headers />
-
+ 
           <Search />
         </div>
       </div>

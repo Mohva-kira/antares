@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import Container from "../components/Container";
 
 const Auth = () => {
   const [showLogin, setShowLogin] = useState(true);
@@ -17,13 +18,13 @@ const Auth = () => {
     }
   }, [params.action]);
   return (
-    <div>
+    <Container >
       {showLogin ? (
         <Login showLogin={showLogin} setShowLogin={setShowLogin} />
       ) : (
         <Register showLogin={showLogin} setShowLogin={setShowLogin} />
       )}
-    </div>
+    </Container>
   );
 };
 

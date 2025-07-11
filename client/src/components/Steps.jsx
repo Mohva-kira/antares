@@ -1,6 +1,6 @@
 import React from 'react'
-import g7 from "../assets/images/c1.png"
-import g1 from "../assets/images/c2.png"
+// import g7 from "../assets/images/c1.png"
+// import g1 from "../assets/images/c2.png"
 const Steps = () => {
   return (
     <>
@@ -15,13 +15,13 @@ const Steps = () => {
                         </div>
                     </div>
                     <div class="col-lg-6 work-grid-left ">
-                        <img src={g1} alt="" class="object-cover h-[430px]"/>
+                        <img src={'g1'} alt="" class="object-cover h-[430px]"/>
                     </div>
                 </div>
                 <div class="row my-5">
 
                     <div class="col-lg-6 work-grid-left">
-                        <img src={g7} alt="" class="object-cover h-[380px]"/>
+                        <img src={'g7'} alt="" class="object-cover h-[380px]"/>
                     </div>
                     <div class="col-lg-6 work-grid-right">
                         <div class="work-info">

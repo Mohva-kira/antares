@@ -71,3 +71,28 @@ export const updateNestedArrayElement = (arrayName, index, key, value, setDataTo
         return { ...prev, [arrayName]: newArray };
     });
 };
+
+export function validatePasswordComplexity(password) {
+    const criteria = {
+      hasUppercase: /[A-Z]/.test(password),
+      hasLowercase: /[a-z]/.test(password),
+      hasNumber: /[0-9]/.test(password),
+      hasLength: password.length >= 8
+    };
+    
+    const isValid = criteria.hasUppercase && criteria.hasLowercase && criteria.hasNumber;
+    
+    const missingCriteria = [];
+    if (!criteria.hasUppercase) missingCriteria.push("majuscule");
+    if (!criteria.hasLowercase) missingCriteria.push("minuscule");
+    if (!criteria.hasNumber) missingCriteria.push("chiffre");
+    if (!criteria.hasLength) missingCriteria.push("8 caractères minimum");
+    if (missingCriteria.length === 0) {
+      missingCriteria.push("aucune");
+    }
+    
+    return {
+      isValid,
+      missingCriteria
+    };
+  }

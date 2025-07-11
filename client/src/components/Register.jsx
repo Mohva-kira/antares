@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import bg from "../assets/images/1.png";
 import logo from "../assets/images/logo_antares.png";
 import { setAuth, useRegisterMutation, useUploadPhotoMutation } from "../redux/auth/authService";
+import { validatePasswordComplexity } from "../utils";
 
 const Register = ({ setShowLogin }) => {
   const [register] = useRegisterMutation();
@@ -16,6 +17,21 @@ const Register = ({ setShowLogin }) => {
   const [photo, setPhoto] = useState();
   const [secondPassword, setSecondPassword] = useState(null);
   const navigate = useNavigate();
+  const [passwordError, setPasswordError] = useState("");
+
+  const handlePasswordChange = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+    
+    const validation = validatePasswordComplexity(password);
+    if (!validation.isValid) {
+      setPasswordError(`Critères manquants: ${validation.missingCriteria.join(", ")}`);
+    } else {
+      setPasswordError("");
+    }
+  };
+
+
   const send = async () => {
     if (!email) return toast.error("Le champ email doit être rempli");
     if (!username)
@@ -144,8 +160,9 @@ const Register = ({ setShowLogin }) => {
                     class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
                     type="password"
                     placeholder="Mot de passe"
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handlePasswordChange}
                   />
+                  {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
                   <input
                     class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
                     type="password"

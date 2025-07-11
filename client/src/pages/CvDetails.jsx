@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { useSelector } from "react-redux";
@@ -12,8 +12,12 @@ import VideoCard from "../components/VideoCard";
 import { CvFormField } from "../constant/CvFormField";
 import {
   useGetResumesQuery,
+  useLazyGetResumesQuery,
   usePostResumesMutation,
+  useUpdateResumeMutation,
 } from "../redux/candidatService";
+import { BsPencilSquare } from "react-icons/bs";
+import { use } from "react";
 
 
 // Composant pour afficher une section d'expérience professionnelle
@@ -202,16 +206,45 @@ const CvDetails = ({ cv }) => {
   const findCv = cvDataList.find((cv, index) => cv.name == "Mamadou Keita");
   const [isVisible, setIsVisible] = useState(false);
   const [postResume] = usePostResumesMutation();
+  const [updateResume] = useUpdateResumeMutation();
   const userState = useSelector((state) => state.auth);
   const user = JSON.parse(localStorage.getItem("auth"));
-
+  const [selectedData, setSelectedData] = useState()
   console.log("id", name);
-  const { data, isLoading, isFetching, isError } = useGetResumesQuery(name);
+  const [ getResumes, { data, isLoading, isFetching, isError }] = useLazyGetResumesQuery(name);
 
   console.log("user", user);
   console.log("mon cv", data);
   const send = (data) => {
     data.user = user?.user?.id;
+
+    if(selectedData) {
+      console.log('updating ....', selectedData.id, data);
+      data.id = selectedData.id;
+      updateResume({ id: selectedData.id, data }).then((rep) => { 
+        console.log("le rep", rep);
+        if (rep?.data) {
+          toast.success("CV modifié avec succès");
+          setIsVisible(false);
+          getResumes(name).then((rep) => {
+            console.log("le rep apres update", rep);
+            if (rep?.data) {
+              toast.success("CV mis à jour");
+              setIsVisible(false);
+              setSelectedData(rep?.data[0]);
+            }
+          }).catch((err) => {
+            console.error("Erreur lors de la récupération des CVs:", err);
+            toast.error("Une erreur est survenue lors de la récupération des CVs");
+          });
+        }
+      }).catch((err) => {
+        console.error("Erreur lors de la mise à jour du CV:", err);
+        toast.error("Une erreur est survenue lors de la mise à jour du CV");
+      });
+      return;
+    }
+
     postResume({ data }).then((rep) => {
       console.log("le rep", rep);
       if (rep?.data) {
@@ -221,16 +254,32 @@ const CvDetails = ({ cv }) => {
     });
   };
 
-  console.log("find", findCv);
+  useEffect(() => {
+    if (name) {
+      getResumes(name).then((rep) => {
+        console.log("le rep", rep);
+        if (rep?.data) {
+          setSelectedData(rep?.data[0]);
+        }
+      }).catch((err) => {
+        console.error("Erreur lors de la récupération des CVs:", err);
+        toast.error("Une erreur est survenue lors de la récupération des CVs");
+      });
+    }
+  }, [name, getResumes]);
+
+  console.log("selectedData", selectedData);
   return (
     <>
       <Container>
         <Breadcumb title={`Mon curriculum vitae / ${user?.user?.username}`} />
         <div className="flex flex-col lg:flex-row w-full">
           <div className="flex lg:w-1/3 w-full p-2 flex-col gap-2">
+          { data?.data?.length === 0 &&
             <button className="btn1" onClick={() => setIsVisible(!isVisible)}>
               Ajouter un cv
             </button>
+            }
             {/* <div className="w-full">
             <LocationMap position={findCv.position} city={findCv.city} />
           </div> */}
@@ -243,6 +292,16 @@ const CvDetails = ({ cv }) => {
 
           <div className="container mx-auto p-4">
             <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-6">
+              <div className="flex justify-center w-full items-center mb-4">
+                <button
+                  className="bg-red-600 p-2 text-white flex items-center gap-2 justify-center w-1/2"
+                  onClick={() => {setSelectedData(data?.data[0]); setIsVisible(!isVisible)}}
+                >
+                 <BsPencilSquare className="text-2xl" />
+
+                  Modifier
+                </button>
+              </div>
               {/* En-tête du CV */}
               <div className="flex items-center mb-6">
                 <img
@@ -304,6 +363,9 @@ const CvDetails = ({ cv }) => {
             setIsVisible={setIsVisible}
             title={"Renseigner votre cv"}
             post={send}
+            selectedData={selectedData}
+            isVisible={isVisible}
+            
           />
         </Modal1>
       </Container>

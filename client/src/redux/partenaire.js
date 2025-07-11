@@ -27,7 +27,7 @@ export const partenaireApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: "https://api.antares-rh.net/api",
         prepareHeaders: (headers, { getState }) => {
-            const token = JSON.parse(localStorage.getItem("auth")).jwt;
+            const token = JSON.parse(localStorage.getItem("auth"))?.jwt;
             if (token) {
                 headers.set("authorization", `Bearer ${token}`);
             }
