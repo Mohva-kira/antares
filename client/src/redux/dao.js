@@ -27,7 +27,7 @@ export const daoApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: "https://api.antares-rh.net/api",
         prepareHeaders: (headers, { getState }) => {
-            const token = JSON.parse(localStorage.getItem("auth")).jwt;
+            const token = JSON.parse(localStorage.getItem("auth"))?.jwt;
             if (token) {
                 headers.set("authorization", `Bearer ${token}`);
             }
@@ -38,7 +38,7 @@ export const daoApi = createApi({
     }),
     endpoints: (builder) => ({
         getDao: builder.query({
-            query: (id) => `/appel-offres?sort=createdAt:desc&populate=*`,
+            query: (id) => `/daos?sort=createdAt:desc&populate=*`,
         }),
         postDao: builder.mutation({
             query: (data) => ({

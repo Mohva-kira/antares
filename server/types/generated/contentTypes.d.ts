@@ -866,6 +866,48 @@ export interface ApiApplicationApplication extends Schema.CollectionType {
   };
 }
 
+export interface ApiBulletinBulletin extends Schema.CollectionType {
+  collectionName: 'bulletins';
+  info: {
+    singularName: 'bulletin';
+    pluralName: 'bulletins';
+    displayName: 'bulletin';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    intitule: Attribute.String;
+    documents: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
+    user: Attribute.Relation<
+      'api::bulletin.bulletin',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    month_nb: Attribute.Integer;
+    company: Attribute.Relation<
+      'api::bulletin.bulletin',
+      'oneToOne',
+      'api::company.company'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::bulletin.bulletin',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::bulletin.bulletin',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiCandidatCandidat extends Schema.CollectionType {
   collectionName: 'candidats';
   info: {
@@ -982,6 +1024,31 @@ export interface ApiContratContrat extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDaoDao extends Schema.CollectionType {
+  collectionName: 'daos';
+  info: {
+    singularName: 'dao';
+    pluralName: 'daos';
+    displayName: 'dao';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    description: Attribute.Text;
+    website: Attribute.String;
+    status: Attribute.Boolean;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::dao.dao', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::dao.dao', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -1151,9 +1218,11 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::actualite.actualite': ApiActualiteActualite;
       'api::application.application': ApiApplicationApplication;
+      'api::bulletin.bulletin': ApiBulletinBulletin;
       'api::candidat.candidat': ApiCandidatCandidat;
       'api::company.company': ApiCompanyCompany;
       'api::contrat.contrat': ApiContratContrat;
+      'api::dao.dao': ApiDaoDao;
       'api::job.job': ApiJobJob;
       'api::partenaire.partenaire': ApiPartenairePartenaire;
       'api::resume.resume': ApiResumeResume;

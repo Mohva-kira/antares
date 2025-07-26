@@ -21,6 +21,7 @@ const Header = () => {
     { name: "Jobs", path: "/jobs" },
     { name: "Entretien", path: "/meets" },
     { name: "Base de CV", path: "/cvs" },
+    { name: "D.A.O", path: "/daos" },
     { name: "Communauté", path: "/community" },
     // { name: "Rapports", path: "/rapports" },
     { name: "Utilisateurs", path: "/utilisateurs" },

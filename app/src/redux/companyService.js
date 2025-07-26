@@ -5,6 +5,9 @@ const initialState = {
     data: null,
 };
 
+const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:1337/api/";
+
+
 // Slice pour stocker des données en local (si nécessaire)
 const companySlice = createSlice({
     name: "company",
@@ -22,7 +25,7 @@ export const { setCompany } = companySlice.actions;
 export const companyApi = createApi({
     reducerPath: "companyApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://api.antares-rh.net/api",
+        baseUrl: apiUrl,
         prepareHeaders: (headers, { getState }) => {
             const token = JSON.parse(localStorage.getItem('auth')).jwt; // Sécuriser l'accès au token
             console.log('le token', token)

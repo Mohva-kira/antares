@@ -4,6 +4,9 @@ const initialState = {
   data: null,
 };
 
+const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:1337/api/";
+
+
 export const redevableSlice = createSlice({
   name: "redevable",
   initialState,
@@ -26,7 +29,7 @@ export default redevableSlice.reducer;
 export const redevableApi = createApi({
   reducerPath: "redevableApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:1338/api",
+    baseUrl: apiUrl,
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.data.jwt;
 

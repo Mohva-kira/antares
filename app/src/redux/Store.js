@@ -12,6 +12,9 @@ import actualitesReducer, {actualitiesApi} from "./actualityService";
 import applicationReducer, { applicationApi } from "./application";
 import usersReducer, {usersApi} from "./usersService";
 import whatsappReducer, {whatsappApi} from "./whatsappService";
+import bulletinReducer, {bulletinApi} from "./bulletinService";
+import {daoService} from "./daoService";
+
 export const store = configureStore({
   reducer: {
     redevables: redevableReducer,
@@ -23,6 +26,8 @@ export const store = configureStore({
     applications: applicationReducer, // Assuming this is the correct reducer for applications
     whatsapp: whatsappReducer,
     users: usersReducer,
+    
+    bulletins: bulletinReducer, // Assuming this is the correct reducer for bulletins
     [candidatApi.reducerPath]: candidatApi.reducer,
     [redevableApi.reducerPath]: redevableApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
@@ -35,6 +40,8 @@ export const store = configureStore({
     [applicationApi.reducerPath]: applicationApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [whatsappApi.reducerPath]: whatsappApi.reducer,
+    [bulletinApi.reducerPath]: bulletinApi.reducer,
+    [daoService.reducerPath]: daoService.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -50,7 +57,9 @@ export const store = configureStore({
       actualitiesApi.middleware,
       applicationApi.middleware,
       usersApi.middleware,
-      whatsappApi.middleware
+      whatsappApi.middleware,
+      bulletinApi.middleware,
+      daoService.middleware
     ),
 });
 

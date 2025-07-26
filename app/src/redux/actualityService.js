@@ -4,6 +4,9 @@ const initialState = {
   data: null,
 };
 
+const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:1337/api/";
+
+
 export const actualitySlice = createSlice({
   name: "Actuality",
   initialState,
@@ -26,7 +29,7 @@ export default actualitySlice.reducer;
 export const actualitiesApi = createApi({
   reducerPath: "actualitiesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.antares-rh.net/api",
+    baseUrl: apiUrl,
     prepareHeaders: (headers, { getState, endpoint }) => {
       const token = getState().auth?.data?.jwt ?? JSON.parse(localStorage.getItem('auth'))?.jwt;
       if (token) {

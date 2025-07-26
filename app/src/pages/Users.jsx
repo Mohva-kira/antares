@@ -3,13 +3,16 @@ import {
   ColumnsDirective,
   GridComponent,
 } from "@syncfusion/ej2-react-grids";
-import React from "react";
+import React, { useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { GrUserAdmin } from "react-icons/gr";
 import Layout from "../components/Layout";
 import UserForm from "./../components/UserForm";
-import { useGetUsersQuery } from "../redux/usersService";
+import { useGetUsersQuery, usePostUsersMutation } from "../redux/usersService";
 import { useSendMessageMutation } from "../redux/whatsappService";
+import Modal from "../components/Modal";
+import Form from "../components/Form";
+import { userFields } from "../constants";
 
 let data = [
   {
@@ -44,6 +47,7 @@ let data = [
 
 const Users = () => {
   const { data, isLoading, error } = useGetUsersQuery();
+  const [showForm, setShowForm] = useState(false);
 
   // Supposons que tu utilises la variable data récupérée de l'API
   const users = data || []; // adapte selon la structure de ta réponse
@@ -52,9 +56,24 @@ const Users = () => {
   const admins = users.filter((user) => user.role.name === "Admin");
   const editeurs = users.filter((user) => user.role.name === "Authenticated");
 
+  const [createUser] = usePostUsersMutation();
   // Pour compter :
   const adminCount = admins.length;
   const editeurCount = editeurs.length;
+
+  const post = (data) => {  
+    console.log("Données à envoyer :", data);
+    createUser(data)
+      .then(() => {
+        console.log("Utilisateur créé avec succès");
+        setShowForm(false); // Ferme le formulaire après l'envoi
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la création de l'utilisateur :", error);
+      });
+  };
+  // Fonction pour envoyer un message WhatsApp
+
 
   const send = (message) => {
     sendMessage(message)
@@ -64,7 +83,7 @@ const Users = () => {
       .catch((error) => {
         console.error("Error sending message:", error);
       });
-  }
+  };
   return (
     <Layout>
       <div className="flex w-full flex-col justify-center items-center">
@@ -89,9 +108,16 @@ const Users = () => {
             <p className="text-lg font-bold"> {editeurCount} </p>
           </div>
         </div>
-        <div className="transition-opacity  lg:w-[1080px] duration-500 ease-in-out">
-          <UserForm />
-        </div>
+        <button
+          onClick={() => setShowForm(true)}
+          className="bg-blue-500 text-white mb-4 px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+          Créer un utilisateur
+        </button>
+        <Modal isVisible={showForm} setIsVisible={setShowForm}>
+          <div className="transition-opacity flex justify-center items-center   duration-500 ease-in-out">
+            <Form fields={userFields} title={'Créer un utilisateur'} setIsVisible={setShowForm} post={post} />
+          </div>
+        </Modal>
         <div className=" h-full lg:w-[1080px] p-2 bg-white m-0.5 w-10/12 rounded-2xl">
           <GridComponent dataSource={data} className="w-10/12 rounded-2xl">
             <ColumnsDirective>

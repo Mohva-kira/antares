@@ -1,6 +1,7 @@
 import React from 'react'
 import { useGetCandidatsQuery } from '../redux/candidatService';
 import Layout from './Layout';
+import { IoMdPerson } from 'react-icons/io';
 
 const CandidatList = ({page, size}) => {
 
@@ -13,13 +14,22 @@ const CandidatList = ({page, size}) => {
 
   console.log('candidats', candidats);
   return (
-    <div className='flex flex-col w-1/3 items-center justify-center '>
+    <div className='flex flex-wrap w-full items-center justify-center '>
     {candidats?.map((candidat, index) => (
          <div
          key={index}
-         className="w-full m-2 p-2 bg-white h-full rounded-2xl">
+         className=" w-2/5 m-2 p-2 bg-white h-full rounded-2xl">
          <div className="flex justify-between items-center p-4">
-           <span className="w-20 h-20 bg-blue-950 rounded-full"></span>
+           <span className="w-20 h-20 flex justify-center items-center bg-blue-950 rounded-full">
+           {candidat?.attributes?.user?.photo ?
+              <img
+                src={candidat?.attributes?.user?.photo?.data?.attributes?.url || 'https://via.placeholder.com/150'}
+                alt="Candidat"
+                className="w-full h-full object-cover rounded-full"
+              />: 
+              <IoMdPerson className='text-6xl' />
+              }
+           </span>
            <span className="bg-orange-500 rounded-3xl p-2 h-full text-white">
              12:00
            </span>

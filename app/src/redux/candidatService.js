@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const initialState = {
   data: null,
 };
+const apiUrl = import.meta.env.VITE_GATEWAY_URL 
 
 export const candidatSlice = createSlice({
   name: "Candidat",
@@ -26,7 +27,7 @@ export default candidatSlice.reducer;
 export const candidatApi = createApi({
   reducerPath: "candidatApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3011",
+    baseUrl: apiUrl,
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.data.jwt;
 

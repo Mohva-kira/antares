@@ -289,3 +289,139 @@ export const actualiteField = [
 
     },
 ]
+
+export const bulletinField = [
+    {
+        class: "",
+        name: "intitule",
+        placeholder: "Intitulé",
+        type: "text",
+        required: true,
+    },
+    {
+        class: "",
+        name: "documents",
+        placeholder: "Documents",
+        type: "file",
+        required: true,
+    },
+    {
+        class: "",
+        name: "month_nb",
+        placeholder: "Numéro du mois",
+        type: "number",
+        required: true,
+    },
+    {
+        class: "",
+        name: "user",
+        placeholder: "Utilisateur",
+        type: "select",
+        required: true,
+        options: [
+            {
+                name: "User 1",
+                value: 1
+            }
+        ]
+    },
+    {
+        class: "",
+        name: "company",
+        placeholder: "Entreprise",
+        type: "select",
+        required: true,
+        options: [
+            {
+                name: "BMS",
+                value: 1
+            }
+        ]
+    },
+]
+
+export const daoField = [
+    {
+        class: "",
+        name: "name",
+        placeholder: "Nom du DAO",
+        type: "text",
+        required: true,
+    },
+    {
+        class: "",
+        name: "description",
+        placeholder: "Description",
+        type: "textarea",
+        required: true,
+    },
+
+    {
+        class: "",
+        name: "website",
+        placeholder: "Site web",
+        type: "url",
+    },
+   
+    {
+        class: "",
+        name: "status",
+        placeholder: "Statut",
+        type: "select",
+        options: [
+            { value: true, name: "Actif" },
+            { value: false, name: "Inactif" }
+        ]
+    },
+];
+
+
+export const userFields = [
+    {
+        class: "",
+        name: "username",
+        placeholder: "Nom d'utilisateur",
+        type: "text",
+        required: true,
+    },
+    {
+        class: "",
+        name: "email",
+        placeholder: "Email",
+        type: "email",
+        required: true,
+    },
+    {
+        class: "",
+        name: "phone",
+        placeholder: "Téléphone",
+        type: "text",
+        required: true,
+    },
+    {
+        class: "",
+        name: "password",
+        placeholder: "Mot de passe",
+        type: "password",
+        required: true,
+    },
+    {
+        class: "",
+        name: "role",
+        placeholder: "Role",
+        type: "select",
+        options: [
+            { value: 3, name: "Administrateur" },
+            { value: 1, name: "Agent" },
+            { value: "user", name: "Utilisateur" }
+        ],
+        required: true,
+    },
+    {
+        class: "",
+        name: "adresse",
+        placeholder: "Adresse",
+        type: "text",
+
+    },
+];

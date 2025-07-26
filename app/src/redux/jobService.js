@@ -5,6 +5,9 @@ const initialState = {
     data: null,
 };
 
+const apiUrl = import.meta.env.VITE_GATEWAY_URL || "http://localhost:1337/api/";
+
+
 // Slice pour stocker des données en local (si nécessaire)
 const jobsSlice = createSlice({
     name: "jobs",
@@ -22,7 +25,7 @@ export const { setJobs } = jobsSlice.actions;
 export const jobsApi = createApi({
     reducerPath: "jobsApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:3011",
+        baseUrl: apiUrl,
         prepareHeaders: (headers, { getState }) => {
             const token = getState().auth?.data?.jwt; // Sécuriser l'accès au token
             if (token) {

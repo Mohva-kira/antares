@@ -67,7 +67,10 @@ const router = createBrowserRouter([
     path: "/news/:name",
     element: <Actualite />,
   },
-
+  {
+    path: "/dao",
+    element: <Dao />,
+  },
   {
     path: "/offres",
     element: <Offers />,

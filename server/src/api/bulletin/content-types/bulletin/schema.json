@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bulletins",
+  "info": {
+    "singularName": "bulletin",
+    "pluralName": "bulletins",
+    "displayName": "bulletin"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "intitule": {
+      "type": "string"
+    },
+    "documents": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "month_nb": {
+      "type": "integer"
+    },
+    "company": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company.company"
+    }
+  }
+}

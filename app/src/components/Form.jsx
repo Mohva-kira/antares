@@ -69,8 +69,8 @@ const Form = ({ fields, title, setIsVisible, post, selected}) => {
               />
             ) : field.type === "select" ? (
               <select
-                id={field.name}
-                value={dataToSend[field.name] || ""}
+                id={field?.name}
+                value={dataToSend && dataToSend[field?.name] || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
                 className="w-full p-2 border rounded-2xl">
                 <option value="">{field.placeholder}</option>

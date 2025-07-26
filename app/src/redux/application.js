@@ -22,10 +22,12 @@ export const applicationSlice = createSlice({
 export const { setApplication } = applicationSlice.actions;
 export default applicationSlice.reducer;
 
+const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:1337/api/";
+
 export const applicationApi = createApi({
     reducerPath: "applicationApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://api.antares-rh.net/api",
+        baseUrl: apiUrl,
         prepareHeaders: (headers, { getState }) => {
             const token = JSON.parse(localStorage.getItem("auth")).jwt;
             if (token) {

@@ -49,8 +49,8 @@ const Home = () => {
       {/* Contenu principal */}
       <div className="w-full flex flex-col text-white">
         {/* Section des cartes dynamiques */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 mb-4">
-          <div className="w-full  h-32 bg-white rounded-2xl flex p-2 justify-between items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 mb-1">
+          <div className="w-full  h-16 bg-white rounded-2xl flex p-2 justify-between items-center">
             <div className="w-full flex space-x-2">
               <SiLibreofficewriter className="text-orange-500 w-14 h-14" />
               <h2 className="text-xl text-black flex justify-between items-center  font-bold">
@@ -62,7 +62,7 @@ const Home = () => {
               {candidatsTotal}
             </span>
           </div>
-          <div className="w-full h-32 bg-white rounded-2xl p-2 flex justify-between items-center">
+          <div className="w-full h-16 bg-white rounded-2xl p-2 flex justify-between items-center">
             <div className="w-full flex space-x-2">
               <IoNewspaperOutline className="text-orange-500 w-14 h-14" />
 
@@ -73,7 +73,7 @@ const Home = () => {
 
             <span className="text-xl text-black font-bold">{jobsTotal}</span>
           </div>
-          <div className="w-full h-32 bg-white rounded-2xl p-2 flex justify-between items-center">
+          <div className="w-full h-16 bg-white rounded-2xl p-2 flex justify-between items-center">
             <div className="w-full flex space-x-2">
               <CiClock1 className="text-orange-500 w-14 h-14" />
 
@@ -86,7 +86,7 @@ const Home = () => {
               {applicationTotal}
             </span>
           </div>
-          {/* <div className="w-full h-32 bg-white rounded-2xl p-2 flex justify-between items-center">
+          {/* <div className="w-full h-16 bg-white rounded-2xl p-2 flex justify-between items-center">
             <div className="w-full flex space-x-2">
               <ImOffice className="text-orange-500 w-14 h-14" />
 
@@ -112,7 +112,7 @@ const Home = () => {
         
           </div>
 
-          <div className="flex w-full lg:w-1/2 flex-col h-full">
+          <div className="flex w-full lg:w-1/2  h-full">
             <div className="flex items-center flex-col lg:flex-row w-full justify-between h-full p-4 m-1 rounded-2xl bg-slate-200">
               <CandidatList page={1} size={3} />
           

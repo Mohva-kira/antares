@@ -18,6 +18,7 @@ import Reports from "./pages/Reports";
 import Users from "./pages/Users.jsx";
 import { store } from "./redux/Store.js";
 import JobDetails from "./pages/JobDetails.jsx";
+import Dao from "./pages/Dao.jsx";
 // Registering Syncfusion license key
 registerLicense(
   "Ngo9BigBOggjHTQxAR8/V1NDaF5cWWtCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXZccHRQRGFZUUV2V0o="
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
   {
     path: "/meets",
     element: <ProtectedRoute element={<Interview />} />,
+  },
+  {
+    path: "/daos",
+    element: <ProtectedRoute element={<Dao />} />,
   },
   {
     path: "/cvs",

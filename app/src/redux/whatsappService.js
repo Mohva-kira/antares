@@ -32,7 +32,7 @@ if(!APIURL || !APIKEY) {
 export const whatsappApi = createApi({
     reducerPath: "whatsappApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://graph.facebook.com/v22.0/587745037765750",
+        baseUrl: APIURL,
         prepareHeaders: (headers, { getState }) => {
             const token = APIKEY;
             if (token) {

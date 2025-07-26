@@ -2,7 +2,7 @@ import React from 'react'
 
 const Applications = () => {
     return (
-        <div>Applications</div>
+        <div>Applicat ions</div>
     )
 }
 

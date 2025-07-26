@@ -47,8 +47,8 @@ const Headers = () => {
     { href: "/candidats", label: "Candidats" },
     { href: "/employeurs", label: "Employeurs" },
     { href: "/offres", label: "Offres" },
-    // { href: "/actualites", label: "Actualités" },
-    // { href: "/dao", label: "DAO" },
+    { href: "/actualites", label: "Actualités" },
+    { href: "/dao", label: "DAO" },
     { href: "/contact", label: "Contact" },
   ];
 
