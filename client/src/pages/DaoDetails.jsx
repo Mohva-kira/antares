@@ -12,6 +12,7 @@ import { usePostApplicationMutation } from "../redux/application";
 import { useGetOffersByNameQuery } from "../redux/offerService";
 import { useGetDaoByNameQuery, useLazyGetDaoByNameQuery } from "../redux/dao";
 import { BsTextParagraph } from "react-icons/bs";
+import { FaFolderOpen } from "react-icons/fa";
 
 // Composant pour afficher une section d'expérience professionnelle
 const ExperienceSection = ({ objectif, typeContrat, date }) => (
@@ -233,18 +234,7 @@ const DaoDetails = () => {
     // Ajoutez plus de CV ici avec les mêmes structures
   ];
 
-  const profiles = [
-    {
-      name: "John Doe",
-      email: "john.doe@email.com",
-      phone: "+33 6 12 34 56 78",
-      experience: 5,
-      skills: ["React", "Node.js", "JavaScript", "SQL"],
-      photo: "https://via.placeholder.com/100",
-    },
-
-    // Autres profils
-  ];
+ 
   const id = useParams();
   console.log("id", id);
   const { data, isLoading, error } = useGetDaoByNameQuery(id.name);
@@ -259,13 +249,13 @@ const DaoDetails = () => {
     education,
     description,
     lieu,
-    salaire,
-    titre,
+    website,
+    name,
     company,
   } = data?.data?.[0]?.attributes || {};
   // const objectifs = objectif[0] || [];
-  const { activite, adresse, email, name, phone, site, nb_emplees } =
-    company?.data?.attributes || {};
+  // const { activite, adresse, email, name, phone, site, nb_emplees } =
+  //   company?.data?.attributes || {};
   console.log("Data", data);
 
   const postCandidature = async () => {
@@ -308,7 +298,7 @@ const DaoDetails = () => {
 
   return (
     <Container>
-      <Breadcumb title={`Job / ${name}`} />
+      <Breadcumb title={`Appel d'offres / ${name}`} />
       <div className="flex flex-col lg:flex-row w-full">
         <div className="flex lg:w-1/3 w-full p-2 flex-col gap-2">
           <div className="w-full lg:w-full  rounded-lg flex flex-col justify-center items-center shadow-md h-auto lg:h-fit p-2 overflow-y-auto">
@@ -364,29 +354,20 @@ const DaoDetails = () => {
         <div className="container mx-auto p-4">
           <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-6">
             {/* En-tête du CV */}
-            <a href={`/employeurs/${findCv.name}`}>
-              <div className="flex items-center mb-6">
-                <img
-                  src={findCv.photoUrl || "https://via.placeholder.com/100"}
-                  alt="Photo du candidat"
-                  className="w-24 h-24 rounded-full border border-gray-300 mr-4"
-                />
-                <div className="flex flex-col">
-                  <h1 className="text-2xl font-bold mb-1">{name}</h1>
-                  <p className="text-gray-600 mb-2">{titre}</p>
+            <a href={`#`}>
+              <div className="flex items-start mb-6">
+                <FaFolderOpen className="w-16 h-16 mx-2 items-start justify-start text-orange-500" />
+                <div className="flex flex-col space-y-3">
+                  <h1 className="text-2xl font-bold ">{name}</h1>
+                  <p className="text-gray-600">{company}</p>
 
                   <div className="flex items-center space-x-2">
-                    <p className="text-gray-600 mb-1">{activite}, </p>
-                    <a href={`mailto:${email}`} className="text-gray-600 mb-1">
-                      {email},{" "}
+                    {/* <p className="text-gray-600 mb-1">{website}, </p> */}
+                    <a href={`mailto:${website}`} className="text-gray-600 mb-1">
+                      {website},{" "}
                     </a>
-                    <a
-                      href={site}
-                      target="_blank"
-                      className="text-gray-600 mb-1">
-                      {site},{" "}
-                    </a>
-                    <p className="text-gray-600">{phone}</p>
+                  
+                    {/* <p className="text-gray-600">{phone}</p> */}
                   </div>
                 </div>
               </div>
@@ -400,15 +381,7 @@ const DaoDetails = () => {
                   <h2 className="text-xl font-semibold mb-2 border-b border-gray-200 pb-1">
                     Description de l'offre
                   </h2>
-                  <p className="text-gray-700">{description.map(paragraph => (
-                    paragraph?.children[0]?.text !== ""&&
-
-                    
-                    <div className="flex items-center justify-start space-x-4 mb-2">
-                      <span> <BsTextParagraph /> </span>
-                      <p className="mb-2">{paragraph?.children[0]?.text}</p>
-                    </div>
-                  ))}</p>
+                  <p className="text-gray-700">{description}</p>
                 </div>
                 )
               }

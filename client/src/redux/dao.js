@@ -48,10 +48,10 @@ export const daoApi = createApi({
             }),
         }),
         getDaoByName: builder.query({
-            query: (name) => `/appel-offres?populate=*&filters[titre][$eq]=${encodeURIComponent(name)}`,
+            query: (name) => `/daos?populate=*&filters[name][$eq]=${encodeURIComponent(name)}`,
           }),
         getDaoById: builder.query({
-            query: (id) => `/appel-offres/${id}`,
+            query: (id) => `/daos/${id}`,
         }),
       
     }),

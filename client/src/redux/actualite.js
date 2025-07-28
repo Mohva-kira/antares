@@ -26,7 +26,7 @@ export default actualiteSlice.reducer;
 export const actualiteApi = createApi({
   reducerPath: "actualiteApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://gateway.antares-rh.net",
+    baseUrl: "https://api.antares-rh.net/api",
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.data.jwt;
 
@@ -41,7 +41,7 @@ export const actualiteApi = createApi({
   }),
   endpoints: (builder) => ({
     getActualites: builder.query({
-      query: (id) => `/actualites`,
+      query: ({page , size}) => `/actualites?sort=createdAt:desc&populate=*&pagination[page]=${page ?? 1}&pagination[pageSize]=${size ?? 10}`,
     }),
 
     postActualite: builder.mutation({
@@ -54,6 +54,12 @@ export const actualiteApi = createApi({
 
     }),
 
+    getActualiteByName: builder.query({
+      query: (name) => `/actualites?populate=*&filters[title][$eqi]=${encodeURIComponent(name)}`,
+    }),
+    getActualiteById: builder.query({
+      query: (id) => `/actualites/${id}?populate=*`,
+    }),
 
 
   }),
@@ -61,4 +67,4 @@ export const actualiteApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetActualitesQuery, usePostActualiteMutation } = actualiteApi;
+export const { useGetActualitesQuery, usePostActualiteMutation, useGetActualiteByNameQuery, useGetActualiteByIdQuery } = actualiteApi;

@@ -53,6 +53,10 @@ export const bulletinApi = createApi({
         getBulletinById: builder.query({
             query: (id) => `/bulletins/${id}`,
         }),
+
+        getBulletinByUser: builder.query({
+            query: (userId) => `/bulletins?populate=*&filters[user][id][$eq]=${userId}`,
+        }),
       
     }),
 });
@@ -64,5 +68,6 @@ export const {
     useGetBulletinByIdQuery,
     useGetBulletinByNameQuery,
     useLazyGetBulletinByNameQuery,
+    useLazyGetBulletinByUserQuery,
 
 } = bulletinApi;

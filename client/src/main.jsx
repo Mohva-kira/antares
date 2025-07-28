@@ -22,6 +22,7 @@ import Actualite from "./pages/Actualite.jsx";
 import Dao from "./pages/Dao.jsx";
 import DaoDetails from "./pages/DaoDetails.jsx";
 import { ToastContainer } from 'react-toastify';
+import NewsList from "./pages/NewsList.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -63,6 +64,11 @@ const router = createBrowserRouter([
     path: "/job/:name",
     element: <ProtectedRoute element={ <JobDetails />} />,
   },
+   {
+    path: "/news",
+    element: <NewsList />,
+  },
+  
   {
     path: "/news/:name",
     element: <Actualite />,

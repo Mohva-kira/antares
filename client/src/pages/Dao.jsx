@@ -58,9 +58,11 @@ const Dao = () => {
                   aria-labelledby="pills-home-tab">
                   <div class="menu-grids mt-4">
                     <div class="row t-in">
-                      <div class="col-lg-8 text-info-sec">
+                      <div class="flex flex-wrap col-lg-8 text-info-sec">
                         {data?.data?.map((item) => (
+                          <div class="col-lg-4 text-info-sec">
                           <DaoCard item={item} />
+                        </div>
                         ))}
                       </div>
                       <div class="col-lg-4 text-info-sec">

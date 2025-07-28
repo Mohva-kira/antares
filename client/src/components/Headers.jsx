@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { useGetMeQuery } from "../redux/auth/authService";
 import logo from "../assets/images/logo_antares.png";
+import { MdAccountCircle } from "react-icons/md";
 
 const Headers = () => {
   const [visible, setVisible] = useState(false);
@@ -47,7 +48,7 @@ const Headers = () => {
     { href: "/candidats", label: "Candidats" },
     { href: "/employeurs", label: "Employeurs" },
     { href: "/offres", label: "Offres" },
-    { href: "/actualites", label: "Actualités" },
+    { href: "/news", label: "Actualités" },
     { href: "/dao", label: "DAO" },
     { href: "/contact", label: "Contact" },
   ];
@@ -76,7 +77,7 @@ const Headers = () => {
         {/* User Menu & Mobile Menu Button */}
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           {/* User Profile Dropdown */}
-          {loggedIn && (
+  
             <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
@@ -87,21 +88,29 @@ const Headers = () => {
                 aria-haspopup="true"
               >
                 <span className="sr-only">Open user menu</span>
+              {userData?.photo?.url ? (
                 <img
                   className="w-10 h-10 rounded-full object-cover"
                   src={userData?.photo?.url ? 'https://api.antares-rh.net' + userData.photo.url : '/default-avatar.png'}
                   alt="Photo de profil"
                 />
+              ) : (
+                <MdAccountCircle className="w-10 h-10 text-gray-500" />
+              )}
               </button>
-
+              
               {/* Dropdown Menu */}
+                      
               <div
                 className={`${
                   visible ? "block" : "hidden"
                 } absolute right-0 top-12 w-48 bg-white divide-y divide-gray-100 rounded-lg shadow-lg border border-gray-200 transition-all duration-200`}
                 id="user-dropdown"
               >
-                <div className="px-4 py-3">
+                {loggedIn && (
+
+                  <div>
+ <div className="px-4 py-3">
                   <span className="block text-sm font-medium text-gray-900">
                     {user?.user?.username || 'Utilisateur'}
                   </span>
@@ -143,9 +152,26 @@ const Headers = () => {
                     </button>
                   </li>
                 </ul>
+                  </div>
+               
+                   )}
+
+                   {!loggedIn && (
+                     <ul className="py-2">
+              <li className="md:flex md:items-center md:justify-between">
+                <a
+                  href="/auth"
+                  className="block py-2 px-3 text-slate-100 bg-orange-600 rounded hover:bg-orange-700 transition-colors duration-200"
+                >
+                  Connexion
+                </a>
+              </li>
+              </ul>
+            )}
               </div>
+             
             </div>
-          )}
+        
 
           {/* Mobile Menu Button */}
           <button

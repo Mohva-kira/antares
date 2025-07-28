@@ -16,16 +16,18 @@ import {
   usePostProfileMutation,
 } from "../redux/profileServices";
 import { useGetMeQuery } from "../redux/auth/authService";
+import MyBulletin from "./MyBulletin";
+import MyBulletinList from "../components/MyBulletinList";
 
 const MyProfile = () => {
   const user = JSON.parse(localStorage.getItem("auth"));
   const [isVisible, setIsVisible] = useState();
   const [postProfile] = usePostProfileMutation();
-    const { data: userData } = useGetMeQuery();
-  
+  const { data: userData } = useGetMeQuery();
+
   const {
     data: profile,
-    
+
     isLoading,
     isSuccess,
     isFetching,
@@ -83,7 +85,8 @@ const MyProfile = () => {
                       : "https://api.antares-rh.net/uploads/2023/10/01/default-avatar.png"
                   }
                   alt="user profile"
-                  className="rounded-full w-48 h-48 object-cover" />
+                  className="rounded-full w-48 h-48 object-cover"
+                />
               </div>
               <div className="flex space-x-2">
                 <button
@@ -126,17 +129,24 @@ const MyProfile = () => {
           </div>
 
           {userData ? (
-            <div class="mt-20 text-center border-b pb-12">
-              <h1 class="text-4xl font-medium text-gray-700">
-                {`${userData?.username} `}
-                {/* , <span class="font-light text-gray-500">27</span> */}
-              </h1>
-              <p class="font-light text-gray-600 mt-3 ">
-                {`${userData?.country_code} ${userData?.phone}, ${userData?.email}   `}
-              </p>
-              <p class="font-light text-gray-600 mt-3 capitalize">
-                {` ${userData?.adresse}`}
-              </p>
+            <div class="mt-20 flex w-full  text-center border-b pb-12">
+              <div class="flex flex-col justify-center items-center w-1/3">
+                <MyBulletinList />
+              </div>
+
+              <div class="flex flex-col justify-center items-center ml-10">
+                <h1 class="text-4xl font-medium text-gray-700">
+                  {`${userData?.username} `}
+                  {/* , <span class="font-light text-gray-500">27</span> */}
+                </h1>
+                <p class="font-light text-gray-600 mt-3 ">
+                  {`${userData?.country_code} ${userData?.phone}, ${userData?.email}   `}
+                </p>
+                <p class="font-light text-gray-600 mt-3 capitalize">
+                  {` ${userData?.adresse}`}
+                </p>
+              </div>
+
               {/* <p class="mt-8 text-gray-500">
                 {`${profile?.data[0]?.attributes?.role} - ${profile?.data[0]?.attributes?.university}`}
               </p> */}
