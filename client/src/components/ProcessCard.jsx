@@ -22,8 +22,8 @@ const ProcessCard = () => {
                             <div className="flow-position">
                                 <img src={s1} alt=" " className="img-fluid rounded-circle" />
                                 <br />
-                                <strong> Processus de recrutement</strong>
-                                <br /> Lorem ipsum
+                                <strong> Domaines d'expertise</strong>
+                                
                             </div>
                         </div>
                         <div className="flow-chart">
@@ -31,14 +31,14 @@ const ProcessCard = () => {
                                 <div className="flow-position">
                                     <img src={s2} alt=" " className="img-fluid rounded-circle" />
                                     <br />
-                                    <strong>1.Poste vacant</strong>
+                                    <strong>Recrutement</strong>
                                     <br /> Lorem ipsum
                                 </div>
                            
                                 <div className="flow-position">
                                     <img src={s3} alt=" " className="img-fluid rounded-circle" />
                                     <br />
-                                    <strong>2. Analyse du poste
+                                    <strong>Formation
                                     </strong>
                                     <br /> Lorem ipsum
                                 </div>
@@ -46,7 +46,7 @@ const ProcessCard = () => {
                                 <div className="flow-position">
                                     <img src={s4} alt=" " className="img-fluid rounded-circle"/>
                                     <br/>
-                                    <strong>3. Attirer les candidats
+                                    <strong>Conseil
                                     </strong>
                                     <br/> Lorem ipsum
                                 </div>

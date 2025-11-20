@@ -1,121 +1,115 @@
 import React from "react";
 import Breadcumb from "../components/Breadcumb";
 import Container from "../components/Container";
+import Headers from "../components/Headers";
+import Footer from "../components/Footer";
+import WhatsAppButton from "../components/WhatsAppButton";
 import { useGetCandidatsQuery } from "../redux/candidatService";
+import { useGetPartenaireQuery } from "../redux/partenaire";
 import CvVideoCard from "./../components/CvVideoCard";
 
 const Candidats = () => {
-  const cvData = [
-    {
-      name: "Fatoumata Diarra",
-      img: "https://example.com/images/fatoumata_diarra.jpg",
-      profil:
-        "Spécialiste en marketing digital avec 5 ans d’expérience dans la gestion de campagnes sur les réseaux sociaux et l’optimisation SEO.",
-    },
-    {
-      name: "Ibrahim Coulibaly",
-      img: "https://example.com/images/ibrahim_coulibaly.jpg",
-      profil:
-        "Développeur full-stack maîtrisant JavaScript, React, et Node.js, avec une expérience en développement de solutions SaaS.",
-    },
-    {
-      name: "Aminata Keita",
-      img: "https://example.com/images/aminata_keita.jpg",
-      profil:
-        "Gestionnaire de projet certifiée PMP, spécialisée dans la transformation digitale et la gestion d'équipes multidisciplinaires.",
-    },
-    {
-      name: "Mohamed Sangaré",
-      img: "https://example.com/images/mohamed_sangare.jpg",
-      profil:
-        "Analyste financier avec une expertise dans l’analyse de risques et la gestion de portefeuilles d’investissement en Afrique de l’Ouest.",
-    },
-    {
-      name: "Oumou Traoré",
-      img: "https://example.com/images/oumou_traore.jpg",
-      profil:
-        "Ingénieure en génie civil spécialisée dans les infrastructures routières et les projets de construction durable.",
-    },
-    {
-      name: "Seydou Konaté",
-      img: "https://example.com/images/seydou_konate.jpg",
-      profil:
-        "Consultant en cybersécurité avec des compétences avancées en gestion des risques, tests d'intrusion, et sécurité des réseaux.",
-    },
-    {
-      name: "Kadiatou Sidibé",
-      img: "https://example.com/images/kadiatou_sidibe.jpg",
-      profil:
-        "Graphiste créative avec une expertise en design d’identité visuelle, illustration, et création de contenus pour les réseaux sociaux.",
-    },
-    {
-      name: "Mamadou Diakité",
-      img: "https://example.com/images/mamadou_diakite.jpg",
-      profil:
-        "Responsable logistique avec 8 ans d’expérience dans la gestion de la chaîne d’approvisionnement et l’optimisation des processus.",
-    },
-    {
-      name: "Awa Cissé",
-      img: "https://example.com/images/awa_cisse.jpg",
-      profil:
-        "Data Scientist spécialisée en apprentissage automatique et analyse de données, avec une solide expérience en Python et R.",
-    },
-    {
-      name: "Yacouba Dembélé",
-      img: "https://example.com/images/yacouba_dembele.jpg",
-      profil:
-        "Ingénieur en énergie renouvelable, expert en solutions solaires et éoliennes pour des projets d’électrification rurale.",
-    },
-  ];
-
   const { data, isLoading, isSuccess, isFetching, isError } =
     useGetCandidatsQuery();
+  const { data: partenaireData, isLoading: partenaireIsLoading } = useGetPartenaireQuery();
 
   console.log("data", data);
 
+  if (isLoading) {
+    return (
+      <>
+        <Headers />
+        <Container>
+          <div className="flex justify-center items-center py-20">
+            <div className="text-gray-600">Chargement...</div>
+          </div>
+        </Container>
+        <Footer />
+        <WhatsAppButton />
+      </>
+    );
+  }
+
   return (
-    <Container>
-      <Breadcumb title={`Base de donnee CV`} />
-
-      <section class="banner-bottom-wthree  py-lg-5 py-3 text-center">
-        <div class="container">
-          <div class="inner-sec-w3ls py-lg-4 py-md-4 py-3">
-            <h3 class="tittle text-center mb-lg-5 mb-3 ">
-              <span>Protail candidats – Profil et CV Vidéo </span>Découvrez les
-              candidats en un coup d'œil !{" "}
-            </h3>
-
-            <div className="flex md:ml-40 bg-white w-fit rounded-lg   p-2">
-              <div>
-                <h6>Filtre : </h6>
-              </div>
-              <div className="px-2 hover:bg-orange-500 hover:text-white rounded-lg">
-                <a href=""> Informaticien</a>
+    <>
+      <Headers />
+      <Container>
+        <section className="py-lg-5 py-md-5 py-3 bg-white">
+          <Breadcumb title={"Candidats"} />
+          
+          <div className="container py-lg-5 py-md-4 py-3">
+            <div className="inner-sec-w3ls py-lg-5 py-3">
+              <div className="text-center mb-5">
+                <h3 className="tittle text-center mb-lg-4 mb-3">
+                  <span className="text-[#2529d8]">Candidats</span>Base de données CV & Profils vidéo
+                </h3>
+                <p className="text-gray-600 max-w-2xl mx-auto">
+                  Découvrez les candidats en un coup d'œil ! Explorez nos profils et CVs vidéo pour trouver le talent idéal.
+                </p>
               </div>
 
-              <div className="px-2 hover:bg-orange-500 hover:text-white rounded-lg">
-                <h6>
-                  <a href=""> Assistant direction</a>
-                </h6>
+              {/* Filtres par catégorie */}
+              <div className="flex flex-wrap items-center gap-2 mb-5 bg-gray-50 p-3 rounded-lg justify-center md:justify-start">
+                <span className="font-semibold text-gray-700 px-2">Filtre :</span>
+                <button className="px-4 py-2 bg-white hover:bg-[#2529d8] hover:text-white rounded-lg transition-colors duration-200 border border-gray-200">
+                  Tous
+                </button>
+                <button className="px-4 py-2 bg-white hover:bg-[#2529d8] hover:text-white rounded-lg transition-colors duration-200 border border-gray-200">
+                  Informaticien
+                </button>
+                <button className="px-4 py-2 bg-white hover:bg-[#2529d8] hover:text-white rounded-lg transition-colors duration-200 border border-gray-200">
+                  Assistant direction
+                </button>
+                <button className="px-4 py-2 bg-white hover:bg-[#2529d8] hover:text-white rounded-lg transition-colors duration-200 border border-gray-200">
+                  Chef de projet
+                </button>
+                <button className="px-4 py-2 bg-white hover:bg-[#2529d8] hover:text-white rounded-lg transition-colors duration-200 border border-gray-200">
+                  Manager
+                </button>
               </div>
-              <div className="px-2 hover:bg-orange-500 hover:text-white rounded-lg">
-                <h6>
-                  <a href=""> Chef de projet</a>
-                </h6>
+
+              {/* Liste des candidats */}
+              <div className="row mt-4">
+                <div className="col-lg-12">
+                  {data?.data && data.data.length > 0 ? (
+                    <div className="row">
+                      {data.data.map((item, index) => (
+                        <CvVideoCard key={index} item={item} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="bg-gray-50 rounded-lg p-10 text-center">
+                      <p className="text-gray-500">Aucun candidat disponible pour le moment.</p>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Partenaires (optionnel) */}
+                {partenaireData?.data && partenaireData.data.length > 0 && (
+                  <div className="col-lg-12 mt-5">
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <h4 className="font-bold text-lg text-gray-800 mb-4 text-center">Nos partenaires</h4>
+                      <div className="flex flex-wrap justify-center gap-3">
+                        {partenaireData.data.map((item, index) => (
+                          <img 
+                            key={index}
+                            src={'https://api.antares-rh.net' + item?.attributes?.image?.data?.attributes?.url} 
+                            alt="Partenaire" 
+                            className="h-16 object-contain bg-white p-2 rounded shadow-sm" 
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="px-2 hover:bg-orange-500 hover:text-white rounded-lg">
-                <h6>
-                  <a href=""> Manager</a>
-                </h6>
-              </div>
-            </div>
-            <div class="flex flex-wrap justify-center items-center mt-5">
-              {data && data?.data?.map((item) => <CvVideoCard item={item} />)}
             </div>
           </div>
-        </div>
-      </section>
-    </Container>
+        </section>
+      </Container>
+      <Footer />
+      <WhatsAppButton />
+    </>
   );
 };
 

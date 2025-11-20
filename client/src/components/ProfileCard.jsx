@@ -1,5 +1,6 @@
 // ProfileCard.js
 import React from "react";
+import { styles } from "../config/colors";
 
 const ProfileCard = ({ profile }) => {
   return (
@@ -37,15 +38,15 @@ const ProfileCard = ({ profile }) => {
         </div>
 
         {/* Boutons de contact */}
-        <div className="w-full mt-4 flex justify-around">
+        <div className="w-full mt-4 flex justify-around gap-2">
           <a
             href={`mailto:${profile.email}`}
-            className="text-white bg-blue-500 hover:bg-blue-600 p-2 rounded-lg text-sm">
+            className={`${styles.button.primary} p-2 text-sm flex-1 text-center`}>
             Envoyer un Email
           </a>
           <a
             href={`tel:${profile.phone}`}
-            className="text-white bg-green-500 hover:bg-green-600 p-2 rounded-lg text-sm">
+            className={`${styles.button.secondary} p-2 text-sm flex-1 text-center`}>
             Appeler
           </a>
         </div>

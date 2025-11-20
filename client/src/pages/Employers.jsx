@@ -2,106 +2,67 @@ import React from "react";
 import Container from "../components/Container";
 import EmployerCard from "../components/EmployerCard";
 import Breadcumb from "../components/Breadcumb";
+import Headers from "../components/Headers";
+import Footer from "../components/Footer";
+import WhatsAppButton from "../components/WhatsAppButton";
 import { useGetCompaniesQuery } from "../redux/companyService";
 
 const Employers = () => {
-  const data = [
-    {
-      item1: {
-        id: 1,
-        name: "Edm",
-        description: "Fournisseur principal d'énergie",
-        logo: "https://apua-asea.org/wp-content/uploads/2023/01/edm-sa.jpg",
-      },
-      item2: {
-        id: 2,
-        name: "Azalaï Hotels",
-        description: "Gestion des infrastructures urbaines à Bamako",
-        logo: "https://bamako.ml/wp-content/uploads/2018/01/logobko.png",
-      },
-    },
-
-    {
-      item1: {
-        id: 3,
-        name: "Orange Mali",
-        description: "Opérateur de télécommunications en Mali",
-        logo: "https://pbs.twimg.com/profile_images/1458758047132798980/RtLX1cYg_400x400.jpg",
-      },
-      item2: {
-        id: 4,
-        name: "OK Clean",
-        description: "Transport public et logistique au Mali",
-        logo: "https://entreprise.pole-emploi.fr/static/img/minisite/85e613e8-f936-47c7-98cc-6780b77a8d2c.png",
-      },
-    },
-    {
-      item1: {
-        id: 5,
-        name: "Malitel",
-        description: "Fournisseur de services de téléphonie mobile",
-        logo: "",
-      },
-      item2: {
-        id: 6,
-        name: "Banque de l'Habitat du Mali (BHM)",
-        description: "Banque spécialisée dans le financement immobilier",
-        logo: "",
-      },
-    },
-    {
-      item1: {
-        id: 7,
-        name: "Société des Mines du Mali (SOMIMA)",
-        description: "Exploitation minière et production de ressources",
-        logo: "",
-      },
-      item2: {
-        id: 8,
-        name: "Go Shop Mali",
-        description: "E-commerce et vente en ligne",
-        logo: "",
-      },
-    },
-    {
-      item1: {
-        id: 9,
-        name: "Cement Company of Mali (CIM)",
-        description: "Fabrication et distribution de ciment",
-        logo: "",
-      },
-      item2: {
-        id: 10,
-        name: "Mali Post",
-        description: "Service postal et logistique au Mali",
-        logo: "",
-      },
-    },
-  ];
-
   const { data: companiesData, error, isLoading } = useGetCompaniesQuery();
 
-  console.log("companiesData", companiesData);
-  if (isLoading) return <Container>Loading...</Container>;
+  if (isLoading) {
+    return (
+      <>
+        
+        <Container>
+          <div className="flex justify-center items-center py-20">
+            <div className="text-gray-600">Chargement...</div>
+          </div>
+        </Container>
+        <Footer />
+        <WhatsAppButton />
+      </>
+    );
+  }
+
   return (
-    <Container>
-      <Breadcumb title={"Employeurs"} />
-      <div className="carousel slide">
-    <div className="carousel-inner mt-5">
-        <div className="carousel-item active">
-            <div className="container-fluid">
-                <div className="row g-3 justify-content-center">
-                    {companiesData?.data.map((item, index) => (
-                        <div key={index} className="col-12 col-xl-6 d-flex justify-content-center">
-                            <EmployerCard item1={item.attributes} />
-                        </div>
-                    ))}
+    <>
+     
+      <Container>
+        <section className="py-lg-5 py-md-5 py-3 bg-white">
+          <Breadcumb title={"Employeurs"} />
+          
+          <div className="container py-lg-5 py-md-4 py-3">
+            <div className="inner-sec-w3ls py-lg-5 py-3">
+              <div className="text-center mb-5">
+                <h3 className="tittle text-center mb-lg-4 mb-3">
+                  <span className="text-[#2529d8]">Employeurs</span>Nos entreprises partenaires
+                </h3>
+                <p className="text-gray-600 max-w-2xl mx-auto">
+                  Découvrez les entreprises qui nous font confiance pour leurs besoins en ressources humaines.
+                </p>
+              </div>
+              
+              {companiesData?.data && companiesData.data.length > 0 ? (
+                <div className="row mt-5">
+                  {companiesData.data.map((item, index) => (
+                    <div key={index} className="col-lg-6 col-md-12 mb-4">
+                      <EmployerCard item1={item.attributes} />
+                    </div>
+                  ))}
                 </div>
+              ) : (
+                <div className="text-center py-10">
+                  <p className="text-gray-500">Aucun employeur disponible pour le moment.</p>
+                </div>
+              )}
             </div>
-        </div>
-    </div>
-</div>
-    </Container>
+          </div>
+        </section>
+      </Container>
+      <Footer />
+      <WhatsAppButton />
+    </>
   );
 };
 

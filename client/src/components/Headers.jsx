@@ -45,10 +45,11 @@ const Headers = () => {
 
   const navigationLinks = [
     { href: "/", label: "Accueil" },
+    { href: "/about", label: "À propos" },
     { href: "/candidats", label: "Candidats" },
     { href: "/employeurs", label: "Employeurs" },
     { href: "/offres", label: "Offres" },
-    { href: "/news", label: "Actualités" },
+    { href: "/ressources", label: "Ressources" },
     { href: "/dao", label: "DAO" },
     { href: "/contact", label: "Contact" },
   ];

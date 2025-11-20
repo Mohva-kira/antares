@@ -6,6 +6,7 @@ import bg from "../assets/images/1.png";
 import logo from "../assets/images/logo_antares.png";
 import { setAuth, useRegisterMutation, useUploadPhotoMutation } from "../redux/auth/authService";
 import { validatePasswordComplexity } from "../utils";
+import { styles } from "../config/colors";
 
 const Register = ({ setShowLogin }) => {
   const [register] = useRegisterMutation();
@@ -90,14 +91,14 @@ const Register = ({ setShowLogin }) => {
   };
   return (
     <>
-      <div class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
-        <div class="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
-          <div class="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
-            <div className="flex justify-center ">
-              <img src={logo} class="w-mx-auto md:w-56" />
+      <div className="min-h-screen bg-gray-50 text-gray-900 flex justify-center">
+        <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow-lg sm:rounded-lg flex justify-center flex-1">
+          <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
+            <div className="flex justify-center mb-8">
+              <img src={logo} className="w-mx-auto md:w-56" alt="Antarès RH Logo" />
             </div>
-            <div class="mt-12 flex flex-col items-center">
-              <div class="w-full flex-1 mt-8">
+            <div className="mt-12 flex flex-col items-center">
+              <div className="w-full flex-1 mt-8">
                 {/* <div class="flex flex-col items-center">
                   <button class="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
                     <div class="bg-white p-2 rounded-full">
@@ -130,50 +131,51 @@ const Register = ({ setShowLogin }) => {
                   </div>
                 </div> */}
 
-                <div class="mx-auto max-w-xs">
+                <div className="mx-auto max-w-xs">
                   <input
-                    class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                    className={styles.input.base}
                     type="text"
                     placeholder="Nom d'utilisateur"
                     onChange={(e) => setUsername(e.target.value)}
                   />
                   <input
-                    class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
+                    className={`${styles.input.base} mt-4`}
                     type="email"
                     placeholder="Email"
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <label
-                    class="block mb-2 text-sm font-medium text-black mt-2"
-                    for="file_input">
-                    Photo
+                    className="block mb-2 text-sm font-semibold text-gray-700 mt-4"
+                    htmlFor="photo">
+                    Photo (optionnel)
                   </label>
                   <input
-                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none focus:border-[#2529d8] focus:ring-2 focus:ring-[#2529d8] focus:ring-opacity-20 transition-all duration-200"
                     id="photo"
                     name="photo"
                     onChange={(e) => setPhoto(e.target.files[0])}
                     type="file"
+                    accept="image/*"
                   />
 
                   <input
-                    class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
+                    className={`${styles.input.base} mt-4`}
                     type="password"
                     placeholder="Mot de passe"
                     onChange={handlePasswordChange}
                   />
-                  {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
+                  {passwordError && <p className="text-red-500 text-sm mt-2">{passwordError}</p>}
                   <input
-                    class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
+                    className={`${styles.input.base} mt-4`}
                     type="password"
                     placeholder="Confirmer mot de passe"
                     onChange={(e) => setSecondPassword(e.target.value)}
                   />
                   <button
                     onClick={() => send()}
-                    class="mt-5 tracking-wide font-semibold bg-green-400 text-white-500 w-full py-4 rounded-lg hover:bg-green-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                    className={`${styles.button.primary} mt-5 w-full py-4 flex items-center justify-center`}>
                     <svg
-                      class="w-6 h-6 -ml-2"
+                      className="w-6 h-6 -ml-2"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2"
@@ -183,28 +185,27 @@ const Register = ({ setShowLogin }) => {
                       <circle cx="8.5" cy="7" r="4" />
                       <path d="M20 8v6M23 11h-6" />
                     </svg>
-                    <span class="ml-">S'inscrire</span>
+                    <span className="ml-2">S'inscrire</span>
                   </button>
-                  <p class="mt-6 text-xs text-gray-600 text-center">
-                    Vous avez un compte
+                  <p className="mt-6 text-xs text-gray-600 text-center">
+                    Vous avez un compte{' '}
                     <Link
                       onClick={() => setShowLogin(true)}
-                      class="border-b border-gray-500 ml-3 border-dotted">
+                      className="text-[#2529d8] hover:underline ml-2 font-semibold">
                       Connexion
                     </Link>
                   </p>
-                  <p class="mt-6 text-xs text-gray-600 text-center">
-                    J’accepte de respecter les conditions d'utilisation de
-                    l'application
+                  <p className="mt-6 text-xs text-gray-600 text-center">
+                    J'accepte de respecter les{' '}
                     <a
                       href="#"
-                      class="border-b m-1 border-gray-500 border-dotted">
-                      Conditions d'utilisation du service
+                      className="text-[#2529d8] hover:underline">
+                      conditions d'utilisation du service
                     </a>
-                    et la
+                    {' '}et la{' '}
                     <a
                       href="#"
-                      class="border-b ml-1 border-gray-500 border-dotted">
+                      className="text-[#2529d8] hover:underline">
                       politique de confidentialité
                     </a>
                   </p>
@@ -212,9 +213,9 @@ const Register = ({ setShowLogin }) => {
               </div>
             </div>
           </div>
-          <div class="flex-1 text-center hidden lg:flex">
+          <div className="flex-1 text-center hidden lg:flex">
             <div
-              class="m-1  w-full bg-cover bg-center bg-no-repeat"
+              className="m-1 w-full bg-cover bg-center bg-no-repeat"
               style={{
                 backgroundImage: `url(${bg})`,
               }}></div>

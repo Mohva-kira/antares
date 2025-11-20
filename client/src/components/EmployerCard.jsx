@@ -1,49 +1,85 @@
 import React from "react";
 import team4 from "../assets/images/team4.jpg";
 import { FaMapMarkerAlt, FaEnvelope, FaGlobe, FaUsers } from "react-icons/fa";
-
 import { useNavigate } from "react-router-dom";
+
 const EmployerCard = ({ item1 }) => {
   const navigate = useNavigate();
+  
   return (
-    <div class="flex w-[80%] justify-center items-center ">
-      <div class="w-full testi-main relative m-2 ">
-        <div className="bg-white w-[90%] absolute h-[80%]  rounded-2xl -z-50  m-2"></div>
-
-        <a href={`/employeurs/${item1.name}`}>
-          <div class="testi-grids row cursor-pointer  ">
-            <div class="col-md-9 col-sm-9 col-xs-9 clients-info-text">
-              <h6>{item1.name}</h6>
-              <h>{item1.activite}</h>
-              <div className="row-span-1 d-flex flex-column flex-lg-row justify-content-between align-items-start h-100 gap-3">
-                <div className="flex-fill mb-2 mb-lg-0">
-                  <p className="text-truncate">{item1.description}</p>
+    <div 
+      onClick={() => navigate(`/employeurs/${item1.name}`)}
+      className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border-t-4 border-[#2529d8] cursor-pointer h-100"
+    >
+      <div className="p-5">
+        <div className="flex flex-col md:flex-row gap-4">
+          {/* Image */}
+          <div className="flex-shrink-0">
+            <img 
+              src={team4} 
+              alt={item1.name || "Employeur"} 
+              className="w-24 h-24 md:w-32 md:h-32 rounded-lg object-cover border-2 border-gray-100"
+            />
+          </div>
+          
+          {/* Informations */}
+          <div className="flex-1">
+            <h4 className="text-xl font-bold text-gray-800 mb-2 hover:text-[#2529d8] transition-colors duration-200">
+              {item1.name || "Entreprise"}
+            </h4>
+            
+            {item1.activite && (
+              <p className="text-sm text-[#2529d8] font-semibold mb-2">
+                {item1.activite}
+              </p>
+            )}
+            
+            {item1.description && (
+              <p className="text-gray-600 mb-4 line-clamp-2">
+                {item1.description}
+              </p>
+            )}
+            
+            {/* Détails */}
+            <div className="space-y-2">
+              {item1.adresse && (
+                <div className="flex items-start text-sm text-gray-600">
+                  <FaMapMarkerAlt className="mt-1 mr-2 text-[#2529d8] flex-shrink-0" />
+                  <span className="line-clamp-1">{item1.adresse}</span>
                 </div>
-                <div className="d-flex flex-column gap-2 flex-lg-row flex-lg-wrap justify-content-lg-end">
-                  <div className="d-flex align-items-center">
-                    <FaMapMarkerAlt className="me-2 text-muted flex-shrink-0" />
-                    <p className="mb-0 small">{item1.adresse}</p>
-                  </div>
-                  <div className="d-flex align-items-center">
-                    <FaEnvelope className="me-2 text-muted flex-shrink-0" />
-                    <p className="mb-0 small">{item1.email}</p>
-                  </div>
-                  <div className="d-flex align-items-center">
-                    <FaGlobe className="me-2 text-muted flex-shrink-0" />
-                    <p className="mb-0 small">{item1.site}</p>
-                  </div>
-                  <div className="d-flex align-items-center">
-                    <FaUsers className="me-2 text-muted flex-shrink-0" />
-                    <p className="mb-0 small">{item1.nb_employees} Employées</p>
-                  </div>
+              )}
+              
+              {item1.email && (
+                <div className="flex items-center text-sm text-gray-600">
+                  <FaEnvelope className="mr-2 text-[#2529d8] flex-shrink-0" />
+                  <span className="truncate">{item1.email}</span>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-3 img-testi">
-              <img class="img-fluid" src={team4} alt="" />
+              )}
+              
+              {item1.site && (
+                <div className="flex items-center text-sm text-gray-600">
+                  <FaGlobe className="mr-2 text-[#2529d8] flex-shrink-0" />
+                  <a 
+                    href={item1.site} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-[#2529d8] hover:underline truncate"
+                  >
+                    {item1.site}
+                  </a>
+                </div>
+              )}
+              
+              {item1.nb_employees && (
+                <div className="flex items-center text-sm text-gray-600">
+                  <FaUsers className="mr-2 text-[#2529d8] flex-shrink-0" />
+                  <span>{item1.nb_employees} Employés</span>
+                </div>
+              )}
             </div>
           </div>
-        </a>
+        </div>
       </div>
     </div>
   );

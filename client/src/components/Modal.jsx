@@ -1,42 +1,32 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { styles } from "../config/colors";
 
 const Modal = ({ id, title, summary, video, isVisible, setIsVisible }) => {
   const navigate = useNavigate();
 
   return (
     <div
-      className={`"relative z-10 " ${isVisible ? "block" : "hidden"} `}
+      className={`relative z-50 ${isVisible ? "block" : "hidden"}`}
       aria-labelledby="modal-title"
       role="dialog"
       aria-modal="true">
-      {/* Background backdrop, show/hide based on modal state.
-
-    Entering: "ease-out duration-300"
-      From: "opacity-0"
-      To: "opacity-100"
-    Leaving: "ease-in duration-200"
-      From: "opacity-100"
-      To: "opacity-0" */}
-
       <div
-        className="fixed inset-0 bg-gray-500/75 transition-opacity"
+        className={styles.modal.overlay}
+        onClick={() => setIsVisible(false)}
         aria-hidden="true"></div>
 
-      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div className={styles.modal.container}>
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-          {/* Modal panel, show/hide based on modal state.
-
-        Entering: "ease-out duration-300"
-          From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          To: "opacity-100 translate-y-0 sm:scale-100"
-        Leaving: "ease-in duration-200"
-          From: "opacity-100 translate-y-0 sm:scale-100"
-          To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" */}
-
-          <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <div
+            className={`${styles.modal.content} sm:my-8 sm:w-full sm:max-w-lg`}
+            onClick={(e) => e.stopPropagation()}>
             <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-              <div onClick={() => setIsVisible(false)} className="absolute right-5 cursor-pointer top-4 font-extrabold">X</div>
+              <button
+                onClick={() => setIsVisible(false)}
+                className="absolute right-5 top-4 text-gray-400 hover:text-gray-600 transition-colors duration-200 font-extrabold text-xl">
+                ×
+              </button>
               <div className="sm:flex sm:items-start">
                 {/* <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
                   <svg
@@ -54,41 +44,41 @@ const Modal = ({ id, title, summary, video, isVisible, setIsVisible }) => {
                     />
                   </svg>
                 </div> */}
-                <div className="mt-3 w-full text-center capitalize font-extrabold text-2xl sm:ml-4 sm:mt-0 sm:text-left">
-                  <h3> {id?.attributes?.username} </h3>
+                <div className="mt-3 w-full text-center capitalize font-bold text-2xl sm:ml-4 sm:mt-0 sm:text-left">
+                  <h3 className="text-[#2529d8] mb-2"> {id?.attributes?.username} </h3>
                   <h3
-                    className="text-base font-light text-gray-900"
+                    className="text-lg font-semibold text-gray-800 mb-3"
                     id="modal-title">
                     {title}
                   </h3>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">{summary}</p>
+                  <div className="mt-2 mb-4">
+                    <p className="text-sm text-gray-600">{summary}</p>
                   </div>
 
-                  <div className="mt-2 w-full p-4 rounded-3xl">
+                  <div className="mt-4 w-full p-4 rounded-lg border border-gray-200">
                     <iframe
-                      className="w-full h-fit"
+                      className="w-full h-64 rounded-lg"
                       src="https://www.youtube.com/embed/oz6Zl7zhCTs?si=zgcQ44P6u0dlRqBr"
                       title="YouTube video player"
-                      frameborder="0"
+                      frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerpolicy="strict-origin-when-cross-origin"
-                      allowfullscreen></iframe>
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen></iframe>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-4 py-3 w-full flex sm:flex-row-reverse sm:px-6 justify-center items-center space-x-3 ">
+            <div className={`${styles.modal.footer} flex sm:flex-row-reverse justify-center items-center space-x-3`}>
               <button
                 onClick={() => navigate(`/cv/${id.id}`)}
                 type="button"
-                className="  w-full justify-center rounded-2xl bg-orange-500  h-fit py-1.5">
-                Detail
+                className={styles.button.primary}>
+                Voir le détail
               </button>
               <button
                 onClick={() => setIsVisible(!isVisible)}
                 type="button"
-                className=" inline-flex w-full mr-2 justify-center rounded-2xl bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">
+                className={styles.button.outline}>
                 Fermer
               </button>
             </div>

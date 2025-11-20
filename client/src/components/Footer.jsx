@@ -11,38 +11,22 @@ const Footer = () => {
             </div>
             <div class="footer-text">
               <p>
-                {" "}
-                Antarès RH est une plateforme innovante de gestion du recrutement qui connecte efficacement les entreprises aux meilleurs talents. Conçue pour répondre aux enjeux modernes du marché de l'emploi, Antarès simplifie l’ensemble du processus de recrutement, depuis la publication d’offres jusqu’à la sélection et l’intégration des candidats.
+                Antarès RH connecte talents et organisations en Afrique de l'Ouest depuis près de 20 ans. Recrutement, conseil et structuration RH : nous aidons entreprises locales et multinationales à construire des équipes solides et des pratiques fiables.
               </p>
               <ul class="footer-social text-left mt-lg-4 mt-3">
                 <li class="mx-2">
-                  <a href="#">
-                    <span class="fab fa-facebook-f"></span>
-                  </a>
-                </li>
-                <li class="mx-2">
-                  <a href="#">
-                    <span class="fab fa-twitter"></span>
-                  </a>
-                </li>
-                <li class="mx-2">
-                  <a href="#">
-                    <span class="fab fa-google-plus-g"></span>
-                  </a>
-                </li>
-                <li class="mx-2">
-                  <a href="#">
+                  <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                     <span class="fab fa-linkedin-in"></span>
                   </a>
                 </li>
                 <li class="mx-2">
-                  <a href="#">
-                    <span class="fas fa-rss"></span>
+                  <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                    <span class="fab fa-facebook-f"></span>
                   </a>
                 </li>
                 <li class="mx-2">
-                  <a href="#">
-                    <span class="fab fa-vk"></span>
+                  <a href="https://wa.me/22320292040" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                    <span class="fab fa-whatsapp"></span>
                   </a>
                 </li>
               </ul>
@@ -55,16 +39,20 @@ const Footer = () => {
             <div class="contact-info">
               <h4>Adresse :</h4>
               <p>
-                HAMDALLAYE ACI - IMMEUBLE BALDE - BLOC 1 - BAMAKO. BP E 4068{" "}
+                Hamdallaye ACI 2000 - Immeuble Kanté - Bamako, Mali
               </p>
               <div class="phone">
                 <h4>Contact :</h4>
                 <p>
-                  <a href="tel:+22366768705">Phone : +223 20 29 20 40</a>{" "}
+                  <a href="tel:+22320292040">Téléphone : +223 20 29 20 40</a>
                 </p>
                 <p>
                   Email :
-                  <a href="mailto:info@example.com">info@antares-rh.com</a>
+                  <a href="mailto:antares.ml@gmail.com">antares.ml@gmail.com</a>
+                </p>
+                <p>
+                  Site web :
+                  <a href="https://www.antares-rh.com" target="_blank" rel="noopener noreferrer">www.antares-rh.com</a>
                 </p>
               </div>
             </div>
@@ -75,25 +63,19 @@ const Footer = () => {
             </div>
             <ul class="links">
               <li>
-                <a href="/">Accueil</a>
-              </li>
-
-              <li>
-                <a href="/offres">Offres</a>
+                <a href="/offres">Offres d'emploi</a>
               </li>
               <li>
-                <a href="/candidats">Candidats</a>
-              </li>
-            </ul>
-            <ul class="links">
-              <li>
-                <a href="/how">Comment ça marche?</a>
+                <a href="/candidats">Déposer CV</a>
               </li>
               <li>
-                <a href="/contact">Assistance</a>
+                <a href="/news">Alertes</a>
               </li>
               <li>
-                <a href="/employeurs">Employeurs</a>
+                <a href="/services">Services</a>
+              </li>
+              <li>
+                <a href="/contact">Contact</a>
               </li>
             </ul>
 
@@ -101,10 +83,19 @@ const Footer = () => {
           </div>
         </div>
         <div class="copyright mt-4">
-          <p class="copy-right text-center ">
-            &copy; 2024 Antares. All Rights Reserved | Design by
-            <a href="https://flyentreprise.com/"> Fly </a>
-          </p>
+          <div class="row">
+            <div class="col-lg-12">
+              <p class="copy-right text-center mb-2">
+                &copy; 2024 Antarès RH. Tous droits réservés | Design par
+                <a href="https://flyentreprise.com/" target="_blank" rel="noopener noreferrer"> Fly </a>
+              </p>
+              <p class="text-center">
+                <a href="/mentions-legales" class="text-white mr-3">Mentions légales</a>
+                <span class="text-white">|</span>
+                <a href="/politique-confidentialite" class="text-white ml-3">Politique de confidentialité</a>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
@@ -112,3 +103,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

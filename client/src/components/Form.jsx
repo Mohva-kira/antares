@@ -7,6 +7,7 @@ import {
   updateNestedArrayElement,
 } from "../utils";
 import { HiOutlineX } from "react-icons/hi";
+import { styles } from "../config/colors";
 
 const Form = ({
   fields,
@@ -83,27 +84,20 @@ const Form = ({
   if (!isVisible) return null;
 
   return (
-    <div className="lg:w-4/5 w-full bg-slate-400 dark:bg-gray-700 p-5 rounded-2xl flex flex-col justify-center shadow-md">
-      <div className="w-full flex justify-end relative">
-        <p
-          onClick={() => setIsVisible(false)}
-          className="text-white cursor-pointer dark:text-white">
-          {" "}
-          X{" "}
-        </p>
+    <div className={`${styles.form.container} lg:w-4/5 w-full flex flex-col justify-center shadow-lg`}>
+      <div className="w-full flex justify-end relative mb-4">
+        <button
+          onClick={handleClose}
+          className="text-gray-500 hover:text-gray-700 transition-colors duration-200 p-1"
+          aria-label="Fermer">
+          <HiOutlineX className="w-6 h-6" />
+        </button>
       </div>
-      <div className="w-full mb-4 border-b-2 border-gray-700 dark:border-black p-2 flex justify-center">
-        <div className="w-full flex justify-between items-center">
-          <h2 className="text-white font-semibold text-lg">
-            {isUpdateMode ? `Modifier ${title}` : `Créer ${title}`}
-          </h2>
-          <button
-            onClick={handleClose}
-            className="text-white hover:text-gray-200 transition-colors duration-200 p-1"
-            aria-label="Fermer">
-            <HiOutlineX className="w-6 h-6" />
-          </button>
-        </div>
+      
+      <div className="w-full mb-6 border-b border-gray-200 pb-4">
+        <h2 className="text-xl font-bold text-gray-800">
+          {isUpdateMode ? `Modifier ${title}` : `Créer ${title}`}
+        </h2>
       </div>
 
       <form
@@ -111,23 +105,29 @@ const Form = ({
           e.preventDefault();
           handleSubmit(dataToSend, fields, setErrors, send, setIsVisible);
         }}
-        className="p-5 bg-gray-100 flex flex-wrap space-x-4  rounded-lg w-full mx-auto">
+        className="flex flex-wrap gap-4">
         {fields.map((field) => (
-          <div key={field.name} className="w-full sm:w-[450px] mb-4">
+          <div key={field.name} className="w-full sm:w-[450px]">
+            {field.label && (
+              <label className={styles.form.label} htmlFor={field.name}>
+                {field.label}
+              </label>
+            )}
             {field.type === "textarea" ? (
               <textarea
                 id={field.name}
                 placeholder={field.placeholder}
                 value={(dataToSend && dataToSend[field.name]) || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-full p-2 border rounded-2xl"
+                className={errors && errors[field.name] ? styles.input.error : styles.input.base}
+                rows={field.rows || 4}
               />
             ) : field.type === "select" ? (
               <select
                 id={field.name}
                 value={(dataToSend && dataToSend[field.name]) || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-full p-2 border rounded-2xl">
+                className={errors && errors[field.name] ? styles.input.error : styles.input.base}>
                 <option value="">{field.placeholder}</option>
                 {field.options.map((option) => (
                   <option key={option} value={option}>
@@ -137,19 +137,25 @@ const Form = ({
               </select>
             ) : field.type === "array" ? (
               <div className="w-full">
-                <label className="block mb-2 font-semibold">
+                <label className={styles.form.label}>
                   {field.placeholder}
                 </label>
                 {((dataToSend && dataToSend[field.name]) || [{}])?.map(
                   (item, index) => (
                     <div
                       key={index}
-                      className="mb-4 p-4 border rounded-2xl shadow-md bg-white ">
+                      className="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
                       {field?.fields?.map((subField) => (
-                        <div key={subField.name} className="mb-2">
+                        <div key={subField.name} className="mb-3">
+                          {subField.label && (
+                            <label className={styles.form.label} htmlFor={`${field.name}-${index}-${subField.name}`}>
+                              {subField.label}
+                            </label>
+                          )}
                           <input
                             type={subField.type}
                             name={subField.name}
+                            id={`${field.name}-${index}-${subField.name}`}
                             placeholder={subField.placeholder}
                             value={(item && item[subField.name]) || ""}
                             onChange={(e) =>
@@ -161,7 +167,7 @@ const Form = ({
                                 setDataToSend
                               )
                             }
-                            className="w-full p-2 border rounded-2xl"
+                            className={styles.input.base}
                             required={subField.required}
                           />
                         </div>
@@ -171,7 +177,7 @@ const Form = ({
                         onClick={() =>
                           removeArrayElement(field.name, index, setDataToSend)
                         }
-                        className="bg-red-500 text-white p-2 rounded w-full">
+                        className={styles.button.danger + " w-full mt-2"}>
                         Supprimer cette expérience
                       </button>
                     </div>
@@ -182,7 +188,7 @@ const Form = ({
                   onClick={() =>
                     addArrayElement(field.name, setDataToSend, field.fields)
                   }
-                  className="bg-blue-500 text-white p-2 rounded w-full">
+                  className={styles.button.secondary + " w-full"}>
                   Ajouter une expérience
                 </button>
               </div>
@@ -193,29 +199,25 @@ const Form = ({
                 placeholder={field.placeholder}
                 value={(dataToSend && dataToSend[field.name]) || ""}
                 onChange={(e) => handleInputChange(e, setDataToSend, setErrors)}
-                className="w-full p-2 border rounded-2xl shadow-md"
+                className={errors && errors[field.name] ? styles.input.error : styles.input.base}
               />
             )}
             {errors && errors[field.name] && (
-              <p className="text-red-500 text-sm">{errors[field.name]}</p>
+              <p className="text-red-500 text-sm mt-1">{errors[field.name]}</p>
             )}
           </div>
         ))}
 
-        <div className="flex justify-end w-full space-x-3 pt-6 border-t border-gray-200 dark:border-gray-600">
+        <div className="flex justify-end w-full space-x-3 pt-6 border-t border-gray-200 mt-6">
           <button
             type="button"
             onClick={handleClose}
-            className="px-6 py-2 w-1/4 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors duration-200 font-medium">
+            className={styles.button.outline}>
             Annuler
           </button>
           <button
             type="submit"
-            className={`px-6 py-2 w-2/3 text-white rounded-lg font-medium transition-colors duration-200 ${
-              isUpdateMode
-                ? "bg-orange-600 hover:bg-orange-700"
-                : "bg-blue-600 hover:bg-blue-700"
-            }`}>
+            className={styles.button.primary}>
             {isUpdateMode ? "Mettre à jour" : "Créer"}
           </button>
         </div>

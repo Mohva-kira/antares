@@ -23,6 +23,8 @@ import Dao from "./pages/Dao.jsx";
 import DaoDetails from "./pages/DaoDetails.jsx";
 import { ToastContainer } from 'react-toastify';
 import NewsList from "./pages/NewsList.jsx";
+import About from "./pages/About.jsx";
+import Resources from "./pages/Resources.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -96,6 +98,14 @@ const router = createBrowserRouter([
   {
     path: "/contact",
     element: <Contact />,
+  },
+  {
+    path: "/about",
+    element: <About />,
+  },
+  {
+    path: "/ressources",
+    element: <Resources />,
   },
 ]);
 

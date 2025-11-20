@@ -2,6 +2,9 @@ import React from "react";
 import job2 from "../assets/images/job-2.png";
 import Breadcumb from "../components/Breadcumb";
 import Container from "../components/Container";
+import Headers from "../components/Headers";
+import Footer from "../components/Footer";
+import WhatsAppButton from "../components/WhatsAppButton";
 import JobCard from "../components/JobCard";
 import { useGetOffersQuery } from "../redux/offerService";
 import { useGetPartenaireQuery } from "../redux/partenaire";
@@ -116,78 +119,99 @@ const {data: partenaireData, isLoading: partenaireIsLoading} = useGetPartenaireQ
 
   if (isLoading) {
     return (
-      <div className="w-full h-[100vh] flex justify-center items-center">
-        Loading...
+      <>
+        {/* <Headers /> */}
+        <Container>
+          <div className="flex justify-center items-center py-20">
+            <div className="text-gray-600">Chargement...</div>
       </div>
+        </Container>
+        <Footer />
+        <WhatsAppButton />
+      </>
     );
   }
 
   return (
+    <>
+    
     <Container>
+        <section className="py-lg-5 py-md-5 py-3 bg-white">
       <Breadcumb title="Offres d'emploi" />
-      <section class="banner-bottom-wthree pb-lg-5 pb-md-4 pb-3">
-        <div class="container">
-          <div class="inner-sec-w3ls py-lg-5  py-3">
-            <h3 class="tittle text-center mb-lg-4 mb-3">
-              <span> Les offres d'emplois</span>Tous les postes à pouvoir
+          
+          <div className="container py-lg-5 py-md-4 py-3">
+            <div className="inner-sec-w3ls py-lg-5 py-3">
+              <div className="text-center mb-5">
+                <h3 className="tittle text-center mb-lg-4 mb-3">
+                  <span className="text-[#2529d8]">Offres d'emploi</span>Tous les postes à pouvoir
             </h3>
-
-            <div class="tabs mt-5">
-              <div className="flex space-x-2 bg-white w-fit rounded-lg   p-2">
-                <h2 className="px-2">Categorie : </h2>
-                <a
-                  className="px-2 hover:bg-orange-500 hover:text-white rounded-lg"
-                  href="">
-                  {" "}
-                  Manager{" "}
-                </a>
-                <a
-                  className="px-2 hover:bg-orange-500 hover:text-white rounded-lg"
-                  href="">
-                  {" "}
-                  Comptabilité{" "}
-                </a>
-                <a
-                  className="px-2 hover:bg-orange-500 hover:text-white rounded-lg"
-                  href="">
-                  {" "}
-                  Informatiuqe{" "}
-                </a>
-                <a
-                  className="px-2 hover:bg-orange-500 hover:text-white rounded-lg"
-                  href="">
-                  {" "}
-                  Sécretariat{" "}
-                </a>
+                <p className="text-gray-600 max-w-2xl mx-auto">
+                  Explorez toutes nos offres d'emploi et trouvez l'opportunité qui correspond à votre profil.
+                </p>
               </div>
-              <div class="tab-content" id="pills-tabContent">
-                <div
-                  class="tab-pane fade show active"
-                  id="pills-home"
-                  role="tabpanel"
-                  aria-labelledby="pills-home-tab">
-                  <div class="menu-grids mt-4">
-                    <div class="row t-in">
-                      <div class="col-lg-8 text-info-sec">
-                        {data?.data?.map((item) => (
-                          <JobCard item={item} />
+
+              {/* Filtres par catégorie */}
+              <div className="flex flex-wrap items-center gap-2 mb-5 bg-gray-50 p-3 rounded-lg">
+                <span className="font-semibold text-gray-700 px-2">Catégorie :</span>
+                <button className="px-4 py-2 bg-white hover:bg-[#2529d8] hover:text-white rounded-lg transition-colors duration-200 border border-gray-200">
+                  Tous
+                </button>
+                <button className="px-4 py-2 bg-white hover:bg-[#2529d8] hover:text-white rounded-lg transition-colors duration-200 border border-gray-200">
+                  Manager
+                </button>
+                <button className="px-4 py-2 bg-white hover:bg-[#2529d8] hover:text-white rounded-lg transition-colors duration-200 border border-gray-200">
+                  Comptabilité
+                </button>
+                <button className="px-4 py-2 bg-white hover:bg-[#2529d8] hover:text-white rounded-lg transition-colors duration-200 border border-gray-200">
+                  Informatique
+                </button>
+                <button className="px-4 py-2 bg-white hover:bg-[#2529d8] hover:text-white rounded-lg transition-colors duration-200 border border-gray-200">
+                  Secrétariat
+                </button>
+              </div>
+
+              {/* Liste des offres */}
+              <div className="row mt-4">
+                <div className="col-lg-8">
+                  {data?.data && data.data.length > 0 ? (
+                    <div className="space-y-4">
+                      {data.data.map((item, index) => (
+                        <JobCard key={index} item={item} />
                         ))}
                       </div>
-                      <div class="col-lg-4 text-info-sec">
-                      {partenaireData?.data?.map(item =>  (
-                          <img src={'https://api.antares-rh.net' + item?.attributes?.image?.data?.attributes?.url} alt=" " className="img-fluid h-44 object-cover mb-2 shadow-md" />
-                        ))
-                        }
+                  ) : (
+                    <div className="bg-gray-50 rounded-lg p-10 text-center">
+                      <p className="text-gray-500">Aucune offre d'emploi disponible pour le moment.</p>
                       </div>
+                  )}
                     </div>
+                
+                {/* Partenaires */}
+                <div className="col-lg-4">
+                  {partenaireData?.data && partenaireData.data.length > 0 && (
+                    <div className="bg-gray-50 rounded-lg p-4 sticky top-24">
+                      <h4 className="font-bold text-lg text-gray-800 mb-4">Nos partenaires</h4>
+                      <div className="space-y-3">
+                        {partenaireData.data.map((item, index) => (
+                          <img 
+                            key={index}
+                            src={'https://api.antares-rh.net' + item?.attributes?.image?.data?.attributes?.url} 
+                            alt="Partenaire" 
+                            className="w-full h-24 object-contain bg-white p-2 rounded shadow-sm" 
+                          />
+                        ))}
                   </div>
                 </div>
+                  )}
               </div>
             </div>
           </div>
         </div>
       </section>
     </Container>
+      <Footer />
+      <WhatsAppButton />
+    </>
   );
 };
 
